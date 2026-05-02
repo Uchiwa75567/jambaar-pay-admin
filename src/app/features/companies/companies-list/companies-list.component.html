@@ -1,0 +1,82 @@
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Gestion des Entreprises</h2>
+    <p class="page-subtitle">{{ companies().length }} entreprises enregistrées</p>
+  </div>
+</div>
+
+<div class="card">
+  <!-- Toolbar -->
+  <div class="table-toolbar">
+    <div class="toolbar-left">
+      <!-- Search -->
+      <div class="search-box">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Rechercher une entreprise..."
+          [ngModel]="searchTerm()"
+          (ngModelChange)="searchTerm.set($event)" />
+      </div>
+
+      <!-- Status filter -->
+      <div class="filter-tabs">
+        <button
+          *ngFor="let opt of statusOptions"
+          class="filter-tab"
+          [class.active]="statusFilter() === opt"
+          (click)="statusFilter.set(opt)">
+          {{ opt }}
+        </button>
+      </div>
+    </div>
+
+    <button class="btn-add">
+      <i class="pi pi-plus"></i>
+      Ajouter une entreprise
+    </button>
+  </div>
+
+  <!-- Table -->
+  <p-table
+    [value]="companies()"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    styleClass="jp-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Entreprise</th>
+        <th>Salariés</th>
+        <th>Solde Total</th>
+        <th>Date d'inscription</th>
+        <th>Statut</th>
+        <th style="width: 60px">Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-company>
+      <tr>
+        <td>
+          <div class="company-name-cell">
+            <div class="company-avatar">{{ company.name[0] }}</div>
+            <span>{{ company.name }}</span>
+          </div>
+        </td>
+        <td>{{ company.employeeCount | number }}</td>
+        <td class="amount">{{ company.totalBalance | fcfa }}</td>
+        <td>{{ company.registrationDate | dateFr }}</td>
+        <td><app-status-badge [status]="company.status"></app-status-badge></td>
+        <td>
+          <button class="action-btn" (click)="actionMenu.toggle($event)">
+            <i class="pi pi-ellipsis-v"></i>
+          </button>
+          <p-menu #actionMenu [popup]="true" [model]="getMenuItems(company)" appendTo="body"></p-menu>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="6" class="empty-message">Aucune entreprise trouvée.</td></tr>
+    </ng-template>
+  </p-table>
+</div>

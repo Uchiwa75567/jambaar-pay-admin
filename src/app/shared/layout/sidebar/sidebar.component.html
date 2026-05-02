@@ -1,0 +1,27 @@
+<aside class="sidebar">
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <img src="assets/images/logo-jp.png" alt="Jambaar Pay" class="logo-img" />
+    <p class="logo-text">JAMBAAR <span>PAY</span></p>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      class="nav-item">
+      <i [class]="item.icon"></i>
+      <span>{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <!-- Logout -->
+  <div class="sidebar-footer">
+    <button class="nav-item logout" (click)="logout()">
+      <i class="pi pi-sign-out"></i>
+      <span>Deconnexion</span>
+    </button>
+  </div>
+</aside>

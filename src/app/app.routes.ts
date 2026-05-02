@@ -1,0 +1,27 @@
+import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { LoginComponent } from './features/auth/login/login.component';
+import { MainLayoutComponent } from './shared/layout/main-layout/main-layout.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { CompaniesListComponent } from './features/companies/companies-list/companies-list.component';
+import { RestaurantsListComponent } from './features/restaurants/restaurants-list/restaurants-list.component';
+import { MonitoringComponent } from './features/monitoring/monitoring.component';
+import { AuditComponent } from './features/audit/audit.component';
+
+export const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: 'dashboard',   component: DashboardComponent      },
+      { path: 'companies',   component: CompaniesListComponent   },
+      { path: 'restaurants', component: RestaurantsListComponent },
+      { path: 'monitoring',  component: MonitoringComponent      },
+      { path: 'audit',       component: AuditComponent           },
+    ],
+  },
+  { path: '**', redirectTo: '/login' },
+];

@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h2>Gestion des Restaurants</h2>
+  <p>{{ restaurants.length }} restaurants enregistrés</p>
+</div>
+
+<div class="card">
+  <p-table [value]="restaurants" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Restaurant</th>
+        <th>Adresse</th>
+        <th>Transactions</th>
+        <th>Volume Total</th>
+        <th>Date d'inscription</th>
+        <th>Statut</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r>
+      <tr>
+        <td><strong>{{ r.name }}</strong></td>
+        <td>{{ r.address }}</td>
+        <td>{{ r.totalTransactions }}</td>
+        <td>{{ r.totalVolume | fcfa }}</td>
+        <td>{{ r.registrationDate | dateFr }}</td>
+        <td><app-status-badge [status]="r.status"></app-status-badge></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

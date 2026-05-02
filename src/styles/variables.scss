@@ -1,0 +1,58 @@
+// ─── Jambaar Pay — Design Tokens ────────────────────────────────────────────
+
+// Colors
+:root {
+  --color-sidebar-bg:       #0D1B2A;
+  --color-sidebar-active:   #E8731A;
+  --color-bg-main:          #F8F9FA;
+  --color-orange-accent:    #E8731A;
+  --color-text-primary:     #1A1A2E;
+  --color-green-valid:      #22C55E;
+  --color-grey-secondary:   #6C757D;
+  --color-white-card:       #FFFFFF;
+  --color-red-danger:       #EF4444;
+  --color-orange-light:     #FFF3E8;
+  --color-sidebar-border:   rgba(255, 255, 255, 0.08);
+
+  // Layout
+  --sidebar-width:          260px;
+  --topbar-height:          64px;
+
+  // Typography
+  --font-family-base:       'Inter', 'Segoe UI', sans-serif;
+  --font-size-base:         14px;
+  --font-size-sm:           12px;
+  --font-size-lg:           16px;
+  --font-size-xl:           20px;
+  --font-size-2xl:          24px;
+
+  // Spacing
+  --spacing-xs:   4px;
+  --spacing-sm:   8px;
+  --spacing-md:   16px;
+  --spacing-lg:   24px;
+  --spacing-xl:   32px;
+
+  // Radius
+  --radius-sm:    4px;
+  --radius-md:    8px;
+  --radius-lg:    12px;
+  --radius-xl:    16px;
+
+  // Shadows
+  --shadow-card:  0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+// SCSS variables (mirrors CSS custom props for use in SCSS expressions)
+$sidebar-bg:       #0D1B2A;
+$sidebar-active:   #E8731A;
+$bg-main:          #F8F9FA;
+$orange-accent:    #E8731A;
+$text-primary:     #1A1A2E;
+$green-valid:      #22C55E;
+$grey-secondary:   #6C757D;
+$white-card:       #FFFFFF;
+$red-danger:       #EF4444;
+$sidebar-width:    260px;
+$topbar-height:    64px;

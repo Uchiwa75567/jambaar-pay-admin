@@ -1,0 +1,19 @@
+<div class="page-header">
+  <h2>Monitoring</h2>
+  <p>Surveillance en temps réel du système</p>
+</div>
+
+<div class="metrics-grid">
+  <div *ngFor="let m of metrics" class="metric-card">
+    <i [class]="m.icon" [style.color]="m.color"></i>
+    <div>
+      <div class="metric-value">{{ m.value }}</div>
+      <div class="metric-label">{{ m.label }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="card coming-soon">
+  <i class="pi pi-chart-bar"></i>
+  <p>Graphiques de monitoring — à venir</p>
+</div>

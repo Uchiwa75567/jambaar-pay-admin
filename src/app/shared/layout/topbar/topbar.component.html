@@ -1,0 +1,25 @@
+<header class="topbar">
+  <div class="title-block">
+    <h1 class="page-title">{{ pageTitle }}</h1>
+    <p class="page-subtitle" *ngIf="pageSubtitle">{{ pageSubtitle }}</p>
+  </div>
+
+  <div class="search-box">
+    <i class="pi pi-search"></i>
+    <input type="text" placeholder="Recherchez ..." />
+  </div>
+
+  <div class="topbar-right">
+    <button class="icon-btn">
+      <i class="pi pi-cog"></i>
+    </button>
+
+    <div class="avatar-block">
+      <div class="user-info">
+        <span class="user-name">{{ profile?.name ?? 'Admin' }}</span>
+        <span class="user-role">{{ profile?.role }}</span>
+      </div>
+      <div class="avatar">{{ initials }}</div>
+    </div>
+  </div>
+</header>

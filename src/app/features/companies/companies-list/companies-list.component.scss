@@ -1,0 +1,160 @@
+@use '../../../../styles/variables' as *;
+
+.page-header {
+  margin-bottom: 24px;
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 4px;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: $grey-secondary;
+  }
+}
+
+.card {
+  background: $white-card;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-main);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--radius-xl);
+  padding: 8px 16px;
+
+  i { color: $grey-secondary; font-size: 14px; }
+
+  input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    width: 220px;
+    color: $text-primary;
+
+    &::placeholder { color: $grey-secondary; }
+  }
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--color-bg-main);
+  border-radius: var(--radius-xl);
+  padding: 4px;
+}
+
+.filter-tab {
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-xl);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: $grey-secondary;
+  transition: all 0.15s;
+
+  &.active {
+    background: $white-card;
+    color: $text-primary;
+    box-shadow: var(--shadow-card);
+    font-weight: 600;
+  }
+
+  &:hover:not(.active) { color: $text-primary; }
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: $orange-accent;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+
+  &:hover { background: darken($orange-accent, 8%); }
+}
+
+.company-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.company-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  background: var(--color-orange-light);
+  color: $orange-accent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.amount {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $grey-secondary;
+
+  &:hover {
+    background: var(--color-bg-main);
+    color: $text-primary;
+  }
+}
+
+.empty-message {
+  text-align: center;
+  color: $grey-secondary;
+  padding: 40px !important;
+  font-size: 14px;
+}
