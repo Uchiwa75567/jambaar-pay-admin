@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/jambaar-pay-admin",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
