@@ -1,7 +1,14 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/jambaar-pay-admin",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/jambaar-pay-admin"
+      }
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
