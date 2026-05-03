@@ -1,74 +1,47 @@
-<div class="page-header">
-  <div>
-    <h2 class="page-title">Gestion des Entreprises</h2>
-    <p class="page-subtitle">{{ companies().length }} entreprises enregistrées</p>
-  </div>
-</div>
+<section class="companies-card">
+  <div class="companies-toolbar">
+    <h2>Liste des Entreprises</h2>
 
-<div class="card">
-  <!-- Toolbar -->
-  <div class="table-toolbar">
-    <div class="toolbar-left">
-      <!-- Search -->
-      <div class="search-box">
+    <div class="toolbar-actions">
+      <div class="table-search">
         <i class="pi pi-search"></i>
         <input
           pInputText
           type="text"
-          placeholder="Rechercher une entreprise..."
+          placeholder="Recherchez une entrep...."
           [ngModel]="searchTerm()"
           (ngModelChange)="searchTerm.set($event)" />
       </div>
 
-      <!-- Status filter -->
-      <div class="filter-tabs">
-        <button
-          *ngFor="let opt of statusOptions"
-          class="filter-tab"
-          [class.active]="statusFilter() === opt"
-          (click)="statusFilter.set(opt)">
-          {{ opt }}
-        </button>
-      </div>
-    </div>
+      <button class="filter-btn" type="button">
+        <i class="pi pi-filter"></i>
+        <span>{{ statusFilter() }}</span>
+      </button>
 
-    <button class="btn-add">
-      <i class="pi pi-plus"></i>
-      Ajouter une entreprise
-    </button>
+      <button class="btn-add" type="button">Ajouter une entreprise</button>
+    </div>
   </div>
 
-  <!-- Table -->
-  <p-table
-    [value]="companies()"
-    [paginator]="true"
-    [rows]="10"
-    [rowsPerPageOptions]="[5, 10, 25]"
-    styleClass="jp-table">
+  <p-table [value]="companies()" styleClass="companies-table">
     <ng-template pTemplate="header">
       <tr>
-        <th>Entreprise</th>
+        <th>Entreprises</th>
         <th>Salariés</th>
         <th>Solde Total</th>
-        <th>Date d'inscription</th>
+        <th>Date d’inscription</th>
         <th>Statut</th>
-        <th style="width: 60px">Action</th>
+        <th>Action</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-company>
       <tr>
-        <td>
-          <div class="company-name-cell">
-            <div class="company-avatar">{{ company.name[0] }}</div>
-            <span>{{ company.name }}</span>
-          </div>
-        </td>
+        <td>{{ company.name }}</td>
         <td>{{ company.employeeCount | number }}</td>
-        <td class="amount">{{ company.totalBalance | fcfa }}</td>
-        <td>{{ company.registrationDate | dateFr }}</td>
+        <td>{{ company.totalBalance | number }}</td>
+        <td>{{ company.registrationDate }}</td>
         <td><app-status-badge [status]="company.status"></app-status-badge></td>
         <td>
-          <button class="action-btn" (click)="actionMenu.toggle($event)">
+          <button class="action-btn" (click)="actionMenu.toggle($event)" aria-label="Actions entreprise">
             <i class="pi pi-ellipsis-v"></i>
           </button>
           <p-menu #actionMenu [popup]="true" [model]="getMenuItems(company)" appendTo="body"></p-menu>
@@ -76,7 +49,26 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-      <tr><td colspan="6" class="empty-message">Aucune entreprise trouvée.</td></tr>
+      <tr>
+        <td colspan="6" class="empty-message">Aucune entreprise trouvée.</td>
+      </tr>
     </ng-template>
   </p-table>
-</div>
+
+  <div class="table-footer">
+    <button class="rows-btn" type="button">
+      <span>lignes par page</span>
+      <strong>6</strong>
+    </button>
+
+    <nav class="pagination" aria-label="Pagination">
+      <span class="prev disabled">Prec</span>
+      <span class="page active">01</span>
+      <span class="page">02</span>
+      <span class="page">03</span>
+      <span class="dots">...</span>
+      <span class="page outlined">24</span>
+      <span class="next">Suiv</span>
+    </nav>
+  </div>
+</section>

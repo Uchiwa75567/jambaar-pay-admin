@@ -14,11 +14,11 @@ export class StatusBadgeComponent {
 
   get badgeClass(): string {
     const map: Record<StatusType, string> = {
-      'Validé':   'badge-valid',
+      'Validé': 'badge-valid',
       'En cours': 'badge-pending',
-      'Échoué':   'badge-failed',
-      'Actif':    'badge-active',
-      'Inactif':  'badge-inactive',
+      'Échoué': 'badge-failed',
+      'Actif': 'badge-active',
+      'Inactif': 'badge-inactive',
     };
     return map[this.status] ?? 'badge-inactive';
   }

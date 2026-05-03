@@ -1,110 +1,110 @@
 @use '../../../../styles/variables' as *;
 
 .sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  width: $sidebar-width;
+  width: 397px;
   min-height: 100vh;
-  background: $sidebar-bg;
-  padding: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
+  background: #1b1b30;
 }
 
-// ── Logo ──────────────────────────────────────────────────────────────────────
 .sidebar-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 28px 20px 24px;
-  border-bottom: 1px solid var(--color-sidebar-border);
+  padding: 45px 20px 30px;
   gap: 8px;
+}
 
-  .logo-img {
-    width: 80px;
-    height: auto;
-    object-fit: contain;
-  }
+.logo-img {
+  width: 113px;
+  height: auto;
+}
 
-  .logo-text {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    color: #fff;
-    text-transform: uppercase;
+.logo-text {
+  margin: 0;
+  color: #b9b9b9;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0;
 
-    span {
-      color: $orange-accent;
-    }
+  span {
+    color: #f47721;
   }
 }
 
-// ── Navigation ────────────────────────────────────────────────────────────────
 .sidebar-nav {
   flex: 1;
-  padding: 20px 16px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 55px;
+  padding: 53px 28px 20px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  color: rgba(255, 255, 255, 0.65);
+  gap: 26px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  text-align: left;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
-  border: none;
-  background: transparent;
-  width: 100%;
-  text-align: left;
 
   i {
-    font-size: 17px;
-    width: 20px;
-    flex-shrink: 0;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.07);
-    color: #fff;
+    width: 25px;
+    color: currentColor;
+    font-size: 28px;
   }
 
   &.active {
-    background: transparent;
-    color: $orange-accent;
-    border-radius: 0;
-    border-bottom: 2px solid $orange-accent;
+    color: #ff7a25;
+    font-size: 29px;
+    font-weight: 800;
 
-    i {
-      color: $orange-accent;
+    span {
+      padding-bottom: 17px;
+      border-bottom: 4px solid #ff7a25;
     }
   }
 
   &.logout {
-    color: $orange-accent;
-    font-weight: 700;
+    gap: 27px;
+    color: #f10f0f;
+    font-size: 29px;
+    font-weight: 800;
 
-    i { color: $orange-accent; }
-
-    &:hover {
-      background: rgba($orange-accent, 0.1);
+    i {
+      color: #fff;
+      font-size: 34px;
     }
   }
 }
 
-// ── Footer ────────────────────────────────────────────────────────────────────
 .sidebar-footer {
-  padding: 12px 16px;
-  border-top: 1px solid var(--color-sidebar-border);
+  padding: 0 45px 66px;
+}
+
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 300px;
+  }
+
+  .sidebar-nav {
+    gap: 36px;
+    padding-inline: 24px;
+  }
+
+  .nav-item,
+  .nav-item.active,
+  .nav-item.logout {
+    font-size: 20px;
+  }
 }

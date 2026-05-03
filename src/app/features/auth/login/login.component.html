@@ -1,14 +1,11 @@
 <div class="login-card">
   <aside class="login-left">
-    <div class="left-overlay"></div>
     <div class="left-content">
       <div class="brand-label">JAMBAAR-PAY</div>
 
       <div class="brand-logo">
         <img src="/assets/images/jambaar-pay-logo.png" alt="Jambaar Pay logo" />
       </div>
-
-      <div class="brand-title">JAMBAAR PAY</div>
     </div>
   </aside>
 
@@ -50,7 +47,7 @@
               [type]="showPassword() ? 'text' : 'password'"
               [(ngModel)]="form.password"
               name="password"
-              placeholder="••••••••••••"
+              placeholder="++++++++++++++"
               class="w-full" />
             <button type="button" class="eye-btn" (click)="togglePassword()" aria-label="Afficher le mot de passe">
               <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
@@ -60,7 +57,7 @@
 
         <div class="form-options">
           <label class="remember-me">
-            <p-checkbox [(ngModel)]="form.rememberMe" name="rememberMe" [binary]="true"></p-checkbox>
+            <input type="checkbox" [(ngModel)]="form.rememberMe" name="rememberMe" />
             <span>Se souvenir de moi</span>
           </label>
           <a href="#" class="forgot-link">mot de passe oublié</a>
