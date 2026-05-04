@@ -8,10 +8,17 @@
 
 html, body {
   height: 100%;
+  overflow: hidden;
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   color: var(--color-text-primary);
   background-color: var(--color-bg-main);
+}
+
+app-root {
+  display: block;
+  height: 100%;
+  overflow: hidden;
 }
 
 // PrimeNG overrides

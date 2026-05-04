@@ -2,18 +2,18 @@
 
 .topbar {
   display: grid;
-  grid-template-columns: 460px 536px 1fr;
+  grid-template-columns: 430px 520px 1fr;
   align-items: center;
-  gap: 40px;
-  min-height: 132px;
-  padding: 0 42px 0 67px;
+  gap: 34px;
+  min-height: 92px;
+  padding: 0 38px 0 67px;
   background: #fff;
 }
 
 .page-title {
-  margin: 0 0 9px;
+  margin: 0 0 7px;
   color: #000;
-  font-size: 31px;
+  font-size: 27px;
   font-weight: 800;
   line-height: 1;
 }
@@ -21,23 +21,23 @@
 .page-subtitle {
   margin: 0;
   color: #8f8f8f;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  gap: 27px;
-  height: 55px;
-  padding: 0 28px;
+  gap: 22px;
+  height: 48px;
+  padding: 0 26px;
   border: 1px solid #a9a9a9;
   border-radius: 9px;
   background: #fff;
 
   i {
     color: #a5a5a5;
-    font-size: 30px;
+    font-size: 27px;
   }
 
   input {
@@ -45,7 +45,7 @@
     border: 0;
     outline: 0;
     color: #1b1b30;
-    font-size: 29px;
+    font-size: 27px;
     background: transparent;
 
     &::placeholder {
@@ -58,14 +58,14 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 35px;
+  gap: 24px;
 }
 
 .icon-btn {
   display: grid;
   place-items: center;
-  width: 54px;
-  height: 54px;
+  width: 48px;
+  height: 48px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -73,14 +73,14 @@
   cursor: pointer;
 
   i {
-    font-size: 46px;
+    font-size: 40px;
   }
 }
 
 .avatar-block {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
 }
 
 .user-info {
@@ -91,28 +91,28 @@
 
 .user-name {
   color: #000;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
 }
 
 .user-role {
-  margin-top: 6px;
+  margin-top: 4px;
   color: #ff650b;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
 }
 
 .avatar {
   display: grid;
   place-items: center;
-  width: 76px;
-  height: 76px;
+  width: 66px;
+  height: 66px;
   border-radius: 50%;
   background:
     radial-gradient(circle at 50% 22%, #4b5568 0 10%, transparent 11%),
     linear-gradient(145deg, #111827, #030712 58%, #1f2937);
   color: #fff;
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 800;
 }
 

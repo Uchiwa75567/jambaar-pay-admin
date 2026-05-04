@@ -2,25 +2,28 @@
 
 .app-shell {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: #fff;
 }
 
 .main-content {
   flex: 1;
   min-width: 0;
-  min-height: 100vh;
-  margin-left: 397px;
+  height: 100vh;
+  margin-left: 382px;
+  overflow-y: hidden;
+  overflow-x: hidden;
   background: #fff;
 }
 
 .page-content {
-  padding: 22px 58px 30px 67px;
+  padding: 10px 58px 14px 67px;
 }
 
 @media (max-width: 1200px) {
   .main-content {
-    margin-left: 300px;
+    margin-left: 286px;
   }
 
   .page-content {

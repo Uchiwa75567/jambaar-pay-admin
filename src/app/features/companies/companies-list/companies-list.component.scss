@@ -1,8 +1,11 @@
 @use '../../../../styles/variables' as *;
 
 .companies-card {
-  min-height: 966px;
-  margin-top: 61px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 190px);
+  min-height: 650px;
+  margin-top: 50px;
   overflow: hidden;
   border: 1px solid #dedede;
   border-radius: 11px;
@@ -15,14 +18,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 30px;
-  height: 126px;
+  min-height: 96px;
   padding: 0 23px 0 30px;
   border-bottom: 1px solid #d6d6d6;
 
   h2 {
     margin: 0;
     color: #4a4a66;
-    font-size: 31px;
+    font-size: 30px;
     font-weight: 800;
   }
 }
@@ -37,8 +40,8 @@
   display: flex;
   align-items: center;
   gap: 13px;
-  width: 446px;
-  height: 55px;
+  width: 430px;
+  height: 52px;
   padding: 0 20px;
   border: 1px solid #dedede;
   border-radius: 8px;
@@ -66,13 +69,13 @@
   display: inline-flex;
   align-items: center;
   gap: 23px;
-  height: 55px;
-  padding: 0 29px;
+  height: 52px;
+  padding: 0 27px;
   border: 1px solid #dedede;
   border-radius: 8px;
   background: #fff;
   color: #696969;
-  font-size: 27px;
+  font-size: 25px;
   cursor: pointer;
 
   i {
@@ -82,35 +85,39 @@
 }
 
 .btn-add {
-  height: 55px;
-  padding: 0 15px;
+  height: 52px;
+  padding: 0 16px;
   border: 0;
   border-radius: 8px;
   background: #f47721;
   color: #fff;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
   cursor: pointer;
 }
 
 :host ::ng-deep .companies-table {
+  display: block;
+  flex: 0 0 auto;
+
   .p-datatable-thead > tr > th {
-    padding: 14px 31px;
+    padding: 13px 31px;
     border-bottom: 1px solid #d6d6d6 !important;
     background: #fff !important;
     color: #454545 !important;
-    font-size: 31px !important;
+    font-size: 28px !important;
     font-weight: 800 !important;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 16px 31px 15px;
+    padding: 13px 31px;
     border: 0 !important;
     color: #454545;
-    font-size: 25px;
+    font-size: 23px;
     font-weight: 400;
+    line-height: 1.2;
   }
 }
 
@@ -119,7 +126,7 @@
   border-radius: 0;
   background: transparent;
   color: #009b3a;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 400;
 }
 
@@ -127,14 +134,14 @@
   display: grid;
   place-items: center;
   width: 36px;
-  height: 36px;
+  height: 32px;
   border: 0;
   background: transparent;
   color: #8b817d;
   cursor: pointer;
 
   i {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 
@@ -148,36 +155,36 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 115px;
-  padding: 0 91px 0 31px;
+  margin-top: auto;
+  padding: 24px 91px 28px 31px;
 }
 
 .rows-btn {
   display: inline-flex;
   align-items: center;
   gap: 23px;
-  height: 52px;
+  height: 48px;
   padding: 0 14px;
   border: 1.5px solid #1b1b30;
   border-radius: 7px;
   background: #fff;
   color: #1b1b30;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
 }
 
 .pagination {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
   color: #1b1b30;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
 }
 
 .prev {
   color: #c8c8c8;
-  font-size: 21px;
+  font-size: 19px;
 }
 
 .page {
@@ -187,8 +194,8 @@
 
 .page.active,
 .page.outlined {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
 }
 
@@ -202,8 +209,8 @@
 }
 
 .next {
-  margin-left: 38px;
-  font-size: 22px;
+  margin-left: 32px;
+  font-size: 20px;
 }
 
 @media (max-width: 1400px) {

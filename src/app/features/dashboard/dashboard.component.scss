@@ -3,15 +3,15 @@
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 76px;
-  margin-bottom: 43px;
+  gap: 70px;
+  margin-bottom: 18px;
 }
 
 .dashboard-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 19px;
-  margin-bottom: 22px;
+  gap: 18px;
+  margin-bottom: 12px;
 }
 
 .card {
@@ -24,50 +24,51 @@
 
 .chart-card,
 .top-restaurants-card {
-  height: 388px;
-  padding: 12px 40px 24px 65px;
+  height: 282px;
+  padding: 10px 30px 14px 52px;
 }
 
 .card-header {
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 
   h3 {
     margin: 0;
     color: #000;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
   }
 }
 
 .chart-container {
-  height: 310px;
+  height: 214px;
 }
 
 .restaurant-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  margin: 45px 0 0;
+  gap: 7px;
+  margin: 22px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .restaurant-item {
   display: grid;
-  grid-template-columns: 43px 1fr 105px;
+  grid-template-columns: 34px 1fr 94px;
   align-items: center;
-  gap: 17px;
+  gap: 15px;
+  min-height: 34px;
 }
 
 .rank-badge {
   display: grid;
   place-items: center;
-  width: 43px;
-  height: 43px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   background: #1b1b30;
   color: #fff;
-  font-size: 24px;
+  font-size: 19px;
   font-weight: 500;
 }
 
@@ -79,15 +80,15 @@
 
 .restaurant-name {
   color: #1b1b30;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 800;
   line-height: 1.1;
 }
 
 .restaurant-transactions {
-  margin-top: 5px;
+  margin-top: 2px;
   color: #8f8f8f;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -97,48 +98,48 @@
 
 .volume-amount {
   color: #1b1b30;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 700;
 }
 
 .volume-unit {
   color: #8f8f8f;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
 }
 
 .activity-card {
-  min-height: 548px;
+  height: 326px;
 }
 
 .activity-card .card-header {
   margin: 0;
-  padding: 17px 31px 20px;
+  padding: 10px 31px 11px;
   border-bottom: 1px solid #d6d6d6;
 
   h3 {
     color: #1b1b30;
-    font-size: 31px;
+    font-size: 24px;
   }
 }
 
 :host ::ng-deep .jp-table {
   .p-datatable-thead > tr > th {
-    padding: 15px 31px;
+    padding: 9px 31px;
     border-bottom: 1px solid #d6d6d6 !important;
     background: #fff !important;
     color: #1b1b30 !important;
-    font-size: 31px !important;
+    font-size: 23px !important;
     font-weight: 800 !important;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 17px 31px;
+    padding: 7px 31px;
     border: 0 !important;
     color: #454545;
-    font-size: 23px;
+    font-size: 16px;
     font-weight: 800;
   }
 }
@@ -156,7 +157,7 @@
   border-radius: 0;
   background: transparent;
   color: #009b3a;
-  font-size: 25px;
+  font-size: 18px;
   font-weight: 800;
 }
 

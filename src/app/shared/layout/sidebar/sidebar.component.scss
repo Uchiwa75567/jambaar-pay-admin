@@ -6,8 +6,9 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  width: 397px;
-  min-height: 100vh;
+  width: 382px;
+  height: 100vh;
+  overflow: hidden;
   background: #1b1b30;
 }
 
@@ -15,19 +16,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 45px 20px 30px;
-  gap: 8px;
+  padding: 36px 20px 24px;
+  gap: 7px;
 }
 
 .logo-img {
-  width: 113px;
+  width: 98px;
   height: auto;
 }
 
 .logo-text {
   margin: 0;
   color: #b9b9b9;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 800;
   letter-spacing: 0;
 
@@ -40,61 +41,61 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 55px;
-  padding: 53px 28px 20px;
+  gap: 36px;
+  padding: 34px 27px 18px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 25px;
   width: 100%;
   border: 0;
   background: transparent;
   color: #fff;
   text-align: left;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 500;
   cursor: pointer;
 
   i {
     width: 25px;
     color: currentColor;
-    font-size: 28px;
+    font-size: 24px;
   }
 
   &.active {
     color: #ff7a25;
-    font-size: 29px;
+    font-size: 24px;
     font-weight: 800;
 
     span {
-      padding-bottom: 17px;
-      border-bottom: 4px solid #ff7a25;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #ff7a25;
     }
   }
 
   &.logout {
     gap: 27px;
     color: #f10f0f;
-    font-size: 29px;
+    font-size: 25px;
     font-weight: 800;
 
     i {
       color: #fff;
-      font-size: 34px;
+      font-size: 30px;
     }
   }
 }
 
 .sidebar-footer {
-  padding: 0 45px 66px;
+  padding: 0 42px 42px;
 }
 
 @media (max-width: 1200px) {
   .sidebar {
-    width: 300px;
+    width: 286px;
   }
 
   .sidebar-nav {
