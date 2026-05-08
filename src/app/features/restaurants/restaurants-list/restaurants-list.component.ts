@@ -1,26 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
 import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component';
-import { FcfaCurrencyPipe } from '../../../shared/pipes/fcfa-currency.pipe';
-import { DateFrPipe } from '../../../shared/pipes/date-fr.pipe';
 import { Restaurant } from '../../../core/models/restaurant.models';
 
 const MOCK_RESTAURANTS: Restaurant[] = [
-  { id: '1', name: 'Le Baobab',      address: 'Plateau, Dakar',        totalTransactions: 142, totalVolume: 6_800_000, registrationDate: '2023-04-10', status: 'Actif'   },
-  { id: '2', name: 'Teranga Food',   address: 'Almadies, Dakar',       totalTransactions: 98,  totalVolume: 4_200_000, registrationDate: '2023-06-22', status: 'Actif'   },
-  { id: '3', name: 'Chez Aminata',   address: 'Médina, Dakar',         totalTransactions: 76,  totalVolume: 3_100_000, registrationDate: '2023-08-01', status: 'Actif'   },
-  { id: '4', name: 'Dakar Saveurs',  address: 'Ouakam, Dakar',         totalTransactions: 54,  totalVolume: 2_400_000, registrationDate: '2023-09-15', status: 'Actif'   },
-  { id: '5', name: 'La Palmeraie',   address: 'Fann, Dakar',           totalTransactions: 20,  totalVolume: 850_000,   registrationDate: '2023-11-20', status: 'Inactif' },
+  { id: '1', name: 'Restaurant 1', address: 'Mermoz',      totalTransactions: 123, totalVolume: 0, registrationDate: '2026-04-15', status: 'Actif' },
+  { id: '2', name: 'Restaurant 2', address: 'Karak',       totalTransactions: 123, totalVolume: 0, registrationDate: '2026-04-15', status: 'Actif' },
+  { id: '3', name: 'Restaurant 3', address: 'Fann',        totalTransactions: 123, totalVolume: 0, registrationDate: '2026-04-15', status: 'Actif' },
+  { id: '4', name: 'Restaurant 4', address: 'Keur Gorgui', totalTransactions: 123, totalVolume: 0, registrationDate: '2026-04-15', status: 'Actif' },
+  { id: '5', name: 'Restaurant 5', address: 'Medina',      totalTransactions: 123, totalVolume: 0, registrationDate: '2026-04-15', status: 'Actif' },
+  { id: '6', name: 'Restaurant 6', address: 'Point E',     totalTransactions: 123, totalVolume: 0, registrationDate: '2026-04-15', status: 'Actif' },
 ];
 
 @Component({
   selector: 'app-restaurants-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, StatusBadgeComponent, FcfaCurrencyPipe, DateFrPipe],
+  imports: [CommonModule, FormsModule, TableModule, ButtonModule, InputTextModule, MenuModule, StatusBadgeComponent],
   templateUrl: './restaurants-list.component.html',
+  styleUrls: ['./restaurants-list.component.scss'],
 })
 export class RestaurantsListComponent {
-  restaurants = MOCK_RESTAURANTS;
+  searchTerm   = signal('');
+  statusFilter = signal('Tous');
+
+  restaurants = computed(() => {
+    const q = this.searchTerm().toLowerCase();
+    return q ? MOCK_RESTAURANTS.filter(r => r.name.toLowerCase().includes(q)) : MOCK_RESTAURANTS;
+  });
+
+  getMenuItems(restaurant: Restaurant): MenuItem[] {
+    return [
+      { label: 'Voir détails', icon: 'pi pi-eye'    },
+      { label: 'Modifier',     icon: 'pi pi-pencil' },
+      { label: 'Désactiver',   icon: 'pi pi-ban',   styleClass: 'text-red-500' },
+    ];
+  }
 }
