@@ -15,6 +15,7 @@ export class KpiCardComponent {
   @Input() changeLabel = '';
   @Input() unit = '';
   @Input() icon = 'pi pi-chart-line';
+  @Input() iconSrc = '';
 
   get displayChange(): string {
     return this.changeLabel || `${this.change}%`;

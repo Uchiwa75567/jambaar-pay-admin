@@ -2,28 +2,29 @@
 
 // Colors
 :root {
-  --color-sidebar-bg:       #0D1B2A;
-  --color-sidebar-active:   #E8731A;
-  --color-bg-main:          #F8F9FA;
-  --color-orange-accent:    #E8731A;
-  --color-text-primary:     #1A1A2E;
-  --color-green-valid:      #22C55E;
-  --color-grey-secondary:   #6C757D;
-  --color-white-card:       #FFFFFF;
-  --color-red-danger:       #EF4444;
+  --color-sidebar-bg:       #1a1a2e;
+  --color-sidebar-active:   #e8722a;
+  --color-bg-main:          #f4f4f4;
+  --color-orange-accent:    #e8722a;
+  --color-text-primary:     #1a1a2e;
+  --color-green-valid:      #00a344;
+  --color-grey-secondary:   #958e8e;
+  --color-white-card:       #ffffff;
+  --color-red-danger:       #fa0505;
   --color-orange-light:     #FFF3E8;
   --color-sidebar-border:   rgba(255, 255, 255, 0.08);
+  --color-text-muted:       #444444;
 
   // Layout
-  --sidebar-width:          260px;
-  --topbar-height:          64px;
+  --sidebar-width:          335px;
+  --topbar-height:          92px;
 
   // Typography
   --font-family-base:       'Inter', 'Segoe UI', sans-serif;
   --font-size-base:         14px;
   --font-size-sm:           12px;
   --font-size-lg:           16px;
-  --font-size-xl:           20px;
+  --font-size-xl:           18px;
   --font-size-2xl:          24px;
 
   // Spacing
@@ -35,24 +36,31 @@
 
   // Radius
   --radius-sm:    4px;
-  --radius-md:    8px;
-  --radius-lg:    12px;
+  --radius-md:    6px;
+  --radius-lg:    9px;
   --radius-xl:    16px;
 
   // Shadows
-  --shadow-card:  0 1px 4px rgba(0, 0, 0, 0.08);
-  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-card:  0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+  --shadow-panel: 0px 0px 4px 3px rgba(0, 0, 0, 0.25);
 }
 
 // SCSS variables (mirrors CSS custom props for use in SCSS expressions)
-$sidebar-bg:       #0D1B2A;
-$sidebar-active:   #E8731A;
-$bg-main:          #F8F9FA;
-$orange-accent:    #E8731A;
-$text-primary:     #1A1A2E;
-$green-valid:      #22C55E;
-$grey-secondary:   #6C757D;
-$white-card:       #FFFFFF;
-$red-danger:       #EF4444;
-$sidebar-width:    260px;
-$topbar-height:    64px;
+$sidebar-bg:       #1a1a2e;
+$sidebar-active:   #e8722a;
+$bg-main:          #f4f4f4;
+$orange-accent:    #e8722a;
+$text-primary:     #1a1a2e;
+$green-valid:      #00a344;
+$grey-secondary:   #958e8e;
+$white-card:       #ffffff;
+$red-danger:       #fa0505;
+$sidebar-width:    335px;
+$topbar-height:    92px;
+
+// Orange icon filter (for black SVG → #e8722a)
+$filter-orange: brightness(0) saturate(100%) invert(51%) sepia(70%) saturate(1200%) hue-rotate(346deg) brightness(104%);
+// White icon filter (for black SVG → white)
+$filter-white: brightness(0) invert(1);
+// Grey icon filter
+$filter-grey: brightness(0) saturate(0%) invert(65%);

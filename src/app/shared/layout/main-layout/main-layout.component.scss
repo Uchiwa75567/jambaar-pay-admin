@@ -4,29 +4,37 @@
   display: flex;
   height: 100vh;
   overflow: hidden;
-  background: #fff;
+  background: $bg-main;
 }
 
 .main-content {
   flex: 1;
   min-width: 0;
   height: 100vh;
-  margin-left: 382px;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  margin-left: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: #fff;
 }
 
+// page-content is a flex column so that app-dashboard (router child) can fill it
 .page-content {
-  padding: 10px 58px 14px 67px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 51px 16px 58px;
+  background: $bg-main;
 }
 
 @media (max-width: 1200px) {
   .main-content {
-    margin-left: 286px;
+    margin-left: 260px;
   }
 
   .page-content {
-    padding: 24px;
+    padding: 16px 24px;
   }
 }

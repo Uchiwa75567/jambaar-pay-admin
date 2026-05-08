@@ -1,3 +1,4 @@
+<!-- KPI Cards -->
 <div class="kpi-grid">
   <app-kpi-card
     *ngFor="let kpi of kpis"
@@ -6,24 +7,24 @@
     [change]="kpi.change"
     [changeLabel]="kpi.changeLabel ?? ''"
     [unit]="kpi.unit ?? ''"
-    [icon]="kpi.icon ?? 'pi pi-chart-line'">
+    [icon]="kpi.icon ?? 'pi pi-chart-line'"
+    [iconSrc]="kpi.iconSrc ?? ''">
   </app-kpi-card>
 </div>
 
+<!-- Chart + Top Restaurants -->
 <div class="dashboard-row">
-  <div class="card chart-card">
-    <div class="card-header">
-      <h3>Transactions par jours</h3>
-    </div>
+  <!-- Line Chart -->
+  <div class="panel chart-panel">
+    <h3 class="panel-title">Transactions par jours</h3>
     <div class="chart-container">
-      <p-chart type="line" [data]="chartData" [options]="chartOptions" height="214px"></p-chart>
+      <p-chart type="line" [data]="chartData" [options]="chartOptions" height="220px"></p-chart>
     </div>
   </div>
 
-  <div class="card top-restaurants-card">
-    <div class="card-header">
-      <h3>Top Restaurants</h3>
-    </div>
+  <!-- Top Restaurants -->
+  <div class="panel top-restaurants-panel">
+    <h3 class="panel-title">Top Restaurants</h3>
     <ul class="restaurant-list">
       <li *ngFor="let r of topRestaurants" class="restaurant-item">
         <div class="rank-badge">{{ r.rank }}</div>
@@ -32,7 +33,7 @@
           <span class="restaurant-transactions">{{ r.transactions }} Transactions</span>
         </div>
         <div class="restaurant-volume">
-          <span class="volume-amount">{{ r.volume | number }}</span>
+          <span class="volume-amount">{{ r.volume | number:'1.0-0' }}</span>
           <span class="volume-unit">FCFA</span>
         </div>
       </li>
@@ -40,10 +41,12 @@
   </div>
 </div>
 
-<div class="card activity-card">
-  <div class="card-header">
-    <h3>Activité récentes</h3>
+<!-- Recent Activity Table -->
+<div class="panel activity-panel">
+  <div class="activity-header">
+    <h3 class="activity-title">Activité récentes</h3>
   </div>
+
   <p-table [value]="recentActivities" styleClass="jp-table">
     <ng-template pTemplate="header">
       <tr>
@@ -60,7 +63,7 @@
         <td class="txn-id">{{ row.transactionId }}</td>
         <td>{{ row.company }}</td>
         <td>{{ row.restaurant }}</td>
-        <td class="amount">{{ row.amount | fcfa }}</td>
+        <td>{{ row.amount | fcfa }}</td>
         <td>{{ row.date }}</td>
         <td><app-status-badge [status]="row.status"></app-status-badge></td>
       </tr>

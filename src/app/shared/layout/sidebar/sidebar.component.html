@@ -1,8 +1,7 @@
 <aside class="sidebar">
   <!-- Logo -->
   <div class="sidebar-logo">
-    <img src="assets/images/logo-jp.png" alt="Jambaar Pay" class="logo-img" />
-    <p class="logo-text">JAMBAAR <span>PAY</span></p>
+    <img src="assets/images/logo-jambaarpay.png" alt="Jambaar Pay" class="logo-img" />
   </div>
 
   <!-- Navigation -->
@@ -11,16 +10,17 @@
       *ngFor="let item of navItems"
       [routerLink]="item.route"
       routerLinkActive="active"
-      class="nav-item">
-      <i [class]="item.icon"></i>
+      class="nav-item"
+      [attr.aria-label]="item.label">
+      <img [src]="item.iconSrc" [alt]="item.label" class="nav-icon" />
       <span>{{ item.label }}</span>
     </a>
   </nav>
 
   <!-- Logout -->
   <div class="sidebar-footer">
-    <button class="nav-item logout" (click)="logout()">
-      <i class="pi pi-sign-out"></i>
+    <button class="nav-item logout" (click)="logout()" aria-label="Se déconnecter">
+      <img src="assets/icons/icon-logout.svg" alt="" class="nav-icon" />
       <span>Deconnexion</span>
     </button>
   </div>

@@ -5,6 +5,7 @@ export interface DashboardKPI {
   changeLabel?: string;
   unit?: string;
   icon?: string;
+  iconSrc?: string;
 }
 
 export interface TopRestaurant {

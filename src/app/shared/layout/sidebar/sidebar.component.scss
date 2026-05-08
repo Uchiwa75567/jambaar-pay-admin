@@ -6,107 +6,107 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  width: 335px;
+  width: $sidebar-width;
   height: 100vh;
   overflow: hidden;
-  background: #1b1b30;
+  background: $sidebar-bg;
 }
 
+// ── Logo ──────────────────────────────────────────────────────────────────────
 .sidebar-logo {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 36px 20px 24px;
-  gap: 7px;
+  padding: 18px 20px 24px;
+  min-height: 175px;
 }
 
 .logo-img {
-  width: 98px;
+  width: 171px;
   height: auto;
 }
 
-.logo-text {
-  margin: 0;
-  color: #b9b9b9;
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: 0;
-
-  span {
-    color: #f47721;
-  }
-}
-
+// ── Navigation ────────────────────────────────────────────────────────────────
 .sidebar-nav {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 36px;
-  padding: 34px 27px 18px;
+  gap: 38px;
+  padding: 20px 27px 18px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 24px;
   width: 100%;
   border: 0;
   background: transparent;
   color: #fff;
   text-align: left;
   text-decoration: none;
-  font-size: 19px;
+  font-family: var(--font-family-base);
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+  transition: color 0.2s ease;
 
-  i {
-    width: 25px;
-    color: currentColor;
-    font-size: 24px;
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    filter: $filter-white;
+    transition: filter 0.2s ease;
   }
 
   &.active {
-    color: #ff7a25;
-    font-size: 19px;
-    font-weight: 800;
+    color: $sidebar-active;
+    font-weight: 700;
 
+    .nav-icon {
+      filter: $filter-orange;
+    }
 
     span {
-      padding-bottom: 15px;
-      border-bottom: 3px solid #ff7a25;
+      padding-bottom: 3px;
+      border-bottom: 3px solid $sidebar-active;
     }
+  }
+
+  &:hover:not(.active):not(.logout) {
+    color: rgba(255, 255, 255, 0.75);
   }
 
   &.logout {
-    gap: 27px;
-    color: #f10f0f;
-    font-size: 25px;
-    font-weight: 800;
+    color: $red-danger;
+    font-size: 16px;
+    font-weight: 700;
 
-    i {
-      color: #fff;
-      font-size: 30px;
+    .nav-icon {
+      width: 26px;
+      height: 26px;
+      filter: $filter-white;
     }
   }
 }
 
+// ── Footer ────────────────────────────────────────────────────────────────────
 .sidebar-footer {
-  padding: 0 42px 42px;
+  padding: 0 27px 42px;
 }
 
+// ── Responsive ────────────────────────────────────────────────────────────────
 @media (max-width: 1200px) {
   .sidebar {
-    width: 286px;
+    width: 260px;
   }
 
   .sidebar-nav {
-    gap: 36px;
-    padding-inline: 24px;
+    gap: 30px;
+    padding-inline: 20px;
   }
 
-  .nav-item,
-  .nav-item.active,
-  .nav-item.logout {
-    font-size: 20px;
+  .sidebar-footer {
+    padding-inline: 20px;
   }
 }

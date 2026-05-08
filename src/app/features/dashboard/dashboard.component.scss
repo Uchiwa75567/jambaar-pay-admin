@@ -1,72 +1,89 @@
 @use '../../../styles/variables' as *;
 
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 70px;
-  margin-bottom: 18px;
+// :host becomes app-dashboard – fill the flex page-content container
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 14px;
 }
 
+// ── KPI Grid ──────────────────────────────────────────────────────────────────
+.kpi-grid {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+// ── Middle row: Chart + Top Restaurants ───────────────────────────────────────
+// flex: 1 — takes its share of remaining space (shorter than activity)
 .dashboard-row {
+  flex: 1;
+  min-height: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
-  margin-bottom: 12px;
 }
 
-:host {
-  display: block;
-}
-
-.card {
-
-
-  overflow: hidden;
-  border: 1px solid #d8d8d8;
-  border-radius: 9px;
+// ── Shared Panel ──────────────────────────────────────────────────────────────
+.panel {
   background: #fff;
-  box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
 }
 
-.chart-card,
-.top-restaurants-card {
-  width: 100%;
-  height: 325px;
-  padding: 10px 30px 14px 52px;
+.panel-title {
+  margin: 0;
+  color: #000;
+  font-size: 11px;
+  font-weight: 600;
 }
 
-
-
-.card-header {
-  margin-bottom: 10px;
-
-  h3 {
-    margin: 0;
-    color: #000;
-    font-size: 12px;
-    font-weight: 800;
-  }
+// ── Chart Panel ───────────────────────────────────────────────────────────────
+.chart-panel {
+  height: 100%;
+  padding: 14px 28px 14px 28px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .chart-container {
-  height: 214px;
+  flex: 1;
+  margin-top: 10px;
+  min-height: 0;
+}
+
+// ── Top Restaurants Panel ─────────────────────────────────────────────────────
+.top-restaurants-panel {
+  height: 100%;
+  padding: 14px 28px 14px 28px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .restaurant-list {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  margin: 22px 0 0;
+  justify-content: space-evenly;
+  margin: 10px 0 0;
   padding: 0;
   list-style: none;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .restaurant-item {
   display: grid;
-  grid-template-columns: 34px 1fr 94px;
+  grid-template-columns: 36px 1fr auto;
   align-items: center;
-  gap: 15px;
-  min-height: 34px;
+  gap: 14px;
 }
 
 .rank-badge {
@@ -74,11 +91,12 @@
   place-items: center;
   width: 34px;
   height: 34px;
-  border-radius: 8px;
-  background: #1b1b30;
-  color: #fff;
-  font-size: 19px;
-  font-weight: 500;
+  border-radius: 7px;
+  background: $text-primary;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 .restaurant-info,
@@ -88,95 +106,131 @@
 }
 
 .restaurant-name {
-  color: #1b1b30;
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 1.1;
+  color: $text-primary;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .restaurant-transactions {
-  margin-top: 2px;
-  color: #8f8f8f;
-  font-size: 12px;
+  margin-top: 1px;
+  color: #a89595;
+  font-size: 10px;
   font-weight: 600;
 }
 
 .restaurant-volume {
   align-items: flex-end;
+  text-align: right;
 }
 
 .volume-amount {
-  color: #1b1b30;
-  font-size: 14px;
-  font-weight: 700;
+  color: $text-primary;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .volume-unit {
-  color: #8f8f8f;
+  color: #a89595;
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.activity-card {
-  height: 325px;
+// ── Activity Panel ────────────────────────────────────────────────────────────
+// flex: 1.4 — takes proportionally more space than the chart row
+.activity-panel {
+  flex: 1.4;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
+.activity-header {
+  flex-shrink: 0;
+  padding: 12px 25px 10px;
+}
 
-.activity-card .card-header {
+.activity-title {
+  color: $text-primary;
+  font-size: 22px;
+  font-weight: 600;
   margin: 0;
-  padding: 10px 31px 11px;
-  border-bottom: 1px solid #d6d6d6;
-
-  h3 {
-    color: #1b1b30;
-    font-size: 24px;
-  }
 }
 
+// ── PrimeNG Table Overrides ───────────────────────────────────────────────────
 :host ::ng-deep .jp-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .p-datatable-wrapper {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
   .p-datatable-thead > tr > th {
-    padding: 9px 31px;
-    border-bottom: 1px solid #d6d6d6 !important;
-    background: #fff !important;
-    color: #1b1b30 !important;
-    font-size: 23px !important;
-    font-weight: 800 !important;
+    padding: 10px 25px;
+    background: rgba(255, 255, 255, 0.78) !important;
+    border-top: 1px solid rgba(113, 113, 113, 0.26) !important;
+    border-bottom: 1px solid rgba(113, 113, 113, 0.26) !important;
+    color: $text-primary !important;
+    font-family: var(--font-family-base) !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 7px 31px;
+    padding: 9px 25px;
     border: 0 !important;
-    color: #454545;
-    font-size: 16px;
-    font-weight: 800;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    color: #444 !important;
+    font-family: var(--font-family-base) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+  }
+
+  .p-datatable-tbody > tr:last-child > td {
+    border-bottom: 0 !important;
+  }
+
+  .p-datatable-tbody > tr:hover > td {
+    background: #fafafa !important;
   }
 }
 
-.txn-id {
-  font-family: inherit;
-}
-
-.amount {
-  color: #454545;
-}
-
+// Status badge — plain green text as per Figma
 :host ::ng-deep .badge-valid {
   padding: 0;
   border-radius: 0;
   background: transparent;
-  color: #009b3a;
-  font-size: 18px;
-  font-weight: 800;
+  color: $green-valid;
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: 600;
 }
 
+// ── Responsive ────────────────────────────────────────────────────────────────
 @media (max-width: 1400px) {
   .kpi-grid {
-    gap: 24px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .dashboard-row {
     grid-template-columns: 1fr;
+    flex: 2;
   }
 }

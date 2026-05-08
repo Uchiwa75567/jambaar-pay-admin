@@ -1,7 +1,8 @@
 <div class="kpi-card">
   <div class="kpi-top">
     <div class="kpi-icon">
-      <i [class]="icon"></i>
+      <img *ngIf="iconSrc" [src]="iconSrc" [alt]="label" class="icon-img" />
+      <i *ngIf="!iconSrc" [class]="icon"></i>
     </div>
     <span class="kpi-change">{{ displayChange }}</span>
   </div>

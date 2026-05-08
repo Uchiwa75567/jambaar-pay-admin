@@ -1,11 +1,11 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 interface NavItem {
   label: string;
-  icon: string;
+  iconSrc: string;
   route: string;
 }
 
@@ -18,14 +18,12 @@ interface NavItem {
 })
 export class SidebarComponent {
   navItems: NavItem[] = [
-    { label: 'Dashboard Global',         icon: 'pi pi-th-large',      route: '/dashboard'   },
-    { label: 'Gestion des entreprises',  icon: 'pi pi-building',      route: '/companies'   },
-    { label: 'Gestion des restaurants',  icon: 'pi pi-home',          route: '/restaurants' },
-    { label: 'Monitoring',               icon: 'pi pi-chart-bar',     route: '/monitoring'  },
-    { label: "Journal d'audit",          icon: 'pi pi-user',          route: '/audit'       },
+    { label: 'Dashboard Global',        iconSrc: 'assets/icons/icon-dashboard.svg',   route: '/dashboard'   },
+    { label: 'Gestion des entreprises', iconSrc: 'assets/icons/icon-business.svg',    route: '/companies'   },
+    { label: 'Gestion des restaurants', iconSrc: 'assets/icons/icon-restaurants.svg', route: '/restaurants' },
+    { label: 'Monitoring',              iconSrc: 'assets/icons/icon-monitoring.svg',  route: '/monitoring'  },
+    { label: "Journal d'audit",         iconSrc: 'assets/icons/icon-audit.svg',       route: '/audit'       },
   ];
-
-  profile = computed(() => this.auth.getProfile());
 
   constructor(private auth: AuthService) {}
 
