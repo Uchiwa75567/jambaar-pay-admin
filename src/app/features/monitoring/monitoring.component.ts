@@ -49,7 +49,7 @@ export class MonitoringComponent {
   filterMenuOpen   = signal(false);
   exportMenuOpen   = signal(false);
 
-  pageSizeOptions = [5, 6, 10, 25, 50];
+  pageSizeOptions = [6, 12, 18];
   filterOptions: StatusFilter[] = ['Tous', 'Validé', 'En attente', 'Échoué'];
 
   kpis = [

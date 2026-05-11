@@ -102,10 +102,23 @@
 // ── Generic dropdown wrapper ──────────────────────────────────────────────────
 .dropdown-wrap { position: relative; }
 
-.filter-menu, .rows-menu {
+.filter-menu {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
+  z-index: 200;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+  padding: 6px 0;
+  min-width: 140px;
+  animation: dropFade 0.12s ease;
+}
+
+.rows-menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
   z-index: 200;
   background: #fff;
   border-radius: 8px;
@@ -232,8 +245,31 @@
 // "Validé" badge — green text
 :host ::ng-deep .badge-valid {
   padding: 0;
+  border-radius: 0;
   background: transparent;
   color: $green-valid;
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+// "En attente" badge — yellow text
+:host ::ng-deep .badge-pending {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #d4a017;
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+// "Échoué" badge — red text
+:host ::ng-deep .badge-failed {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: $red-danger;
   font-family: var(--font-family-base);
   font-size: 15px;
   font-weight: 400;

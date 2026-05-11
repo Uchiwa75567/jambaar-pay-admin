@@ -45,7 +45,7 @@ export class CompaniesListComponent {
   pageSizeMenuOpen = signal(false);
   filterMenuOpen   = signal(false);
 
-  pageSizeOptions  = [5, 6, 10, 25, 50];
+  pageSizeOptions  = [6, 12, 18];
   statusOptions: StatusFilter[] = ['Tous', 'Actif', 'Inactif'];
   dateOptions: DateFilter[]     = ['Tous', 'Ce mois', 'Ce trimestre', 'Cette année'];
 

@@ -72,10 +72,23 @@
 // ── Generic dropdown wrapper ──────────────────────────────────────────────────
 .dropdown-wrap { position: relative; }
 
-.filter-menu, .rows-menu {
+.filter-menu {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
+  z-index: 200;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+  padding: 6px 0;
+  min-width: 180px;
+  animation: dropFade 0.12s ease;
+}
+
+.rows-menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
   z-index: 200;
   background: #fff;
   border-radius: 8px;

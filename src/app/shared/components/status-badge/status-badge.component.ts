@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-type StatusType = 'Validé' | 'En cours' | 'Échoué' | 'Actif' | 'Inactif';
+type StatusType = 'Validé' | 'En cours' | 'En attente' | 'Échoué' | 'Actif' | 'Inactif';
 
 @Component({
   selector: 'app-status-badge',
@@ -14,11 +14,12 @@ export class StatusBadgeComponent {
 
   get badgeClass(): string {
     const map: Record<StatusType, string> = {
-      'Validé': 'badge-valid',
-      'En cours': 'badge-pending',
-      'Échoué': 'badge-failed',
-      'Actif': 'badge-active',
-      'Inactif': 'badge-inactive',
+      'Validé':     'badge-valid',
+      'En cours':   'badge-pending',
+      'En attente': 'badge-pending',
+      'Échoué':     'badge-failed',
+      'Actif':      'badge-active',
+      'Inactif':    'badge-inactive',
     };
     return map[this.status] ?? 'badge-inactive';
   }

@@ -41,7 +41,7 @@ export class RestaurantsListComponent {
   pageSizeMenuOpen = signal(false);
   filterMenuOpen   = signal(false);
 
-  pageSizeOptions = [5, 6, 10, 25, 50];
+  pageSizeOptions = [6, 12, 18];
   filterOptions: StatusFilter[] = ['Tous', 'Actif', 'Inactif'];
 
   filtered = computed(() => {
