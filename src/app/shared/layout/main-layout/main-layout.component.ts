@@ -22,7 +22,7 @@ export class MainLayoutComponent {
     '/companies': { title: 'Gestion des Entreprises', subtitle: 'Gérer toutes les entreprises partenaires' },
     '/restaurants': { title: 'Gestion des Restaurants', subtitle: 'Gérer tous les restaurants partenaires' },
     '/monitoring': { title: 'Monitoring', subtitle: 'Suivi des performances de la plateforme' },
-    '/audit': { title: "Journal d'Audit", subtitle: 'Historique des actions administrateurs' },
+    '/audit': { title: "Journal d'Audit", subtitle: "Consultez l'historique des actions système" },
   };
 
   constructor(private router: Router) {
