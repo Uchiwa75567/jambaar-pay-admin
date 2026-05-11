@@ -1,6 +1,7 @@
 import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,7 +22,7 @@ const MOCK_RESTAURANTS: Restaurant[] = [
 @Component({
   selector: 'app-restaurants-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableModule, ButtonModule, InputTextModule, MenuModule, StatusBadgeComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TableModule, ButtonModule, InputTextModule, MenuModule, StatusBadgeComponent],
   templateUrl: './restaurants-list.component.html',
   styleUrls: ['./restaurants-list.component.scss'],
 })

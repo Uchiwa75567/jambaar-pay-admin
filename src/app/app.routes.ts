@@ -6,6 +6,7 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CompaniesListComponent } from './features/companies/companies-list/companies-list.component';
 import { CompanyAddComponent } from './features/companies/company-add/company-add.component';
 import { RestaurantsListComponent } from './features/restaurants/restaurants-list/restaurants-list.component';
+import { RestaurantAddComponent } from './features/restaurants/restaurant-add/restaurant-add.component';
 import { MonitoringComponent } from './features/monitoring/monitoring.component';
 import { AuditComponent } from './features/audit/audit.component';
 
@@ -17,12 +18,13 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: 'dashboard',   component: DashboardComponent      },
-      { path: 'companies',   component: CompaniesListComponent   },
-      { path: 'companies/add', component: CompanyAddComponent   },
-      { path: 'restaurants', component: RestaurantsListComponent },
-      { path: 'monitoring',  component: MonitoringComponent      },
-      { path: 'audit',       component: AuditComponent           },
+      { path: 'dashboard',       component: DashboardComponent       },
+      { path: 'companies',       component: CompaniesListComponent    },
+      { path: 'companies/add',   component: CompanyAddComponent       },
+      { path: 'restaurants',     component: RestaurantsListComponent  },
+      { path: 'restaurants/add', component: RestaurantAddComponent    },
+      { path: 'monitoring',      component: MonitoringComponent       },
+      { path: 'audit',           component: AuditComponent            },
     ],
   },
   { path: '**', redirectTo: '/login' },
