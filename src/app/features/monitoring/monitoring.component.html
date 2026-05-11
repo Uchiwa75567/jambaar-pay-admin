@@ -35,16 +35,11 @@
         <button class="btn-export" type="button" (click)="toggleExportMenu()">Exporter</button>
         <div class="export-menu" *ngIf="exportMenuOpen()">
           <button class="export-item" type="button" (click)="exportPDF()">
-            <img src="assets/icons/icon-pdf.svg" alt="PDF" class="export-icon pdf-icon" />
+            <img src="assets/icons/icon-pdf.svg" alt="PDF" class="export-icon" />
             <span>Exporter PDF</span>
           </button>
           <button class="export-item" type="button" (click)="exportExcel()">
-            <span class="excel-icon-wrap">
-              <img src="assets/icons/icon-excel-bg.svg"    alt="" class="excel-layer" />
-              <img src="assets/icons/icon-excel-part1.svg" alt="" class="excel-layer" />
-              <img src="assets/icons/icon-excel-part2.svg" alt="" class="excel-layer" />
-              <img src="assets/icons/icon-excel-x.svg"     alt="" class="excel-layer" />
-            </span>
+            <img src="assets/icons/icon-excel.svg" alt="Excel" class="export-icon" />
             <span>Exporter Excel</span>
           </button>
         </div>
