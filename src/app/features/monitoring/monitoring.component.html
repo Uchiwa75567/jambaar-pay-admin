@@ -31,7 +31,24 @@
         <span>{{ statusFilter() }}</span>
       </button>
 
-      <button class="btn-export" type="button">Exporter</button>
+      <div class="export-wrapper">
+        <button class="btn-export" type="button" (click)="toggleExportMenu()">Exporter</button>
+        <div class="export-menu" *ngIf="exportMenuOpen()">
+          <button class="export-item" type="button" (click)="exportPDF()">
+            <img src="assets/icons/icon-pdf.svg" alt="PDF" class="export-icon pdf-icon" />
+            <span>Exporter PDF</span>
+          </button>
+          <button class="export-item" type="button" (click)="exportExcel()">
+            <span class="excel-icon-wrap">
+              <img src="assets/icons/icon-excel-bg.svg"    alt="" class="excel-layer" />
+              <img src="assets/icons/icon-excel-part1.svg" alt="" class="excel-layer" />
+              <img src="assets/icons/icon-excel-part2.svg" alt="" class="excel-layer" />
+              <img src="assets/icons/icon-excel-x.svg"     alt="" class="excel-layer" />
+            </span>
+            <span>Exporter Excel</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

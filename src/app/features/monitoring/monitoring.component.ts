@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -34,8 +34,22 @@ const MOCK_TRANSACTIONS: MonitoringTransaction[] = [
   styleUrls: ['./monitoring.component.scss'],
 })
 export class MonitoringComponent {
-  searchTerm   = signal('');
-  statusFilter = signal('Tous');
+  searchTerm     = signal('');
+  statusFilter   = signal('Tous');
+  exportMenuOpen = signal(false);
+
+  constructor(private el: ElementRef) {}
+
+  toggleExportMenu(): void { this.exportMenuOpen.update(v => !v); }
+  exportPDF(): void        { this.exportMenuOpen.set(false); }
+  exportExcel(): void      { this.exportMenuOpen.set(false); }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(e: MouseEvent): void {
+    if (!this.el.nativeElement.contains(e.target)) {
+      this.exportMenuOpen.set(false);
+    }
+  }
 
   kpis = [
     { label: 'Validées',               value: 4790,  change: 95, icon: '', iconSrc: 'assets/icons/icon-check-circle.svg' },
