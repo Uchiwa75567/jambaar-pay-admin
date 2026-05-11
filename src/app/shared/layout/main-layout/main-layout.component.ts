@@ -25,6 +25,7 @@ export class MainLayoutComponent {
     '/restaurants/add': { title: 'Gestion des Restaurants',   subtitle: 'Gérer tous les restaurants partenaires'          },
     '/monitoring':      { title: 'Monitoring des transaction', subtitle: 'Surveillez toutes les transactions en temps réel' },
     '/audit':           { title: "Journal d'Audit",           subtitle: "Consultez l'historique des actions système"      },
+    '/settings':        { title: 'Parametre du système',      subtitle: 'Gérer toutes les entreprises partenaires'        },
   };
 
   constructor(private router: Router) {

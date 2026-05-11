@@ -1,0 +1,74 @@
+<div class="settings-wrapper">
+
+  <!-- Section 1: Parametre Généraux -->
+  <div class="settings-card">
+    <h2 class="section-title">Parametre Généraux</h2>
+
+    <div class="field">
+      <label class="field-label">Nom de la plateforme</label>
+      <input
+        pInputText
+        type="text"
+        class="field-input"
+        [(ngModel)]="form.platformName"
+        name="platformName"
+        aria-label="Nom de la plateforme" />
+    </div>
+
+    <div class="field">
+      <label class="field-label">Adresse</label>
+      <input
+        pInputText
+        type="text"
+        class="field-input"
+        [(ngModel)]="form.address"
+        name="address"
+        aria-label="Adresse" />
+    </div>
+
+    <div class="field">
+      <label class="field-label">Téléphone support</label>
+      <input
+        pInputText
+        type="tel"
+        class="field-input"
+        [(ngModel)]="form.supportPhone"
+        name="supportPhone"
+        aria-label="Téléphone support" />
+    </div>
+  </div>
+
+  <!-- Section 2: Limites et Quotas -->
+  <div class="settings-card">
+    <h2 class="section-title">Limites et Quotas</h2>
+
+    <div class="field">
+      <label class="field-label">Montant maximum par transaction (FCFA)</label>
+      <input
+        pInputText
+        type="number"
+        class="field-input"
+        [(ngModel)]="form.maxTransactionAmount"
+        name="maxTransactionAmount"
+        aria-label="Montant maximum par transaction en FCFA" />
+    </div>
+
+    <div class="field">
+      <label class="field-label">Nombre de transactions par jour</label>
+      <input
+        pInputText
+        type="number"
+        class="field-input"
+        [(ngModel)]="form.maxTransactionsPerDay"
+        name="maxTransactionsPerDay"
+        aria-label="Nombre de transactions par jour" />
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="form-actions">
+    <button type="button" class="btn-cancel" (click)="onCancel()">Annuler</button>
+    <button type="button" class="btn-submit" (click)="onSubmit()">Enrégister les modification</button>
+  </div>
+
+</div>

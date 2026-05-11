@@ -96,6 +96,11 @@
     width: 30px;
     height: 30px;
     filter: $filter-grey;
+    transition: filter 0.2s;
+  }
+
+  &.settings-active .settings-icon {
+    filter: $filter-orange;
   }
 }
 

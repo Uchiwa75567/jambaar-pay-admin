@@ -9,6 +9,7 @@ import { RestaurantsListComponent } from './features/restaurants/restaurants-lis
 import { RestaurantAddComponent } from './features/restaurants/restaurant-add/restaurant-add.component';
 import { MonitoringComponent } from './features/monitoring/monitoring.component';
 import { AuditComponent } from './features/audit/audit.component';
+import { SettingsComponent } from './features/settings/settings.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const routes: Routes = [
       { path: 'restaurants/add', component: RestaurantAddComponent    },
       { path: 'monitoring',      component: MonitoringComponent       },
       { path: 'audit',           component: AuditComponent            },
+      { path: 'settings',        component: SettingsComponent         },
     ],
   },
   { path: '**', redirectTo: '/login' },
