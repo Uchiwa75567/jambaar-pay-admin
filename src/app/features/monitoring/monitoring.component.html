@@ -1,19 +1,83 @@
-<div class="page-header">
-  <h2>Monitoring</h2>
-  <p>Surveillance en temps réel du système</p>
+<!-- KPI Cards -->
+<div class="kpi-grid">
+  <app-kpi-card
+    *ngFor="let kpi of kpis"
+    [label]="kpi.label"
+    [value]="kpi.value"
+    [change]="kpi.change ?? 0"
+    [changeLabel]="kpi.changeLabel ?? ''"
+    [iconSrc]="kpi.iconSrc">
+  </app-kpi-card>
 </div>
 
-<div class="metrics-grid">
-  <div *ngFor="let m of metrics" class="metric-card">
-    <i [class]="m.icon" [style.color]="m.color"></i>
-    <div>
-      <div class="metric-value">{{ m.value }}</div>
-      <div class="metric-label">{{ m.label }}</div>
+<!-- Transactions table card -->
+<div class="panel table-panel">
+  <div class="panel-toolbar">
+    <h3 class="panel-title">Toutes les transactions</h3>
+
+    <div class="toolbar-right">
+      <div class="table-search">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Recherchez une entrep...."
+          [ngModel]="searchTerm()"
+          (ngModelChange)="searchTerm.set($event)" />
+      </div>
+
+      <button class="filter-btn" type="button">
+        <i class="pi pi-filter"></i>
+        <span>{{ statusFilter() }}</span>
+      </button>
+
+      <button class="btn-export" type="button">Exporter</button>
     </div>
   </div>
-</div>
 
-<div class="card coming-soon">
-  <i class="pi pi-chart-bar"></i>
-  <p>Graphiques de monitoring — à venir</p>
+  <p-table [value]="transactions()" styleClass="monitoring-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Salariés</th>
+        <th>Entreprise</th>
+        <th>Restaurant</th>
+        <th>Montant</th>
+        <th>Date</th>
+        <th>Statut</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tx>
+      <tr>
+        <td class="txn-id">{{ tx.id }}</td>
+        <td>{{ tx.employee }}</td>
+        <td>{{ tx.company }}</td>
+        <td>{{ tx.restaurant }}</td>
+        <td>{{ tx.amount }} Fcfa</td>
+        <td>{{ tx.date }}</td>
+        <td><app-status-badge [status]="tx.status"></app-status-badge></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="empty-message">Aucune transaction trouvée.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="table-footer">
+    <button class="rows-btn" type="button">
+      <span>lignes par page</span>
+      <strong>6</strong>
+    </button>
+    <nav class="pagination" aria-label="Pagination">
+      <span class="prev">Prec</span>
+      <span class="page active">01</span>
+      <span class="page">02</span>
+      <span class="page">03</span>
+      <span class="dots">...</span>
+      <span class="page outlined">24</span>
+      <span class="next">Suiv</span>
+    </nav>
+  </div>
 </div>
