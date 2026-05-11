@@ -1,0 +1,121 @@
+<div class="form-card">
+  <h2 class="form-title">Ajouter une Entreprise</h2>
+
+  <form (ngSubmit)="onSubmit()" #companyForm="ngForm" novalidate>
+    <!-- Row 1: Nom entreprise + Secteur d'activité -->
+    <div class="form-row two-col">
+      <div class="field">
+        <label class="field-label">Nom de l'entreprise <span class="required">*</span></label>
+        <input
+          pInputText
+          type="text"
+          class="field-input"
+          [(ngModel)]="form.name"
+          name="name"
+          required
+          placeholder="" />
+      </div>
+      <div class="field">
+        <label class="field-label">Secteur d'activité <span class="required">*</span></label>
+        <input
+          pInputText
+          type="text"
+          class="field-input"
+          [(ngModel)]="form.sector"
+          name="sector"
+          required
+          placeholder="" />
+      </div>
+    </div>
+
+    <!-- Row 2: Nom du responsable -->
+    <div class="form-row">
+      <div class="field">
+        <label class="field-label">Nom du responsable<span class="required">*</span></label>
+        <input
+          pInputText
+          type="text"
+          class="field-input"
+          [(ngModel)]="form.managerName"
+          name="managerName"
+          required
+          placeholder="" />
+      </div>
+    </div>
+
+    <!-- Row 3: Email + Téléphone -->
+    <div class="form-row two-col">
+      <div class="field">
+        <label class="field-label">Adresse e-mail<span class="required">*</span></label>
+        <input
+          pInputText
+          type="email"
+          class="field-input"
+          [(ngModel)]="form.email"
+          name="email"
+          required
+          placeholder="" />
+      </div>
+      <div class="field">
+        <label class="field-label">Numero de téléphone<span class="required">*</span></label>
+        <input
+          pInputText
+          type="tel"
+          class="field-input"
+          [(ngModel)]="form.phone"
+          name="phone"
+          required
+          placeholder="" />
+      </div>
+    </div>
+
+    <!-- Row 4: Ninéa + Solde Initial -->
+    <div class="form-row two-col">
+      <div class="field">
+        <label class="field-label">Ninéa</label>
+        <input
+          pInputText
+          type="text"
+          class="field-input"
+          [(ngModel)]="form.ninea"
+          name="ninea"
+          placeholder="" />
+      </div>
+      <div class="field">
+        <label class="field-label">Solde Initial</label>
+        <input
+          pInputText
+          type="text"
+          class="field-input"
+          [(ngModel)]="form.initialBalance"
+          name="initialBalance"
+          placeholder="" />
+      </div>
+    </div>
+
+    <!-- Row 5: Adresse -->
+    <div class="form-row">
+      <div class="field">
+        <label class="field-label">Adresse</label>
+        <input
+          pInputText
+          type="text"
+          class="field-input"
+          [(ngModel)]="form.address"
+          name="address"
+          placeholder="" />
+      </div>
+    </div>
+
+    <!-- Info text + Actions -->
+    <p class="info-text">
+      Un email de bienvenue avec les identifiants de connexion sera automatiquement envoyé au responsable de
+      l'entreprise après l'enregistrement.
+    </p>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">Annuler</button>
+      <button type="submit" class="btn-submit">Enrégister l'entreprise</button>
+    </div>
+  </form>
+</div>
