@@ -5,6 +5,7 @@ import { MainLayoutComponent } from './shared/layout/main-layout/main-layout.com
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { CompaniesListComponent } from './features/companies/companies-list/companies-list.component';
 import { RestaurantsListComponent } from './features/restaurants/restaurants-list/restaurants-list.component';
+import { RestaurantAddComponent } from './features/restaurants/restaurant-add/restaurant-add.component';
 import { MonitoringComponent } from './features/monitoring/monitoring.component';
 import { AuditComponent } from './features/audit/audit.component';
 
@@ -18,7 +19,8 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard',   component: DashboardComponent      },
       { path: 'companies',   component: CompaniesListComponent   },
-      { path: 'restaurants', component: RestaurantsListComponent },
+      { path: 'restaurants',     component: RestaurantsListComponent },
+      { path: 'restaurants/add', component: RestaurantAddComponent  },
       { path: 'monitoring',  component: MonitoringComponent      },
       { path: 'audit',       component: AuditComponent           },
     ],
