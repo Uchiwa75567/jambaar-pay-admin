@@ -79,6 +79,43 @@
   }
 }
 
+// ── Generic dropdown wrapper ──────────────────────────────────────────────────
+.dropdown-wrap { position: relative; }
+
+.filter-menu, .rows-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 200;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+  padding: 6px 0;
+  min-width: 140px;
+  animation: dropFade 0.12s ease;
+}
+
+.filter-item, .rows-item {
+  display: block;
+  width: 100%;
+  padding: 9px 16px;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover  { background: #f5f5f5; }
+  &.active { color: $orange-accent; font-weight: 700; }
+}
+
+@keyframes dropFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .filter-btn {
   display: inline-flex;
   align-items: center;
@@ -201,7 +238,7 @@
 .rows-btn {
   display: inline-flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   height: 40px;
   padding: 0 16px;
   border: 1.5px solid $text-primary;
@@ -211,7 +248,9 @@
   font-family: var(--font-family-base);
   font-size: 14px;
   font-weight: 600;
-  cursor: default;
+  cursor: pointer;
+
+  &:hover { background: #f5f5f5; }
 }
 
 .pagination {

@@ -5,18 +5,22 @@
     <div class="toolbar-right">
       <div class="table-search">
         <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          placeholder="Recherchez une entrep...."
-          [ngModel]="searchTerm()"
-          (ngModelChange)="searchTerm.set($event)" />
+        <input pInputText type="text" placeholder="Recherchez..."
+          [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" />
       </div>
 
-      <button class="filter-btn" type="button">
-        <i class="pi pi-filter"></i>
-        <span>{{ statusFilter() }}</span>
-      </button>
+      <!-- Filter dropdown -->
+      <div class="dropdown-wrap">
+        <button class="filter-btn" type="button" (click)="toggleFilterMenu()">
+          <i class="pi pi-filter"></i>
+          <span>{{ actionFilter() }}</span>
+        </button>
+        <div class="filter-menu" *ngIf="filterMenuOpen()">
+          <button *ngFor="let f of filterOptions" class="filter-item"
+            [class.active]="actionFilter() === f"
+            type="button" (click)="setFilter(f)">{{ f }}</button>
+        </div>
+      </div>
 
       <button class="btn-export" type="button">Exporter</button>
     </div>
@@ -40,25 +44,34 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="4" class="empty-message">Aucun journal trouvé.</td>
-      </tr>
+      <tr><td colspan="4" class="empty-message">Aucun journal trouvé.</td></tr>
     </ng-template>
   </p-table>
 
   <div class="table-footer">
-    <button class="rows-btn" type="button">
-      <span>lignes par page</span>
-      <strong>6</strong>
-    </button>
+    <div class="dropdown-wrap">
+      <button class="rows-btn" type="button" (click)="togglePageSizeMenu()">
+        <span>lignes par page</span>
+        <strong>{{ pageSize() }}</strong>
+        <i class="pi pi-chevron-down" style="font-size:11px"></i>
+      </button>
+      <div class="rows-menu" *ngIf="pageSizeMenuOpen()">
+        <button *ngFor="let s of pageSizeOptions" class="rows-item"
+          [class.active]="pageSize() === s"
+          type="button" (click)="setPageSize(s)">{{ s }}</button>
+      </div>
+    </div>
+
     <nav class="pagination" aria-label="Pagination">
-      <span class="prev">Prec</span>
-      <span class="page active">01</span>
-      <span class="page">02</span>
-      <span class="page">03</span>
-      <span class="dots">...</span>
-      <span class="page outlined">24</span>
-      <span class="next">Suiv</span>
+      <span class="prev" [class.disabled]="currentPage() === 1" (click)="prevPage()">Prec</span>
+      <ng-container *ngFor="let p of visiblePages()">
+        <span *ngIf="p !== '...'" class="page"
+          [class.active]="currentPage() === p"
+          [class.outlined]="currentPage() !== p"
+          (click)="setPage(p)">{{ p < 10 ? '0' + p : p }}</span>
+        <span *ngIf="p === '...'" class="dots">...</span>
+      </ng-container>
+      <span class="next" [class.disabled]="currentPage() === totalPages()" (click)="nextPage()">Suiv</span>
     </nav>
   </div>
 </div>
