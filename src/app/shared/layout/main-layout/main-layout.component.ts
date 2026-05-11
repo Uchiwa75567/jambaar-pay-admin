@@ -19,10 +19,12 @@ export class MainLayoutComponent {
 
   private readonly routeMeta: Record<string, { title: string; subtitle: string }> = {
     '/dashboard': { title: 'Dashboard Global', subtitle: "Vue d'ensemble de la plateforme Jambaar Pay" },
-    '/companies': { title: 'Gestion des Entreprises', subtitle: 'Gérer toutes les entreprises partenaires' },
-    '/restaurants': { title: 'Gestion des Restaurants', subtitle: 'Gérer tous les restaurants partenaires' },
-    '/monitoring': { title: 'Monitoring des transaction', subtitle: 'Surveillez toutes les transactions en temps réel' },
-    '/audit': { title: "Journal d'Audit", subtitle: 'Historique des actions administrateurs' },
+    '/companies':       { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },
+    '/companies/add':   { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },
+    '/restaurants':     { title: 'Gestion des Restaurants',   subtitle: 'Gérer tous les restaurants partenaires'          },
+    '/restaurants/add': { title: 'Gestion des Restaurants',   subtitle: 'Gérer tous les restaurants partenaires'          },
+    '/monitoring':      { title: 'Monitoring des transaction', subtitle: 'Surveillez toutes les transactions en temps réel' },
+    '/audit':           { title: "Journal d'Audit",           subtitle: "Consultez l'historique des actions système"      },
   };
 
   constructor(private router: Router) {
