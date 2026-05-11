@@ -136,6 +136,10 @@
   i { color: #888; }
 }
 
+.export-wrapper {
+  position: relative;
+}
+
 .btn-export {
   height: 42px;
   padding: 0 24px;
@@ -150,6 +154,44 @@
   transition: background 0.2s;
 
   &:hover { background: darken($orange-accent, 8%); }
+}
+
+.export-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 200;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+  padding: 6px 0;
+  min-width: 160px;
+  animation: dropFade 0.12s ease;
+}
+
+.export-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+
+  &:hover { background: #f5f5f5; }
+}
+
+.export-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 // ── PrimeNG Table ─────────────────────────────────────────────────────────────

@@ -22,7 +22,20 @@
         </div>
       </div>
 
-      <button class="btn-export" type="button">Exporter</button>
+      <!-- Export dropdown -->
+      <div class="export-wrapper">
+        <button class="btn-export" type="button" (click)="toggleExportMenu()">Exporter</button>
+        <div class="export-menu" *ngIf="exportMenuOpen()">
+          <button class="export-item" type="button" (click)="exportPDF()">
+            <img src="assets/icons/icon-pdf.svg" alt="PDF" class="export-icon" />
+            <span>Exporter PDF</span>
+          </button>
+          <button class="export-item" type="button" (click)="exportExcel()">
+            <img src="assets/icons/icon-excel.svg" alt="Excel" class="export-icon" />
+            <span>Exporter Excel</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

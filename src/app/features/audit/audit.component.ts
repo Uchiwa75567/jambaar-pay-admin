@@ -43,6 +43,7 @@ export class AuditComponent {
 
   pageSizeMenuOpen = signal(false);
   filterMenuOpen   = signal(false);
+  exportMenuOpen   = signal(false);
 
   pageSizeOptions = [6, 12, 18];
   filterOptions: ActionFilter[] = ['Tous', 'Création entreprise', 'Création restaurant', 'Modification', 'Suppression'];
@@ -83,6 +84,7 @@ export class AuditComponent {
     if (!this.el.nativeElement.contains(e.target)) {
       this.pageSizeMenuOpen.set(false);
       this.filterMenuOpen.set(false);
+      this.exportMenuOpen.set(false);
     }
   }
 
@@ -103,6 +105,9 @@ export class AuditComponent {
 
   toggleFilterMenu(): void   { this.filterMenuOpen.update(v => !v); }
   togglePageSizeMenu(): void { this.pageSizeMenuOpen.update(v => !v); }
+  toggleExportMenu(): void   { this.exportMenuOpen.update(v => !v); }
+  exportPDF(): void          { this.exportMenuOpen.set(false); }
+  exportExcel(): void        { this.exportMenuOpen.set(false); }
 
   setFilter(f: ActionFilter): void {
     this.actionFilter.set(f);
