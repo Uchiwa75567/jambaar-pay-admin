@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
@@ -12,7 +13,7 @@ import { DashboardKPI, TopRestaurant, RecentActivity } from '../../core/models/d
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, CardModule, TableModule, ChartModule, KpiCardComponent, StatusBadgeComponent, FcfaCurrencyPipe, DateFrPipe],
+  imports: [CommonModule, RouterLink, CardModule, TableModule, ChartModule, KpiCardComponent, StatusBadgeComponent, FcfaCurrencyPipe, DateFrPipe],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -57,7 +58,7 @@ export class DashboardComponent implements OnInit {
     { rank: 6, name: 'FoodGood',             transactions: 340, volume: 892_998 },
   ];
 
-  recentActivities: RecentActivity[] = Array.from({ length: 6 }, () => ({
+  recentActivities: RecentActivity[] = Array.from({ length: 5 }, () => ({
     transactionId: '#38932987',
     company:       'Entreprise 1',
     restaurant:    'Restaurant 2',
@@ -75,7 +76,7 @@ export class DashboardComponent implements OnInit {
 
   private initChart(): void {
     const labels = ['Apr10', 'Apr11', 'Apr12', 'Apr13', 'Apr14', 'Apr15', 'Apr16'];
-    const data   = [55, 68, 27, 76, 86, 70, 50, 88, 108, 77, 88];
+    const data   = [250, 150, 300, 350, 400, 220, 450];
 
     this.chartData = {
       labels,
@@ -106,16 +107,31 @@ export class DashboardComponent implements OnInit {
           },
         },
       },
+      layout: {
+        padding: {
+          bottom: 20,
+          left: 8,
+          right: 8,
+          top: 0,
+        },
+      },
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#1A1A2E', font: { size: 11, family: 'Inter', weight: '600' } },
+          ticks: { 
+            color: '#1A1A2E', 
+            font: { size: 11, family: 'Inter', weight: '600' },
+            padding: 12,
+            maxRotation: 0,
+            minRotation: 0,
+          },
         },
         y: {
           min: 0,
-          max: 110,
+          max: 500,
           grid: { color: 'rgba(0,0,0,0.06)' },
-          ticks: { stepSize: 25, color: '#1A1A2E', font: { size: 12, family: 'Inter', weight: '600' } },
+          ticks: { stepSize: 100, color: '#1A1A2E', font: { size: 12, family: 'Inter', weight: '600' } },
+          position: 'left',
         },
       },
     };

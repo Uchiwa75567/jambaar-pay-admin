@@ -25,16 +25,16 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 18px 51px 16px 58px;
+  padding: 1.125rem 3.1875rem 1rem 3.625rem;
   background: $bg-main;
 }
 
 @media (max-width: 1200px) {
   .main-content {
-    margin-left: 260px;
+    margin-left: $sidebar-width-min;
   }
 
   .page-content {
-    padding: 16px 24px;
+    padding: 1rem 1.5rem;
   }
 }

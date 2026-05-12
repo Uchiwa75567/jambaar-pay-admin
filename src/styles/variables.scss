@@ -15,9 +15,10 @@
   --color-sidebar-border:   rgba(255, 255, 255, 0.08);
   --color-text-muted:       #444444;
 
-  // Layout
-  --sidebar-width:          335px;
-  --topbar-height:          92px;
+  // Layout - using relative units for responsiveness
+  --sidebar-width:          18vw;
+  --sidebar-width-min:      220px;
+  --topbar-height:          5.5rem;
 
   // Typography
   --font-family-base:       'Inter', 'Segoe UI', sans-serif;
@@ -55,8 +56,9 @@ $green-valid:      #00a344;
 $grey-secondary:   #958e8e;
 $white-card:       #ffffff;
 $red-danger:       #fa0505;
-$sidebar-width:    335px;
-$topbar-height:    92px;
+$sidebar-width:    18vw;
+$sidebar-width-min: 220px;
+$topbar-height:    5.5rem;
 
 // Orange icon filter (for black SVG → #e8722a)
 $filter-orange: brightness(0) saturate(100%) invert(51%) sepia(70%) saturate(1200%) hue-rotate(346deg) brightness(104%);

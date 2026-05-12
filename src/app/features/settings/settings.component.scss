@@ -11,25 +11,25 @@
 .settings-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0.875rem;
 }
 
 // ── Card / Section ────────────────────────────────────────────────────────────
 .settings-card {
   background: #fff;
-  border-radius: 11px;
+  border-radius: 0.6875rem;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
-  padding: 24px 40px;
+  padding: 1.25rem 2rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0.75rem;
 }
 
 .section-title {
-  margin: 0 0 4px;
+  margin: 0 0 0.25rem;
   color: $text-primary;
   font-family: var(--font-family-base);
-  font-size: 22px;
+  font-size: 1.25rem;
   font-weight: 700;
 }
 
@@ -37,25 +37,25 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .field-label {
   color: $text-primary;
   font-family: var(--font-family-base);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
 }
 
 .field-input {
   width: 100%;
-  height: 48px;
-  padding: 0 16px;
+  height: 2.75rem;
+  padding: 0 0.875rem;
   border: 1px solid #dedede;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   color: $text-primary;
   font-family: var(--font-family-base);
-  font-size: 15px;
+  font-size: 0.875rem;
   outline: none;
   transition: border-color 0.2s;
   box-sizing: border-box;
@@ -67,11 +67,11 @@
 // Override PrimeNG InputText
 :host ::ng-deep .p-inputtext {
   width: 100%;
-  height: 48px;
-  border-radius: 8px;
+  height: 2.75rem;
+  border-radius: 0.5rem;
   border-color: #dedede;
   font-family: var(--font-family-base);
-  font-size: 15px;
+  font-size: 0.875rem;
 
   &:enabled:focus {
     border-color: $orange-accent !important;
@@ -84,20 +84,20 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
   flex-shrink: 0;
-  padding-bottom: 4px;
+  padding-bottom: 0.25rem;
 }
 
 .btn-cancel {
-  height: 44px;
-  padding: 0 28px;
+  height: 2.375rem;
+  padding: 0 1.5rem;
   border: 1px solid #c0c0c0;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: #fff;
   color: $text-primary;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
@@ -106,14 +106,14 @@
 }
 
 .btn-submit {
-  height: 44px;
-  padding: 0 28px;
+  height: 2.375rem;
+  padding: 0 1.5rem;
   border: 0;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: $orange-accent;
   color: #fff;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 0.8125rem;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s;

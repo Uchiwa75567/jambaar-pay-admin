@@ -10,18 +10,18 @@ $border: #c9c9c9;
   display: block;
   width: 100vw;
   min-height: 100vh;
-  padding: 28px 20px;
+  padding: 1.75rem 1.25rem;
   overflow: hidden;
   background: #fff;
 }
 
 .login-card {
   display: grid;
-  grid-template-columns: minmax(380px, 1.05fr) minmax(320px, .95fr);
-  gap: 12px;
+  grid-template-columns: minmax(23.75rem, 1.05fr) minmax(20rem, .95fr);
+  gap: 0.75rem;
   align-items: center;
   width: 100%;
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - 3.5rem);
   background: #fff;
 }
 
@@ -29,7 +29,7 @@ $border: #c9c9c9;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - 3.5rem);
   padding: 0;
   order: 1;
 }
@@ -37,33 +37,33 @@ $border: #c9c9c9;
 .login-visual {
   display: block;
   width: 100%;
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 2.5rem);
   object-fit: contain;
-  border-radius: 28px;
+  border-radius: 1.75rem;
 }
 
 .login-right {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 56px);
-  padding: 56px 40px 44px 12px;
+  min-height: calc(100vh - 3.5rem);
+  padding: 3.5rem 2.5rem 2.75rem 0.75rem;
   order: 2;
 }
 
 .login-form-card {
-  width: min(100%, 400px);
+  width: min(100%, 25rem);
 }
 
 .login-header {
-  margin-bottom: 58px;
+  margin-bottom: 3.625rem;
   text-align: center;
 }
 
 .login-header h1 {
-  margin: 0 0 40px;
+  margin: 0 0 2.5rem;
   color: $text;
-  font-size: clamp(35px, 3.2vw, 50px);
+  font-size: clamp(2.1875rem, 3.2vw, 3.125rem);
   font-weight: 800;
   line-height: .95;
 }
@@ -71,21 +71,21 @@ $border: #c9c9c9;
 .login-header p {
   margin: 0;
   color: $muted;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.35;
 }
 
 .error-alert {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
   align-items: center;
-  margin: -36px 0 24px;
-  padding: 13px 15px;
-  border-radius: 8px;
+  margin: -2.25rem 0 1.5rem;
+  padding: 0.8125rem 0.9375rem;
+  border-radius: 0.5rem;
   background: #fee2e2;
   color: $red-danger;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .login-form,
@@ -95,13 +95,13 @@ $border: #c9c9c9;
 }
 
 .field {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .field label {
-  margin-bottom: 14px;
+  margin-bottom: 0.875rem;
   color: #000;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1;
 }
@@ -113,25 +113,25 @@ $border: #c9c9c9;
 .input-icon {
   position: absolute;
   top: 50%;
-  left: 30px;
+  left: 1.875rem;
   z-index: 1;
   color: #777;
-  font-size: 21px;
+  font-size: 1.3125rem;
   transform: translateY(-50%);
   pointer-events: none;
 }
 
 .input-wrapper input {
   width: 100%;
-  height: 50px;
-  padding: 0 64px 0 88px !important;
-  border: 1.4px solid $border !important;
-  border-radius: 14px !important;
+  height: 3.125rem;
+  padding: 0 4rem 0 5.5rem !important;
+  border: 0.0875rem solid $border !important;
+  border-radius: 0.875rem !important;
   outline: none !important;
   box-shadow: none !important;
   background: transparent !important;
   color: #111;
-  font-size: 16px !important;
+  font-size: 1rem !important;
   font-weight: 700 !important;
 }
 
@@ -143,18 +143,18 @@ $border: #c9c9c9;
 
 .input-wrapper input:focus {
   border-color: $orange !important;
-  box-shadow: 0 0 0 3px rgba($orange, .12) !important;
+  box-shadow: 0 0 0 0.1875rem rgba($orange, .12) !important;
 }
 
 .eye-btn {
   position: absolute;
   top: 50%;
-  right: 18px;
+  right: 1.125rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -164,33 +164,33 @@ $border: #c9c9c9;
 }
 
 .eye-btn i {
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .form-options {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  margin: 17px 0 28px;
+  gap: 1.25rem;
+  margin: 1.0625rem 0 1.75rem;
 }
 
 .remember-me {
   display: inline-flex;
   align-items: center;
-  gap: 13px;
+  gap: 0.8125rem;
   color: #000;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
 }
 
 .remember-me input {
   appearance: none;
-  width: 18px;
-  height: 18px;
-  flex: 0 0 24px;
-  border: 1.4px solid #9d9d9d;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: 0 0 1.5rem;
+  border: 0.0875rem solid #9d9d9d;
   background: #fff;
   cursor: pointer;
 }
@@ -198,12 +198,12 @@ $border: #c9c9c9;
 .remember-me input:checked {
   border-color: $navy;
   background: $navy;
-  box-shadow: inset 0 0 0 5px #fff;
+  box-shadow: inset 0 0 0 0.3125rem #fff;
 }
 
 .forgot-link,
 .register-link {
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .forgot-link {
@@ -217,12 +217,12 @@ $border: #c9c9c9;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 50px;
-  border: 1.4px solid #9a9a9a;
-  border-radius: 14px;
+  height: 3.125rem;
+  border: 0.0875rem solid #9a9a9a;
+  border-radius: 0.875rem;
   background: $navy;
   color: #fff;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 800;
   cursor: pointer;
 }
@@ -233,7 +233,7 @@ $border: #c9c9c9;
 }
 
 .register-link {
-  margin: 30px 0 0;
+  margin: 1.875rem 0 0;
   color: #000;
   text-align: right;
 }
@@ -251,12 +251,12 @@ $border: #c9c9c9;
 
 @media (max-width: 1180px) {
   .login-card {
-    grid-template-columns: minmax(360px, 1fr) minmax(360px, 420px);
-    gap: 24px;
+    grid-template-columns: minmax(22.5rem, 1fr) minmax(22.5rem, 26.25rem);
+    gap: 1.5rem;
   }
 
   .login-right {
-    padding: 48px 24px 38px 0;
+    padding: 3rem 1.5rem 2.375rem 0;
   }
 }
 
@@ -285,16 +285,16 @@ $border: #c9c9c9;
   }
 
   .login-right {
-    padding: 44px 20px;
+    padding: 2.75rem 1.25rem;
   }
 
   .login-header {
-    margin-bottom: 40px;
+    margin-bottom: 2.5rem;
   }
 
   .login-header h1 {
-    margin-bottom: 26px;
-    font-size: clamp(44px, 13vw, 64px);
+    margin-bottom: 1.625rem;
+    font-size: clamp(2.75rem, 13vw, 4rem);
   }
 
   .login-header p,
@@ -302,37 +302,37 @@ $border: #c9c9c9;
   .remember-me,
   .forgot-link,
   .register-link {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 
   .field label {
-    margin-bottom: 13px;
+    margin-bottom: 0.8125rem;
   }
 
   .input-icon {
-    left: 24px;
-    font-size: 20px;
+    left: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .input-wrapper input {
-    height: 72px;
-    padding: 0 56px 0 58px !important;
-    font-size: 19px !important;
+    height: 4.5rem;
+    padding: 0 3.5rem 0 3.625rem !important;
+    font-size: 1.1875rem !important;
   }
 
   .eye-btn {
-    right: 14px;
+    right: 0.875rem;
   }
 
   .form-options {
     align-items: flex-start;
     flex-direction: column;
-    gap: 14px;
+    gap: 0.875rem;
   }
 
   .btn-submit {
-    height: 72px;
-    font-size: 26px;
+    height: 4.5rem;
+    font-size: 1.625rem;
   }
 
   .register-link {

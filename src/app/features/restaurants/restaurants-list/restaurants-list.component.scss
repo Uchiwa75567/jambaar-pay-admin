@@ -26,16 +26,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 1rem;
   flex-shrink: 0;
-  min-height: 72px;
-  padding: 0 20px 0 24px;
+  min-height: 4.5rem;
+  padding: 0 1.25rem 0 1.5rem;
   border-bottom: 1px solid #e0e0e0;
 
   h2 {
     margin: 0;
     color: $text-primary;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 700;
     white-space: nowrap;
   }
@@ -44,23 +44,23 @@
 .toolbar-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   flex-shrink: 0;
 }
 
 .table-search {
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 260px;
-  height: 42px;
-  padding: 0 14px;
+  gap: 0.625rem;
+  width: 16.25rem;
+  height: 2.625rem;
+  padding: 0 0.875rem;
   border: 1px solid #dedede;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 
   i {
     color: #b5b5b5;
-    font-size: 15px;
+    font-size: 0.9375rem;
     flex-shrink: 0;
   }
 
@@ -70,7 +70,7 @@
     outline: 0;
     color: #454545;
     font-family: var(--font-family-base);
-    font-size: 14px;
+    font-size: 0.875rem;
     background: transparent;
 
     &::placeholder {
@@ -84,38 +84,38 @@
 
 .filter-menu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 0.375rem);
   right: 0;
   z-index: 200;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
-  padding: 6px 0;
-  min-width: 140px;
+  padding: 0.375rem 0;
+  min-width: 8.75rem;
   animation: dropFade 0.12s ease;
 }
 
 .rows-menu {
   position: absolute;
-  bottom: calc(100% + 6px);
+  bottom: calc(100% + 0.375rem);
   left: 0;
   z-index: 200;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
-  padding: 6px 0;
-  min-width: 140px;
+  padding: 0.375rem 0;
+  min-width: 8.75rem;
   animation: dropFade 0.12s ease;
 }
 
 .filter-item, .rows-item {
   display: block;
   width: 100%;
-  padding: 9px 16px;
+  padding: 0.5625rem 1rem;
   border: 0;
   background: transparent;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #333;
   cursor: pointer;
   text-align: left;
@@ -132,32 +132,32 @@
 .filter-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  height: 42px;
-  padding: 0 18px;
+  gap: 0.625rem;
+  height: 2.625rem;
+  padding: 0 1.125rem;
   border: 1px solid #dedede;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: #fff;
   color: #696969;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: border-color 0.2s;
 
   &:hover { border-color: #bbb; }
 
-  i { color: #888; font-size: 14px; }
+  i { color: #888; font-size: 0.875rem; }
 }
 
 .btn-add {
-  height: 42px;
-  padding: 0 20px;
+  height: 2.625rem;
+  padding: 0 1.25rem;
   border: 0;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: $orange-accent;
   color: #fff;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
@@ -171,24 +171,24 @@
   flex: 1;
 
   .p-datatable-thead > tr > th {
-    padding: 14px 24px;
+    padding: 0.875rem 1.5rem;
     border-bottom: 1px solid #e0e0e0 !important;
     background: #fff !important;
     color: $text-primary !important;
     font-family: var(--font-family-base) !important;
-    font-size: 16px !important;
+    font-size: 1rem !important;
     font-weight: 700 !important;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 15px 24px;
+    padding: 0.9375rem 1.5rem;
     border: 0 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
     color: #454545;
     font-family: var(--font-family-base) !important;
-    font-size: 15px !important;
+    font-size: 0.9375rem !important;
     font-weight: 400 !important;
   }
 
@@ -208,7 +208,7 @@
   background: transparent;
   color: $green-valid;
   font-family: var(--font-family-base);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 400;
 }
 
@@ -219,7 +219,7 @@
   background: transparent;
   color: $red-danger;
   font-family: var(--font-family-base);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 400;
 }
 
@@ -227,22 +227,22 @@
 .action-btn {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 28px;
+  width: 2rem;
+  height: 1.75rem;
   border: 0;
   background: transparent;
   color: #8b817d;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   transition: background 0.2s;
 
   &:hover { background: rgba(0, 0, 0, 0.05); }
 
-  i { font-size: 16px; }
+  i { font-size: 1rem; }
 }
 
 .empty-message {
-  padding: 40px !important;
+  padding: 2.5rem !important;
   color: #8f8f8f !important;
   font-family: var(--font-family-base) !important;
   text-align: center;
@@ -255,22 +255,22 @@
   justify-content: space-between;
   flex-shrink: 0;
   margin-top: auto;
-  padding: 18px 48px 20px 24px;
+  padding: 1.125rem 3rem 1.25rem 1.5rem;
   border-top: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .rows-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  height: 40px;
-  padding: 0 16px;
-  border: 1.5px solid $text-primary;
-  border-radius: 7px;
+  gap: 0.625rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: 0.09375rem solid $text-primary;
+  border-radius: 0.4375rem;
   background: #fff;
   color: $text-primary;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
 
@@ -280,16 +280,16 @@
 .pagination {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
   color: $text-primary;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
-.prev  { color: #c8c8c8; font-size: 14px; cursor: default; }
+.prev  { color: #c8c8c8; font-size: 0.875rem; cursor: default; }
 .dots  { color: #aaa; letter-spacing: 2px; }
-.next  { font-size: 14px; cursor: pointer; }
+.next  { font-size: 0.875rem; cursor: pointer; }
 
 .page {
   display: grid;
@@ -299,21 +299,21 @@
 
 .page.active,
 .page.outlined {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 50%;
 }
 
 .page.active   { background: $text-primary; color: #fff; }
-.page.outlined { border: 1.5px solid $text-primary; background: transparent; }
+.page.outlined { border: 0.09375rem solid $text-primary; background: transparent; }
 
 // ── Responsive ────────────────────────────────────────────────────────────────
 @media (max-width: 1400px) {
   .restaurants-toolbar {
     flex-wrap: wrap;
     height: auto;
-    padding-block: 14px;
+    padding-block: 0.875rem;
   }
 
-  .table-search { width: 200px; }
+  .table-search { width: 12.5rem; }
 }

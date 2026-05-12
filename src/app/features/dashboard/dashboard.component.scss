@@ -6,7 +6,7 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  gap: 14px;
+  gap: 20px;
 }
 
 // ── KPI Grid ──────────────────────────────────────────────────────────────────
@@ -14,7 +14,7 @@
   flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 // ── Middle row: Chart + Top Restaurants ───────────────────────────────────────
@@ -24,7 +24,8 @@
   min-height: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  gap: 1.125rem;
+  max-height: 100%;
 }
 
 // ── Shared Panel ──────────────────────────────────────────────────────────────
@@ -36,65 +37,125 @@
 }
 
 .panel-title {
-  margin: 0;
+  margin: 0 0 0.75rem 0;
   color: #000;
-  font-size: 11px;
+  font-size: 1rem;
   font-weight: 600;
+  letter-spacing: 0;
 }
 
 // ── Chart Panel ───────────────────────────────────────────────────────────────
 .chart-panel {
   height: 100%;
-  padding: 14px 28px 14px 28px;
+  padding: 1rem 1.75rem;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .chart-container {
   flex: 1;
-  margin-top: 10px;
-  min-height: 0;
+  margin-top: 0.75rem;
+  min-height: 200px;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // ── Top Restaurants Panel ─────────────────────────────────────────────────────
 .top-restaurants-panel {
   height: 100%;
-  padding: 14px 28px 14px 28px;
+  padding: 1rem 1.75rem;
   display: flex;
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .restaurant-list {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  margin: 10px 0 0;
-  padding: 0;
+  /* use gap to control vertical spacing between items and allow scrolling */
+  gap: 0.5rem;
+  margin: 0;
+  /* reserve right padding so scrollbars don't cover content or overflow panel */
+  padding: 0 1rem 0 0;
+  /* reserve space for stable scrollbar to avoid overlap (modern browsers) */
+  scrollbar-gutter: stable;
   list-style: none;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .restaurant-item {
   display: grid;
-  grid-template-columns: 36px 1fr auto;
+  /* fix volume column to avoid overlap with scrollbar */
+  grid-template-columns: 2.125rem 1fr minmax(100px, auto);
   align-items: center;
-  gap: 14px;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  box-sizing: border-box;
 }
+
+.restaurant-item:last-child {
+  border-bottom: 0;
+}
+
+/* ensure grid children can shrink and text ellipsis works without forcing overflow */
+.restaurant-info { 
+  min-width: 0; 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.restaurant-volume { 
+  min-width: 0;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* keep amount on a single line and ellipsize if necessary */
+.volume-amount { 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  min-width: 0;
+}
+
+/* slightly reduce unit font-size so it fits under amount */
+.volume-unit { 
+  font-size: 0.625rem; 
+  color: #a89595;
+  margin-top: 2px;
+}
+
+/* subtle, thin scrollbar that stays inside the panel */
+.restaurant-list::-webkit-scrollbar { width: 6px; }
+.restaurant-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 6px; }
+.restaurant-list::-webkit-scrollbar-track { background: transparent; }
+.restaurant-list { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.12) transparent; }
 
 .rank-badge {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 7px;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
   background: $text-primary;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 16px;
+  font-size: 0.875rem;
   font-weight: 600;
   flex-shrink: 0;
 }
@@ -107,19 +168,25 @@
 
 .restaurant-name {
   color: $text-primary;
-  font-size: 15px;
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .restaurant-transactions {
-  margin-top: 1px;
-  color: #a89595;
-  font-size: 10px;
-  font-weight: 600;
+  margin-top: 2px;
+  color: #888;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  line-height: 1;
 }
 
 .restaurant-volume {
@@ -129,21 +196,24 @@
 
 .volume-amount {
   color: $text-primary;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-weight: 600;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .volume-unit {
   color: #a89595;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 600;
 }
 
 // ── Activity Panel ────────────────────────────────────────────────────────────
-// flex: 1.4 — takes proportionally more space than the chart row
+// flex: 0.8 — takes less space, more compact
 .activity-panel {
-  flex: 1.4;
+  flex: 0.8;
   min-height: 0;
   overflow: hidden;
   display: flex;
@@ -152,12 +222,16 @@
 
 .activity-header {
   flex-shrink: 0;
-  padding: 12px 25px 10px;
+  padding: 0.75rem 1.5625rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .activity-title {
   color: $text-primary;
-  font-size: 22px;
+  font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
 }
@@ -175,25 +249,25 @@
   }
 
   .p-datatable-thead > tr > th {
-    padding: 10px 25px;
+    padding: 0.5rem 1.25rem;
     background: rgba(255, 255, 255, 0.78) !important;
     border-top: 1px solid rgba(113, 113, 113, 0.26) !important;
     border-bottom: 1px solid rgba(113, 113, 113, 0.26) !important;
     color: $text-primary !important;
     font-family: var(--font-family-base) !important;
-    font-size: 18px !important;
+    font-size: 1rem !important;
     font-weight: 600 !important;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 9px 25px;
+    padding: 0.375rem 1.25rem;
     border: 0 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
     color: #444 !important;
     font-family: var(--font-family-base) !important;
-    font-size: 15px !important;
+    font-size: 0.875rem !important;
     font-weight: 600 !important;
   }
 
@@ -213,14 +287,32 @@
   background: transparent;
   color: $green-valid;
   font-family: var(--font-family-base);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
+}
+
+.btn-see-more {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  color: $orange-accent;
+  font-family: var(--font-family-base);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
 }
 
 // ── Responsive ────────────────────────────────────────────────────────────────
 @media (max-width: 1400px) {
   .kpi-grid {
-    gap: 16px;
+    gap: 1rem;
   }
 }
 
