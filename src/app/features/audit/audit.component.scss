@@ -286,3 +286,44 @@
   &.active   { background: $text-primary; color: #fff; }
   &.outlined { border: 0.09375rem solid $text-primary; }
 }
+
+@media (max-width: 768px) {
+  :host,
+  .audit-panel {
+    min-height: auto;
+  }
+
+  .panel-toolbar,
+  .toolbar-right,
+  .table-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .panel-toolbar,
+  .table-footer {
+    padding: 1rem;
+  }
+
+  .panel-title {
+    white-space: normal;
+  }
+
+  .toolbar-right,
+  .table-search,
+  .filter-btn,
+  .btn-export {
+    width: 100%;
+  }
+
+  .pagination {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  :host ::ng-deep .audit-table .p-datatable-wrapper {
+    max-height: 52vh;
+    overflow: auto;
+  }
+}

@@ -26,9 +26,15 @@
               type="email"
               [(ngModel)]="form.email"
               name="email"
-              placeholder="Adresseemail@gmail.com"
+              required
+              autocomplete="email"
+              placeholder="adresse@email.com"
+              [class.input-invalid]="shouldShowEmailError()"
+              [attr.aria-invalid]="shouldShowEmailError()"
+              aria-describedby="email-error"
               class="w-full" />
           </div>
+          <small id="email-error" class="field-error" *ngIf="shouldShowEmailError()">{{ emailError }}</small>
         </div>
 
         <div class="field">
@@ -41,12 +47,19 @@
               [type]="showPassword() ? 'text' : 'password'"
               [(ngModel)]="form.password"
               name="password"
+              required
+              [minlength]="passwordMinLength"
+              autocomplete="current-password"
               placeholder="++++++++++++++"
+              [class.input-invalid]="shouldShowPasswordError()"
+              [attr.aria-invalid]="shouldShowPasswordError()"
+              aria-describedby="password-error"
               class="w-full" />
             <button type="button" class="eye-btn" (click)="togglePassword()" aria-label="Afficher le mot de passe">
               <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
             </button>
           </div>
+          <small id="password-error" class="field-error" *ngIf="shouldShowPasswordError()">{{ passwordError }}</small>
         </div>
 
         <div class="form-options">

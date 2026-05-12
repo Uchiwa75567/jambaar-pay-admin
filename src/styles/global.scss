@@ -21,6 +21,14 @@ app-root {
   overflow: hidden;
 }
 
+@supports (height: 100dvh) {
+  html,
+  body,
+  app-root {
+    height: 100dvh;
+  }
+}
+
 // PrimeNG overrides
 .p-card {
   border-radius: var(--radius-lg) !important;
@@ -47,6 +55,11 @@ app-root {
 .p-paginator {
   background: transparent !important;
   border: none !important;
+}
+
+.p-datatable-wrapper {
+  min-height: 0;
+  overflow: auto;
 }
 
 // Status badge utilities
@@ -118,6 +131,16 @@ app-root {
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 // Monitoring page

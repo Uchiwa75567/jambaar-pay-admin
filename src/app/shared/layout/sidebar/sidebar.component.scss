@@ -8,6 +8,7 @@
   flex-direction: column;
   width: $sidebar-width;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: $sidebar-bg;
 }
@@ -109,5 +110,68 @@
 
   .sidebar-footer {
     padding-inline: 1.25rem;
+  }
+}
+
+@media (max-height: 720px) and (min-width: 769px) {
+  .sidebar-logo {
+    min-height: 22vh;
+    padding-block: 2vh;
+  }
+
+  .sidebar-nav {
+    gap: 4vh;
+    padding-block: 2vh;
+  }
+
+  .sidebar-footer {
+    padding-bottom: 4vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    inset: auto 0 0 0;
+    width: 100%;
+    height: var(--mobile-nav-height);
+    min-height: 4.75rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .sidebar-logo,
+  .sidebar-footer {
+    display: none;
+  }
+
+  .sidebar-nav {
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    padding: 0 0.5rem;
+  }
+
+  .nav-item {
+    justify-content: center;
+    min-width: 5.5rem;
+    height: 100%;
+    gap: 0.35rem;
+    padding: 0.5rem 0.25rem;
+    text-align: center;
+    font-size: 0.6875rem;
+    line-height: 1.15;
+    flex-direction: column;
+
+    .nav-icon {
+      width: 1.35rem;
+      height: 1.35rem;
+    }
+
+    &.active span {
+      padding-bottom: 0;
+      border-bottom: 0;
+      color: $sidebar-active;
+    }
   }
 }

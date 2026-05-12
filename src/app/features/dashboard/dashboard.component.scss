@@ -326,3 +326,43 @@
     flex: 2;
   }
 }
+
+@media (max-width: 768px) {
+  :host {
+    display: block;
+    min-height: auto;
+  }
+
+  .kpi-grid,
+  .dashboard-row {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-grid,
+  .dashboard-row,
+  .activity-panel {
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-row,
+  .activity-panel,
+  .chart-panel,
+  .top-restaurants-panel {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .chart-container {
+    height: 34vh;
+    min-height: 14rem;
+  }
+
+  .activity-panel {
+    min-height: 38vh;
+  }
+
+  :host ::ng-deep .jp-table .p-datatable-wrapper {
+    overflow: auto;
+  }
+}

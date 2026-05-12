@@ -5,6 +5,8 @@ import { AuthState, AdminProfile, LoginForm } from '../models/auth.models';
 
 const TOKEN_KEY = 'jp_token';
 const USER_KEY  = 'jp_user';
+const ADMIN_EMAIL = 'admin@jambaarpay.com';
+const ADMIN_PASSWORD = 'Admin@1234';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -24,12 +26,15 @@ export class AuthService {
 
   login(form: LoginForm): boolean {
     // Mock authentication — replace with real API call
-    if (form.email && form.password) {
+    const email = form.email.trim().toLowerCase();
+    const isAuthorizedUser = email === ADMIN_EMAIL && form.password === ADMIN_PASSWORD;
+
+    if (isAuthorizedUser) {
       const mockToken = 'mock-jwt-token-' + Date.now();
       const profile: AdminProfile = {
         id: '1',
         name: 'Abdoulaye Diallo',
-        email: form.email,
+        email: ADMIN_EMAIL,
         role: 'Admin Principal',
       };
       const store = !form.rememberMe;
