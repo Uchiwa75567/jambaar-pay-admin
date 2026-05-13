@@ -6,7 +6,7 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  gap: 20px;
+  gap: 2rem;
 }
 
 // ── KPI Grid ──────────────────────────────────────────────────────────────────
@@ -14,40 +14,40 @@
   flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 4rem;
 }
 
 // ── Middle row: Chart + Top Restaurants ───────────────────────────────────────
 // flex: 1 — takes its share of remaining space (shorter than activity)
 .dashboard-row {
-  flex: 1;
+  flex: 0 0 20.75rem;
   min-height: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.125rem;
-  max-height: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
 }
 
 // ── Shared Panel ──────────────────────────────────────────────────────────────
 .panel {
   background: #fff;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-panel);
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 0.6875rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.24);
   overflow: hidden;
 }
 
 .panel-title {
-  margin: 0 0 0.75rem 0;
+  margin: 0;
   color: #000;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 800;
   letter-spacing: 0;
 }
 
 // ── Chart Panel ───────────────────────────────────────────────────────────────
 .chart-panel {
   height: 100%;
-  padding: 1rem 1.75rem;
+  padding: 0.875rem 2.25rem 1.375rem 3.75rem;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -57,19 +57,24 @@
 
 .chart-container {
   flex: 1;
-  margin-top: 0.75rem;
-  min-height: 200px;
+  margin-top: 1.625rem;
+  min-height: 0;
   overflow: hidden;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+:host ::ng-deep p-chart,
+:host ::ng-deep p-chart > div,
+:host ::ng-deep canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 // ── Top Restaurants Panel ─────────────────────────────────────────────────────
 .top-restaurants-panel {
   height: 100%;
-  padding: 1rem 1.75rem;
+  padding: 0.875rem 2.125rem 1.125rem 2.375rem;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -82,27 +87,23 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* use gap to control vertical spacing between items and allow scrolling */
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.875rem;
   margin: 0;
-  /* reserve right padding so scrollbars don't cover content or overflow panel */
-  padding: 0 1rem 0 0;
-  /* reserve space for stable scrollbar to avoid overlap (modern browsers) */
-  scrollbar-gutter: stable;
+  padding: 0;
   list-style: none;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
 .restaurant-item {
   display: grid;
-  /* fix volume column to avoid overlap with scrollbar */
-  grid-template-columns: 2.125rem 1fr minmax(100px, auto);
+  grid-template-columns: 2.5rem 1fr minmax(6.5rem, auto);
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  gap: 0.875rem;
+  padding: 0;
+  border-bottom: 0;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -150,13 +151,13 @@
 .rank-badge {
   display: grid;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.375rem;
+  width: 2.375rem;
+  height: 2.375rem;
+  border-radius: 0.5rem;
   background: $text-primary;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.875rem;
-  font-weight: 600;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
   flex-shrink: 0;
 }
 
@@ -168,8 +169,8 @@
 
 .restaurant-name {
   color: $text-primary;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 800;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
@@ -178,9 +179,9 @@
 }
 
 .restaurant-transactions {
-  margin-top: 2px;
+  margin-top: 0.125rem;
   color: #888;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -196,8 +197,8 @@
 
 .volume-amount {
   color: $text-primary;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -206,14 +207,14 @@
 
 .volume-unit {
   color: #a89595;
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 600;
 }
 
 // ── Activity Panel ────────────────────────────────────────────────────────────
 // flex: 0.8 — takes less space, more compact
 .activity-panel {
-  flex: 0.8;
+  flex: 1;
   min-height: 0;
   overflow: hidden;
   display: flex;
@@ -222,17 +223,17 @@
 
 .activity-header {
   flex-shrink: 0;
-  padding: 0.75rem 1.5625rem 0.5rem;
+  min-height: 4rem;
+  padding: 0 1.75rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  border-bottom: 1px solid rgba(113, 113, 113, 0.26);
 }
 
 .activity-title {
   color: $text-primary;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.625rem;
+  font-weight: 800;
   margin: 0;
 }
 
@@ -249,26 +250,26 @@
   }
 
   .p-datatable-thead > tr > th {
-    padding: 0.5rem 1.25rem;
-    background: rgba(255, 255, 255, 0.78) !important;
-    border-top: 1px solid rgba(113, 113, 113, 0.26) !important;
+    padding: 0.8125rem 1.75rem;
+    background: #fff !important;
+    border-top: 0 !important;
     border-bottom: 1px solid rgba(113, 113, 113, 0.26) !important;
     color: $text-primary !important;
     font-family: var(--font-family-base) !important;
-    font-size: 1rem !important;
-    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 0.375rem 1.25rem;
+    padding: 0.6875rem 1.75rem;
     border: 0 !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 0 !important;
     color: #444 !important;
     font-family: var(--font-family-base) !important;
-    font-size: 0.875rem !important;
-    font-weight: 600 !important;
+    font-size: 1.125rem !important;
+    font-weight: 800 !important;
   }
 
   .p-datatable-tbody > tr:last-child > td {
@@ -287,26 +288,8 @@
   background: transparent;
   color: $green-valid;
   font-family: var(--font-family-base);
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.btn-see-more {
-  flex-shrink: 0;
-  padding: 0.5rem 1rem;
-  color: $orange-accent;
-  font-family: var(--font-family-base);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  white-space: nowrap;
-
-  &:hover {
-    opacity: 0.8;
-    text-decoration: underline;
-  }
+  font-size: 1.125rem;
+  font-weight: 800;
 }
 
 // ── Responsive ────────────────────────────────────────────────────────────────
