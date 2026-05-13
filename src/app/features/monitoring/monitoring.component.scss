@@ -352,6 +352,7 @@
   :host,
   .table-panel {
     min-height: auto;
+    overflow: visible;
   }
 
   .kpi-grid {
@@ -388,7 +389,7 @@
   }
 
   :host ::ng-deep .monitoring-table .p-datatable-wrapper {
-    max-height: 52vh;
-    overflow: auto;
+    max-height: none !important;
+    overflow: visible !important;
   }
 }

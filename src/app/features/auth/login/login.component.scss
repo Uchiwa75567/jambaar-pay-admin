@@ -65,6 +65,10 @@ $border: #c9c9c9;
   text-align: center;
 }
 
+.mobile-logo {
+  display: none;
+}
+
 .login-header h1 {
   margin: 0 0 2.5rem;
   color: $text;
@@ -288,27 +292,24 @@ $border: #c9c9c9;
     display: block;
   }
 
-  .login-left,
-  .login-right {
-    min-height: auto;
-  }
-
   .login-left {
-    min-height: auto;
-  }
-
-  .login-visual {
-    max-height: none;
-    border-radius: 0;
+    display: none;
   }
 
   .login-right {
     min-height: auto;
-    padding: 7vh 1.25rem;
+    padding: 3.5rem 1.25rem 7vh;
   }
 
   .login-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .mobile-logo {
+    display: block;
+    width: min(12rem, 58vw);
+    height: auto;
+    margin: 0 auto 2rem;
   }
 
   .login-header h1 {

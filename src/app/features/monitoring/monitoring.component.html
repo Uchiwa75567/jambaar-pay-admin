@@ -66,13 +66,13 @@
     </ng-template>
     <ng-template pTemplate="body" let-tx>
       <tr>
-        <td class="txn-id">{{ tx.id }}</td>
-        <td>{{ tx.employee }}</td>
-        <td>{{ tx.company }}</td>
-        <td>{{ tx.restaurant }}</td>
-        <td>{{ tx.amount }} Fcfa</td>
-        <td>{{ tx.date }}</td>
-        <td><app-status-badge [status]="tx.status"></app-status-badge></td>
+        <td class="txn-id" data-label="ID">{{ tx.id }}</td>
+        <td data-label="Salarié">{{ tx.employee }}</td>
+        <td data-label="Entreprise">{{ tx.company }}</td>
+        <td data-label="Restaurant">{{ tx.restaurant }}</td>
+        <td data-label="Montant">{{ tx.amount }} Fcfa</td>
+        <td data-label="Date">{{ tx.date }}</td>
+        <td data-label="Statut"><app-status-badge [status]="tx.status"></app-status-badge></td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

@@ -322,6 +322,7 @@
   :host,
   .restaurants-card {
     min-height: auto;
+    overflow: visible;
   }
 
   .restaurants-toolbar,
@@ -358,7 +359,7 @@
   }
 
   :host ::ng-deep .restaurants-table .p-datatable-wrapper {
-    max-height: 52vh;
-    overflow: auto;
+    max-height: none !important;
+    overflow: visible !important;
   }
 }

@@ -44,12 +44,12 @@
     </ng-template>
     <ng-template pTemplate="body" let-company>
       <tr>
-        <td>{{ company.name }}</td>
-        <td>{{ company.employeeCount | number }}</td>
-        <td>{{ company.totalBalance | number }}</td>
-        <td>{{ company.registrationDate }}</td>
-        <td><app-status-badge [status]="company.status"></app-status-badge></td>
-        <td>
+        <td data-label="Entreprise">{{ company.name }}</td>
+        <td data-label="Salariés">{{ company.employeeCount | number }}</td>
+        <td data-label="Solde Total">{{ company.totalBalance | number }}</td>
+        <td data-label="Date d'inscription">{{ company.registrationDate }}</td>
+        <td data-label="Statut"><app-status-badge [status]="company.status"></app-status-badge></td>
+        <td data-label="Action">
           <button class="action-btn" (click)="actionMenu.toggle($event)" aria-label="Actions entreprise">
             <i class="pi pi-ellipsis-v"></i>
           </button>

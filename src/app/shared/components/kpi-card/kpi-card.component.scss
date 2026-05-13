@@ -71,3 +71,12 @@
   font-weight: 500;
   line-height: 1.15;
 }
+
+@media (max-width: 768px) {
+  .kpi-card {
+    width: 100%;
+    height: auto;
+    min-height: 6.75rem;
+    padding: 0.875rem 1rem;
+  }
+}

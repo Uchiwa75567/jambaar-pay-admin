@@ -331,11 +331,13 @@
   :host {
     display: block;
     min-height: auto;
+    overflow: visible;
   }
 
   .kpi-grid,
   .dashboard-row {
     grid-template-columns: 1fr;
+    gap: 0.875rem;
   }
 
   .kpi-grid,
@@ -356,6 +358,16 @@
   .chart-container {
     height: 34vh;
     min-height: 14rem;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  :host ::ng-deep p-chart,
+  :host ::ng-deep p-chart > div,
+  :host ::ng-deep canvas {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .activity-panel {
@@ -363,6 +375,6 @@
   }
 
   :host ::ng-deep .jp-table .p-datatable-wrapper {
-    overflow: auto;
+    overflow: visible !important;
   }
 }

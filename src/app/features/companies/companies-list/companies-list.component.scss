@@ -366,6 +366,7 @@
   :host,
   .companies-card {
     min-height: auto;
+    overflow: visible;
   }
 
   .companies-toolbar,
@@ -402,7 +403,7 @@
   }
 
   :host ::ng-deep .companies-table .p-datatable-wrapper {
-    max-height: 52vh;
-    overflow: auto;
+    max-height: none !important;
+    overflow: visible !important;
   }
 }

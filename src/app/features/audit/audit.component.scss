@@ -291,6 +291,7 @@
   :host,
   .audit-panel {
     min-height: auto;
+    overflow: visible;
   }
 
   .panel-toolbar,
@@ -323,7 +324,7 @@
   }
 
   :host ::ng-deep .audit-table .p-datatable-wrapper {
-    max-height: 52vh;
-    overflow: auto;
+    max-height: none !important;
+    overflow: visible !important;
   }
 }

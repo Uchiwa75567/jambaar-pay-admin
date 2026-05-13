@@ -38,11 +38,11 @@
     </ng-template>
     <ng-template pTemplate="body" let-restaurant>
       <tr>
-        <td>{{ restaurant.name }}</td>
-        <td>{{ restaurant.address }}</td>
-        <td>{{ restaurant.totalTransactions }}</td>
-        <td><app-status-badge [status]="restaurant.status"></app-status-badge></td>
-        <td>
+        <td data-label="Restaurant">{{ restaurant.name }}</td>
+        <td data-label="Localisation">{{ restaurant.address }}</td>
+        <td data-label="Transactions">{{ restaurant.totalTransactions }}</td>
+        <td data-label="Statut"><app-status-badge [status]="restaurant.status"></app-status-badge></td>
+        <td data-label="Action">
           <button class="action-btn" (click)="actionMenu.toggle($event)" aria-label="Actions restaurant">
             <i class="pi pi-ellipsis-v"></i>
           </button>

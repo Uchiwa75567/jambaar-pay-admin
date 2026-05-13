@@ -50,10 +50,10 @@
     </ng-template>
     <ng-template pTemplate="body" let-log>
       <tr>
-        <td>{{ log.action }}</td>
-        <td>{{ log.user }}</td>
-        <td>{{ log.details }}</td>
-        <td>{{ log.date }}</td>
+        <td data-label="Action">{{ log.action }}</td>
+        <td data-label="Utilisateur">{{ log.user }}</td>
+        <td data-label="Détails">{{ log.details }}</td>
+        <td data-label="Date">{{ log.date }}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

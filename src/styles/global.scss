@@ -134,12 +134,72 @@ app-root {
 }
 
 @media (max-width: 768px) {
+  html,
+  body,
+  app-root {
+    width: 100%;
+    overflow: hidden;
+  }
+
   .card {
     padding: 1rem;
   }
 
   .metrics-grid {
     grid-template-columns: 1fr;
+  }
+
+  .p-datatable,
+  .p-datatable-wrapper,
+  .p-datatable-table,
+  .p-datatable-tbody {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .p-datatable-wrapper {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .p-datatable-thead {
+    display: none !important;
+  }
+
+  .p-datatable-tbody > tr {
+    display: block !important;
+    margin: 0.75rem 0 !important;
+    padding: 0.25rem 0.875rem !important;
+    border: 1px solid #ececec !important;
+    border-radius: 0.75rem !important;
+    background: #fff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .p-datatable-tbody > tr > td {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0.75rem 0 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    text-align: right !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .p-datatable-tbody > tr > td:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .p-datatable-tbody > tr > td::before {
+    content: attr(data-label);
+    flex: 0 0 44%;
+    color: var(--color-text-primary);
+    font-weight: 700;
+    text-align: left;
   }
 }
 
