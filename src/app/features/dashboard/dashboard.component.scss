@@ -6,7 +6,7 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 // ── KPI Grid ──────────────────────────────────────────────────────────────────
@@ -14,17 +14,17 @@
   flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4rem;
+  gap: 1.5rem;
 }
 
 // ── Middle row: Chart + Top Restaurants ───────────────────────────────────────
 // flex: 1 — takes its share of remaining space (shorter than activity)
 .dashboard-row {
-  flex: 0 0 20.75rem;
+  flex: 0 0 18rem;
   min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 // ── Shared Panel ──────────────────────────────────────────────────────────────
@@ -39,15 +39,15 @@
 .panel-title {
   margin: 0;
   color: #000;
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: 0.6875rem;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
 // ── Chart Panel ───────────────────────────────────────────────────────────────
 .chart-panel {
   height: 100%;
-  padding: 0.875rem 2.25rem 1.375rem 3.75rem;
+  padding: 0.75rem 1.25rem 1rem 2rem;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -57,7 +57,7 @@
 
 .chart-container {
   flex: 1;
-  margin-top: 1.625rem;
+  margin-top: 1rem;
   min-height: 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -74,7 +74,7 @@
 // ── Top Restaurants Panel ─────────────────────────────────────────────────────
 .top-restaurants-panel {
   height: 100%;
-  padding: 0.875rem 2.125rem 1.125rem 2.375rem;
+  padding: 0.75rem 1rem 0.875rem 1rem;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -88,7 +88,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.875rem;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -157,7 +157,7 @@
   background: $text-primary;
   color: #fff;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
   flex-shrink: 0;
 }
 
@@ -169,8 +169,8 @@
 
 .restaurant-name {
   color: $text-primary;
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
@@ -197,8 +197,8 @@
 
 .volume-amount {
   color: $text-primary;
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -223,17 +223,32 @@
 
 .activity-header {
   flex-shrink: 0;
-  min-height: 4rem;
-  padding: 0 1.75rem;
+  min-height: 3rem;
+  padding: 0 1.25rem;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(113, 113, 113, 0.26);
 }
 
+.activity-header .see-more {
+  margin-left: auto;
+  color: $text-primary;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  background: transparent;
+}
+
+.activity-header .see-more:hover {
+  background: rgba(0,0,0,0.03);
+}
+
 .activity-title {
   color: $text-primary;
-  font-size: 1.625rem;
-  font-weight: 800;
+  font-size: 1.375rem;
+  font-weight: 700;
   margin: 0;
 }
 
@@ -256,8 +271,8 @@
     border-bottom: 1px solid rgba(113, 113, 113, 0.26) !important;
     color: $text-primary !important;
     font-family: var(--font-family-base) !important;
-    font-size: 1.5rem !important;
-    font-weight: 800 !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
     text-transform: none;
     letter-spacing: 0;
   }
@@ -268,8 +283,8 @@
     border-bottom: 0 !important;
     color: #444 !important;
     font-family: var(--font-family-base) !important;
-    font-size: 1.125rem !important;
-    font-weight: 800 !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
   }
 
   .p-datatable-tbody > tr:last-child > td {
@@ -288,8 +303,8 @@
   background: transparent;
   color: $green-valid;
   font-family: var(--font-family-base);
-  font-size: 1.125rem;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 // ── Responsive ────────────────────────────────────────────────────────────────

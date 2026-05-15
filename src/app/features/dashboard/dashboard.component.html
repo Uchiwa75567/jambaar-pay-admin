@@ -43,9 +43,10 @@
 <div class="panel activity-panel">
   <div class="activity-header">
     <h3 class="activity-title">Activité récentes</h3>
+    <a class="see-more" [routerLink]="['/monitoring']">Voir plus</a>
   </div>
 
-  <p-table [value]="recentActivities" styleClass="jp-table">
+  <p-table [value]="recentActivities | slice:0:5" styleClass="jp-table">
     <ng-template pTemplate="header">
       <tr>
         <th>Transaction</th>
