@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -52,22 +52,26 @@ export class RegisterComponent {
   readonly passwordMinLength = 8;
   private readonly emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  firstStepValid = computed(() => {
-    return !!this.form.companyName.trim()
+  private isFirstStepValid(): boolean {
+    return this.hasValue(this.form.companyName)
       && this.emailPattern.test(this.form.email.trim())
-      && !!this.form.phone.trim()
-      && !!this.form.hrManager.trim()
-      && !!this.form.sector.trim()
-      && !!this.form.employeeCount.trim()
-      && !!this.form.ninea.trim();
-  });
+      && this.hasValue(this.form.phone)
+      && this.hasValue(this.form.hrManager)
+      && this.hasValue(this.form.sector)
+      && this.hasValue(this.form.employeeCount)
+      && this.hasValue(this.form.ninea);
+  }
 
-  secondStepValid = computed(() => {
-    return !!this.form.location.trim()
-      && !!this.form.city.trim()
+  private isSecondStepValid(): boolean {
+    return this.hasValue(this.form.location)
+      && this.hasValue(this.form.city)
       && this.form.password.length >= this.passwordMinLength
       && this.form.password === this.form.confirmPassword;
-  });
+  }
+
+  private hasValue(value: string | number | null | undefined): boolean {
+    return !!String(value ?? '').trim();
+  }
 
   constructor(private router: Router) {}
 
@@ -75,7 +79,7 @@ export class RegisterComponent {
     this.submitted.set(true);
     this.successMessage.set('');
 
-    if (!this.firstStepValid()) {
+    if (!this.isFirstStepValid()) {
       return;
     }
 
@@ -101,7 +105,7 @@ export class RegisterComponent {
     this.submitted.set(true);
     this.successMessage.set('');
 
-    if (!this.secondStepValid()) {
+    if (!this.isSecondStepValid()) {
       return;
     }
 
