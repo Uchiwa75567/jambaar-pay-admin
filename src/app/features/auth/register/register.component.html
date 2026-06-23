@@ -1,0 +1,222 @@
+<div class="register-shell">
+  <aside class="register-left" aria-hidden="true">
+    <img class="register-visual" src="assets/images/login-bg.jpg" alt="" />
+  </aside>
+
+  <main class="register-right">
+    <section class="register-panel" aria-labelledby="register-title">
+      <div class="register-topline">
+        <button *ngIf="step() === 2" type="button" class="back-link" (click)="previousStep()">
+          <i class="pi pi-arrow-left"></i>
+          <span>Retour</span>
+        </button>
+        <h1 id="register-title">Inscrire votre entreprise</h1>
+      </div>
+
+      <div class="stepper" aria-label="Progression de l'inscription">
+        <div class="step" [class.active]="step() === 1" [class.done]="step() === 2">
+          <span class="step-number">1</span>
+          <span>Info de l'entreprise</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" [class.active]="step() === 2">
+          <span class="step-number">2</span>
+          <span>Localisation et accès</span>
+        </div>
+      </div>
+
+      <div *ngIf="successMessage()" class="success-alert">
+        <i class="pi pi-check-circle"></i>
+        <span>{{ successMessage() }}</span>
+      </div>
+
+      <form *ngIf="step() === 1" class="register-form" (ngSubmit)="nextStep()" novalidate>
+        <div class="field">
+          <label for="companyName">Nom de l'entreprise*</label>
+          <div class="input-wrapper">
+            <i class="pi pi-building input-icon"></i>
+            <input
+              pInputText
+              id="companyName"
+              name="companyName"
+              type="text"
+              [(ngModel)]="form.companyName"
+              placeholder="Entreprise"
+              autocomplete="organization"
+              [class.input-invalid]="showRequiredError(form.companyName)" />
+          </div>
+          <small *ngIf="showRequiredError(form.companyName)" class="field-error">Le nom de l'entreprise est requis.</small>
+        </div>
+
+        <div class="field">
+          <label for="email">Adresse email *</label>
+          <div class="input-wrapper">
+            <i class="pi pi-envelope input-icon"></i>
+            <input
+              pInputText
+              id="email"
+              name="email"
+              type="email"
+              [(ngModel)]="form.email"
+              placeholder="Adresseemail@gmail.com"
+              autocomplete="email"
+              [class.input-invalid]="showEmailError()" />
+          </div>
+          <small *ngIf="showEmailError()" class="field-error">Veuillez saisir une adresse email valide.</small>
+        </div>
+
+        <div class="field">
+          <label for="phone">Téléphone*</label>
+          <div class="input-wrapper phone-wrapper">
+            <span class="phone-prefix">+221</span>
+            <input
+              pInputText
+              id="phone"
+              name="phone"
+              type="tel"
+              [(ngModel)]="form.phone"
+              placeholder="77 772 98 88"
+              autocomplete="tel"
+              [class.input-invalid]="showRequiredError(form.phone)" />
+          </div>
+          <small *ngIf="showRequiredError(form.phone)" class="field-error">Le téléphone est requis.</small>
+        </div>
+
+        <div class="field">
+          <label for="hrManager">Responsable RH *</label>
+          <div class="input-wrapper">
+            <input
+              pInputText
+              id="hrManager"
+              name="hrManager"
+              type="text"
+              [(ngModel)]="form.hrManager"
+              placeholder="Nom du responsable RH"
+              autocomplete="name"
+              [class.input-invalid]="showRequiredError(form.hrManager)" />
+          </div>
+          <small *ngIf="showRequiredError(form.hrManager)" class="field-error">Le responsable RH est requis.</small>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="sector">Secteur d'activité</label>
+            <input
+              pInputText
+              id="sector"
+              name="sector"
+              type="text"
+              [(ngModel)]="form.sector"
+              [class.input-invalid]="showRequiredError(form.sector)" />
+            <small *ngIf="showRequiredError(form.sector)" class="field-error">Le secteur est requis.</small>
+          </div>
+
+          <div class="field">
+            <label for="employeeCount">Nombre de salariés</label>
+            <input
+              pInputText
+              id="employeeCount"
+              name="employeeCount"
+              type="number"
+              min="1"
+              [(ngModel)]="form.employeeCount"
+              [class.input-invalid]="showRequiredError(form.employeeCount)" />
+            <small *ngIf="showRequiredError(form.employeeCount)" class="field-error">Le nombre de salariés est requis.</small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="ninea">NINEA / RCCM</label>
+          <input
+            pInputText
+            id="ninea"
+            name="ninea"
+            type="text"
+            [(ngModel)]="form.ninea"
+            placeholder="77 772 98 88"
+            [class.input-invalid]="showRequiredError(form.ninea)" />
+          <small *ngIf="showRequiredError(form.ninea)" class="field-error">Le NINEA ou RCCM est requis.</small>
+        </div>
+
+        <button type="submit" class="btn-submit">Continuer</button>
+
+        <p class="auth-switch">
+          J'ai déjà un compte ? <a routerLink="/login">Se connecter</a>
+        </p>
+      </form>
+
+      <form *ngIf="step() === 2" class="register-form register-form-short" (ngSubmit)="onSubmit()" novalidate>
+        <div class="field">
+          <label for="location">Localisation *</label>
+          <input
+            pInputText
+            id="location"
+            name="location"
+            type="text"
+            [(ngModel)]="form.location"
+            placeholder="Adresse complète de localisation"
+            autocomplete="street-address"
+            [class.input-invalid]="showRequiredError(form.location)" />
+          <small *ngIf="showRequiredError(form.location)" class="field-error">La localisation est requise.</small>
+        </div>
+
+        <div class="field">
+          <label for="city">Ville *</label>
+          <input
+            pInputText
+            id="city"
+            name="city"
+            type="text"
+            [(ngModel)]="form.city"
+            autocomplete="address-level2"
+            [class.input-invalid]="showRequiredError(form.city)" />
+          <small *ngIf="showRequiredError(form.city)" class="field-error">La ville est requise.</small>
+        </div>
+
+        <div class="field">
+          <label for="password">Mot de passe *</label>
+          <div class="input-wrapper">
+            <input
+              pInputText
+              id="password"
+              name="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [(ngModel)]="form.password"
+              placeholder="**************"
+              autocomplete="new-password"
+              [class.input-invalid]="showPasswordError()" />
+            <button type="button" class="eye-btn" (click)="togglePassword()" aria-label="Afficher le mot de passe">
+              <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </button>
+          </div>
+          <small *ngIf="showPasswordError()" class="field-error">Le mot de passe doit contenir au moins 8 caractères.</small>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirmer mot de passe *</label>
+          <div class="input-wrapper">
+            <input
+              pInputText
+              id="confirmPassword"
+              name="confirmPassword"
+              [type]="showConfirmPassword() ? 'text' : 'password'"
+              [(ngModel)]="form.confirmPassword"
+              placeholder="**************"
+              autocomplete="new-password"
+              [class.input-invalid]="showConfirmPasswordError()" />
+            <button type="button" class="eye-btn" (click)="toggleConfirmPassword()" aria-label="Afficher la confirmation">
+              <i [class]="showConfirmPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </button>
+          </div>
+          <small *ngIf="showConfirmPasswordError()" class="field-error">Les mots de passe ne correspondent pas.</small>
+        </div>
+
+        <button type="submit" class="btn-submit">S'inscrire</button>
+
+        <p class="auth-switch">
+          J'ai déjà un compte ? <a routerLink="/login">Se connecter</a>
+        </p>
+      </form>
+    </section>
+  </main>
+</div>

@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +14,7 @@ import { LoginForm } from '../../../core/models/auth.models';
   host: {
     class: 'login-page',
   },
-  imports: [CommonModule, FormsModule, InputTextModule, CheckboxModule, ButtonModule],
+  imports: [CommonModule, FormsModule, RouterLink, InputTextModule, CheckboxModule, ButtonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
