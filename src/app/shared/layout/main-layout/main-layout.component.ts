@@ -20,6 +20,7 @@ export class MainLayoutComponent {
   private readonly routeMeta: Record<string, { title: string; subtitle: string }> = {
     '/dashboard': { title: 'Dashboard Global', subtitle: "Vue d'ensemble de la plateforme Jambaar Pay" },
     '/enterprise-dashboard': { title: 'Dashboard Entreprise', subtitle: "Vue d'ensemble de votre espace entreprise" },
+    '/enterprise-employees': { title: 'Gestion des salariés', subtitle: 'Gérer les salariés et leurs soldes' },
     '/companies':       { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },
     '/companies/add':   { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },
     '/restaurants':     { title: 'Gestion des Restaurants',   subtitle: 'Gérer tous les restaurants partenaires'          },

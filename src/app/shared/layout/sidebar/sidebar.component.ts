@@ -28,7 +28,7 @@ export class SidebarComponent {
 
   private readonly enterpriseNavItems: NavItem[] = [
     { label: 'Dashboard Global', iconSrc: 'assets/icons/icon-dashboard.svg', route: '/enterprise-dashboard' },
-    { label: 'Gestion des salariés', iconSrc: 'assets/icons/icon-business.svg', disabled: true },
+    { label: 'Gestion des salariés', iconSrc: 'assets/icons/icon-business.svg', route: '/enterprise-employees' },
     { label: 'Historique', iconSrc: 'assets/icons/icon-audit.svg', disabled: true },
   ];
 
