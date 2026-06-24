@@ -65,7 +65,7 @@ app-root {
 // Status badge utilities
 .badge-valid {
   background: #DCFCE7;
-  color: #16A34A;
+  color: var(--color-green-valid);
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;
@@ -92,7 +92,7 @@ app-root {
 
 .badge-active {
   background: #DCFCE7;
-  color: #16A34A;
+  color: var(--color-green-valid);
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;

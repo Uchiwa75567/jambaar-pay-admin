@@ -19,14 +19,14 @@
       <img src="assets/icons/icon-settings.svg" alt="" class="settings-icon" aria-hidden="true" />
     </a>
 
-    <button
+    <a
       *ngIf="isEnterprise"
-      type="button"
-      class="icon-btn icon-btn-disabled"
-      aria-label="Paramètres non disponibles"
-      aria-disabled="true">
+      routerLink="/enterprise-employees/add"
+      routerLinkActive="settings-active"
+      class="icon-btn"
+      aria-label="Ajouter un salarié">
       <img src="assets/icons/icon-settings.svg" alt="" class="settings-icon" aria-hidden="true" />
-    </button>
+    </a>
 
     <div class="avatar-block">
       <div class="user-info">
