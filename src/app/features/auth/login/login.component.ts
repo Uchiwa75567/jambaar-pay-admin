@@ -76,7 +76,7 @@ export class LoginComponent {
       const ok = this.auth.login(this.form);
       this.loading.set(false);
       if (ok) {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate([this.auth.getLandingRoute()]);
       } else {
         this.error.set('Email ou mot de passe incorrect.');
       }

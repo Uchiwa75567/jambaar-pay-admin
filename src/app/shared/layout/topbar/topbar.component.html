@@ -10,9 +10,23 @@
   </div>
 
   <div class="topbar-right">
-    <a routerLink="/settings" routerLinkActive="settings-active" class="icon-btn" aria-label="Paramètres du système">
+    <a
+      *ngIf="!isEnterprise"
+      routerLink="/settings"
+      routerLinkActive="settings-active"
+      class="icon-btn"
+      aria-label="Paramètres du système">
       <img src="assets/icons/icon-settings.svg" alt="" class="settings-icon" aria-hidden="true" />
     </a>
+
+    <button
+      *ngIf="isEnterprise"
+      type="button"
+      class="icon-btn icon-btn-disabled"
+      aria-label="Paramètres non disponibles"
+      aria-disabled="true">
+      <img src="assets/icons/icon-settings.svg" alt="" class="settings-icon" aria-hidden="true" />
+    </button>
 
     <div class="avatar-block">
       <div class="user-info">

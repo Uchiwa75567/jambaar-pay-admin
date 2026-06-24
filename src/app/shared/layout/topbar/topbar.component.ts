@@ -18,6 +18,10 @@ export class TopbarComponent {
 
   constructor(private auth: AuthService) {}
 
+  get isEnterprise(): boolean {
+    return this.profile?.role === 'Entreprise';
+  }
+
   get initials(): string {
     if (!this.profile?.name) return 'A';
     return this.profile.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);

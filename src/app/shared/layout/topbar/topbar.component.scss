@@ -103,6 +103,14 @@
   &.settings-active .settings-icon {
     filter: $filter-orange;
   }
+
+  &.icon-btn-disabled {
+    cursor: default;
+
+    &:hover {
+      background: transparent;
+    }
+  }
 }
 
 .avatar-block {

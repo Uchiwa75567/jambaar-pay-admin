@@ -6,15 +6,27 @@
 
   <!-- Navigation -->
   <nav class="sidebar-nav">
-    <a
-      *ngFor="let item of navItems"
-      [routerLink]="item.route"
-      routerLinkActive="active"
-      class="nav-item"
-      [attr.aria-label]="item.label">
-      <img [src]="item.iconSrc" [alt]="item.label" class="nav-icon" />
-      <span>{{ item.label }}</span>
-    </a>
+    <ng-container *ngFor="let item of navItems">
+      <a
+        *ngIf="!item.disabled && item.route"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        class="nav-item"
+        [attr.aria-label]="item.label">
+        <img [src]="item.iconSrc" [alt]="item.label" class="nav-icon" />
+        <span>{{ item.label }}</span>
+      </a>
+
+      <button
+        *ngIf="item.disabled || !item.route"
+        type="button"
+        class="nav-item nav-item-disabled"
+        [attr.aria-label]="item.label"
+        aria-disabled="true">
+        <img [src]="item.iconSrc" [alt]="item.label" class="nav-icon" />
+        <span>{{ item.label }}</span>
+      </button>
+    </ng-container>
   </nav>
 
   <!-- Logout -->
