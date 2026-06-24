@@ -19,6 +19,7 @@ export class MainLayoutComponent {
 
   private readonly routeMeta: Record<string, { title: string; subtitle: string }> = {
     '/dashboard': { title: 'Dashboard Global', subtitle: "Vue d'ensemble de la plateforme Jambaar Pay" },
+    '/enterprise-dashboard': { title: 'Dashboard Entreprise', subtitle: "Vue d'ensemble de votre espace entreprise" },
     '/companies':       { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },
     '/companies/add':   { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },
     '/restaurants':     { title: 'Gestion des Restaurants',   subtitle: 'Gérer tous les restaurants partenaires'          },
@@ -29,16 +30,21 @@ export class MainLayoutComponent {
   };
 
   constructor(private router: Router) {
+    this.updatePageMeta(this.router.url);
+
     this.router.events
       .pipe(
         filter(e => e instanceof NavigationEnd),
         map(e => (e as NavigationEnd).urlAfterRedirects),
         takeUntilDestroyed(),
       )
-      .subscribe(url => {
-        const meta = this.routeMeta[url];
-        this.pageTitle = meta?.title ?? 'Jambaar Pay';
-        this.pageSubtitle = meta?.subtitle ?? '';
-      });
+      .subscribe(url => this.updatePageMeta(url));
+  }
+
+  private updatePageMeta(url: string): void {
+    const path = url.split('?')[0];
+    const meta = this.routeMeta[path];
+    this.pageTitle = meta?.title ?? 'Jambaar Pay';
+    this.pageSubtitle = meta?.subtitle ?? '';
   }
 }

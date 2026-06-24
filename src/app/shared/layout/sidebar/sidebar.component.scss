@@ -79,6 +79,14 @@
     color: rgba(255, 255, 255, 0.75);
   }
 
+  &.nav-item-disabled {
+    cursor: default;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
   &.logout {
     color: $red-danger;
     font-size: 1rem;

@@ -4,6 +4,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { MainLayoutComponent } from './shared/layout/main-layout/main-layout.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { EnterpriseDashboardComponent } from './features/enterprise-dashboard/enterprise-dashboard.component';
 import { CompaniesListComponent } from './features/companies/companies-list/companies-list.component';
 import { CompanyAddComponent } from './features/companies/company-add/company-add.component';
 import { RestaurantsListComponent } from './features/restaurants/restaurants-list/restaurants-list.component';
@@ -22,6 +23,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'dashboard',       component: DashboardComponent       },
+      { path: 'enterprise-dashboard', component: EnterpriseDashboardComponent },
       { path: 'companies',       component: CompaniesListComponent    },
       { path: 'companies/add',   component: CompanyAddComponent       },
       { path: 'restaurants',     component: RestaurantsListComponent  },
