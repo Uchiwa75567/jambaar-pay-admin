@@ -6,6 +6,8 @@ import { MainLayoutComponent } from './shared/layout/main-layout/main-layout.com
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { EnterpriseDashboardComponent } from './features/enterprise-dashboard/enterprise-dashboard.component';
 import { EnterpriseEmployeesComponent } from './features/enterprise-employees/enterprise-employees.component';
+import { EnterpriseEmployeeAddComponent } from './features/enterprise-employee-add/enterprise-employee-add.component';
+import { EnterpriseHistoryComponent } from './features/enterprise-history/enterprise-history.component';
 import { CompaniesListComponent } from './features/companies/companies-list/companies-list.component';
 import { CompanyAddComponent } from './features/companies/company-add/company-add.component';
 import { RestaurantsListComponent } from './features/restaurants/restaurants-list/restaurants-list.component';
@@ -26,6 +28,8 @@ export const routes: Routes = [
       { path: 'dashboard',       component: DashboardComponent       },
       { path: 'enterprise-dashboard', component: EnterpriseDashboardComponent },
       { path: 'enterprise-employees', component: EnterpriseEmployeesComponent },
+      { path: 'enterprise-employees/add', component: EnterpriseEmployeeAddComponent },
+      { path: 'enterprise-history', component: EnterpriseHistoryComponent },
       { path: 'companies',       component: CompaniesListComponent    },
       { path: 'companies/add',   component: CompanyAddComponent       },
       { path: 'restaurants',     component: RestaurantsListComponent  },

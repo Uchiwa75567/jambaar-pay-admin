@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -15,7 +16,7 @@ interface EmployeeRow {
 @Component({
   selector: 'app-enterprise-employees',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableModule, InputTextModule],
+  imports: [CommonModule, FormsModule, RouterLink, TableModule, InputTextModule],
   templateUrl: './enterprise-employees.component.html',
   styleUrls: ['./enterprise-employees.component.scss'],
 })
