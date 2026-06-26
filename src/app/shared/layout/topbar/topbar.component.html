@@ -28,6 +28,14 @@
       <img src="assets/icons/icon-settings.svg" alt="" class="settings-icon" aria-hidden="true" />
     </button>
 
+    <button
+      type="button"
+      class="icon-btn mobile-logout-btn"
+      aria-label="Se déconnecter"
+      (click)="logout()">
+      <img src="assets/icons/icon-logout.svg" alt="" class="logout-icon" aria-hidden="true" />
+    </button>
+
     <div class="avatar-block">
       <div class="user-info">
         <span class="user-name">{{ profile?.name ?? 'Admin' }}</span>

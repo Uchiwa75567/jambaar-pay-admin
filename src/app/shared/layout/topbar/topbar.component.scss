@@ -113,6 +113,16 @@
   }
 }
 
+.mobile-logout-btn {
+  display: none;
+
+  .logout-icon {
+    width: 1.45rem;
+    height: 1.45rem;
+    filter: brightness(0) saturate(100%) invert(15%) sepia(99%) saturate(6200%) hue-rotate(358deg) brightness(100%) contrast(114%);
+  }
+}
+
 .avatar-block {
   display: flex;
   align-items: center;
@@ -189,6 +199,10 @@
 
   .topbar-right {
     gap: 0.5rem;
+  }
+
+  .mobile-logout-btn {
+    display: grid;
   }
 
   .avatar-photo {
