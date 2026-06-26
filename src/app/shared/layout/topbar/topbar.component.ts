@@ -26,4 +26,8 @@ export class TopbarComponent {
     if (!this.profile?.name) return 'A';
     return this.profile.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
   }
+
+  logout(): void {
+    this.auth.logout();
+  }
 }

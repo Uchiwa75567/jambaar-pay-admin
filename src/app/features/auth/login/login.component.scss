@@ -284,12 +284,17 @@ $border: #c9c9c9;
 
 @media (max-width: 900px) {
   :host(.login-page) {
+    height: 100vh;
+    height: 100dvh;
     padding: 0;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .login-card {
     display: block;
+    min-height: 100%;
   }
 
   .login-left {
@@ -298,23 +303,23 @@ $border: #c9c9c9;
 
   .login-right {
     min-height: auto;
-    padding: 3.5rem 1.25rem 7vh;
+    padding: 2.25rem 1.25rem max(2rem, env(safe-area-inset-bottom));
   }
 
   .login-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.375rem;
   }
 
   .mobile-logo {
     display: block;
-    width: min(12rem, 58vw);
+    width: min(9.25rem, 42vw);
     height: auto;
-    margin: 0 auto 2rem;
+    margin: 0 auto 1.375rem;
   }
 
   .login-header h1 {
-    margin-bottom: 1.625rem;
-    font-size: clamp(2.75rem, 13vw, 4rem);
+    margin-bottom: 1rem;
+    font-size: clamp(2.5rem, 11vw, 3.5rem);
   }
 
   .login-header p,
@@ -322,11 +327,15 @@ $border: #c9c9c9;
   .remember-me,
   .forgot-link,
   .register-link {
-    font-size: 1.125rem;
+    font-size: 0.9375rem;
+  }
+
+  .field {
+    margin-bottom: 1rem;
   }
 
   .field label {
-    margin-bottom: 0.8125rem;
+    margin-bottom: 0.625rem;
   }
 
   .input-icon {
@@ -335,9 +344,9 @@ $border: #c9c9c9;
   }
 
   .input-wrapper input {
-    height: 4.5rem;
+    height: 3.5rem;
     padding: 0 3.5rem 0 3.625rem !important;
-    font-size: 1.1875rem !important;
+    font-size: 1rem !important;
   }
 
   .eye-btn {
@@ -347,15 +356,17 @@ $border: #c9c9c9;
   .form-options {
     align-items: flex-start;
     flex-direction: column;
-    gap: 0.875rem;
+    gap: 0.625rem;
+    margin: 0.75rem 0 1rem;
   }
 
   .btn-submit {
-    height: 4.5rem;
-    font-size: 1.625rem;
+    height: 3.5rem;
+    font-size: 1.25rem;
   }
 
   .register-link {
+    margin-top: 0.875rem;
     text-align: center;
   }
 }
