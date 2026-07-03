@@ -39,13 +39,13 @@ export class CompaniesListComponent {
   searchTerm   = signal('');
   statusFilter = signal<StatusFilter>('Tous');
   dateFilter   = signal<DateFilter>('Tous');
-  pageSize     = signal(6);
+  pageSize     = signal(5);
   currentPage  = signal(1);
 
   pageSizeMenuOpen = signal(false);
   filterMenuOpen   = signal(false);
 
-  pageSizeOptions  = [6, 12, 18];
+  pageSizeOptions  = [5, 10];
   statusOptions: StatusFilter[] = ['Tous', 'Actif', 'Inactif'];
   dateOptions: DateFilter[]     = ['Tous', 'Ce mois', 'Ce trimestre', 'Cette année'];
 

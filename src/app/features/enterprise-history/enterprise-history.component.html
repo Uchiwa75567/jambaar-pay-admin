@@ -24,7 +24,7 @@
 <section class="history-card">
   <h2>Transaction recentes</h2>
 
-  <p-table [value]="transactions" styleClass="history-table">
+  <p-table [value]="paginatedTransactions()" styleClass="history-table">
     <ng-template pTemplate="header">
       <tr>
         <th>Salarié</th>
@@ -47,15 +47,47 @@
 </section>
 
 <div class="history-pagination">
-  <button type="button" class="page-size">lignes par page <strong>6</strong></button>
+  <div class="dropdown-wrap">
+    <button type="button" class="rows-btn" (click)="togglePageSizeMenu()">
+      <span>lignes par page</span>
+      <strong>{{ pageSize() }}</strong>
+      <i class="pi pi-chevron-down" style="font-size:11px" aria-hidden="true"></i>
+    </button>
+    <div class="rows-menu" *ngIf="pageSizeMenuOpen()">
+      <button
+        *ngFor="let size of pageSizeOptions"
+        type="button"
+        class="rows-item"
+        [class.active]="pageSize() === size"
+        (click)="setPageSize(size)">
+        {{ size }}
+      </button>
+    </div>
+  </div>
 
   <div class="pager">
-    <button type="button" class="pager-prev" disabled>Prec</button>
-    <button type="button" class="page-number active">01</button>
-    <button type="button" class="page-number">02</button>
-    <button type="button" class="page-number">03</button>
-    <span class="page-ellipsis">...</span>
-    <button type="button" class="page-number outlined">24</button>
-    <button type="button" class="pager-next">Suiv</button>
+    <button
+      type="button"
+      class="pager-prev"
+      [disabled]="currentPage() === 1"
+      (click)="previousPage()">
+      Prec
+    </button>
+    <button
+      *ngFor="let page of visiblePages()"
+      type="button"
+      class="page-number"
+      [class.active]="currentPage() === page"
+      [class.outlined]="currentPage() !== page"
+      (click)="setPage(page)">
+      {{ page < 10 ? '0' + page : page }}
+    </button>
+    <button
+      type="button"
+      class="pager-next"
+      [disabled]="currentPage() === totalPages()"
+      (click)="nextPage()">
+      Suiv
+    </button>
   </div>
 </div>
