@@ -72,14 +72,11 @@ export class MonitoringComponent {
 
   visiblePages = computed<(number | '...')[]>(() => {
     const total = this.totalPages();
-    const curr  = this.currentPage();
-    if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
-    const pages: (number | '...')[] = [1];
-    if (curr > 3) pages.push('...');
-    for (let i = Math.max(2, curr - 1); i <= Math.min(total - 1, curr + 1); i++) pages.push(i);
-    if (curr < total - 2) pages.push('...');
-    if (total > 1) pages.push(total);
-    return pages;
+    const current = this.currentPage();
+    if (total <= 6) return Array.from({ length: total }, (_, index) => index + 1);
+    if (current <= 3) return [1, 2, 3, '...', total];
+    if (current >= total - 2) return [1, '...', total - 2, total - 1, total];
+    return [1, '...', current - 1, current, current + 1, '...', total];
   });
 
   transactions = computed(() => {

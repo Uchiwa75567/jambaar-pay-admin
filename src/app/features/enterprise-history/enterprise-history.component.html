@@ -73,15 +73,18 @@
       (click)="previousPage()">
       Prec
     </button>
-    <button
-      *ngFor="let page of visiblePages()"
-      type="button"
-      class="page-number"
-      [class.active]="currentPage() === page"
-      [class.outlined]="currentPage() !== page"
-      (click)="setPage(page)">
-      {{ page < 10 ? '0' + page : page }}
-    </button>
+    <ng-container *ngFor="let page of visiblePages()">
+      <button
+        *ngIf="page !== '...'"
+        type="button"
+        class="page-number"
+        [class.active]="currentPage() === page"
+        [class.outlined]="currentPage() !== page"
+        (click)="setPage(page)">
+        {{ page < 10 ? '0' + page : page }}
+      </button>
+      <span *ngIf="page === '...'" class="page-ellipsis">...</span>
+    </ng-container>
     <button
       type="button"
       class="pager-next"

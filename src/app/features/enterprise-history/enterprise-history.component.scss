@@ -196,7 +196,6 @@
 }
 
 .pager-prev {
-  color: #bdbdbd !important;
   font-size: 1.125rem;
   margin-right: 1.35rem;
 }
@@ -274,6 +273,7 @@
     align-items: flex-start;
     flex-direction: column;
     margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   .pager {
