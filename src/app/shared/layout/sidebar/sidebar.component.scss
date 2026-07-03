@@ -141,8 +141,10 @@
   .sidebar {
     inset: auto 0 0 0;
     width: 100%;
-    height: var(--mobile-nav-height);
+    height:
+      calc(max(var(--mobile-nav-height), 4.75rem) + env(safe-area-inset-bottom, 0px));
     min-height: 4.75rem;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     overflow-x: auto;
     overflow-y: hidden;
   }

@@ -311,9 +311,9 @@
 }
 
 .prev {
-  color: #c8c8c8;
+  color: $text-primary;
   font-size: 0.875rem;
-  cursor: default;
+  cursor: pointer;
 }
 
 .dots {
@@ -345,8 +345,16 @@
 }
 
 .next {
+  color: $text-primary;
   font-size: 0.875rem;
   cursor: pointer;
+}
+
+.prev.disabled,
+.next.disabled {
+  color: #c8c8c8;
+  cursor: default;
+  pointer-events: none;
 }
 
 // ── Responsive ────────────────────────────────────────────────────────────────

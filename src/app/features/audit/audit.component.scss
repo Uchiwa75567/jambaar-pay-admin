@@ -268,9 +268,16 @@
   font-weight: 700;
 }
 
-.prev  { color: #c8c8c8; cursor: default; }
+.prev  { color: $text-primary; cursor: pointer; }
 .dots  { color: #aaa; letter-spacing: 2px; }
-.next  { cursor: pointer; }
+.next  { color: $text-primary; cursor: pointer; }
+
+.prev.disabled,
+.next.disabled {
+  color: #c8c8c8;
+  cursor: default;
+  pointer-events: none;
+}
 
 .page {
   display: grid;
