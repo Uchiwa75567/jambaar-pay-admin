@@ -1,13 +1,15 @@
 :host {
   display: block;
+  width: 100%;
 }
 
 .payment-page {
   display: flex;
+  width: 100%;
 }
 
 .payment-card {
-  width: min(100%, 70rem);
+  width: 100%;
   padding: 1.6rem;
   border: 1px solid rgba(25, 24, 49, 0.08);
   border-radius: 1.1rem;
@@ -17,13 +19,14 @@
 
 .payment-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(15rem, 0.9fr);
-  gap: 1.35rem;
+  grid-template-columns: minmax(0, 1fr) clamp(17.5rem, 28vw, 20.5rem);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
   align-items: stretch;
 }
 
 .payment-form-block {
   min-width: 0;
+  padding-right: 0.25rem;
 }
 
 .section-head h2 {
@@ -107,7 +110,10 @@
 .payment-qr-block {
   display: grid;
   place-items: center;
-  padding: 1rem;
+  width: 100%;
+  max-width: 20.5rem;
+  justify-self: end;
+  padding: 1.15rem;
   border: 1px solid rgba(25, 24, 49, 0.08);
   border-radius: 1rem;
   background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
@@ -116,7 +122,7 @@
 .payment-qr-frame {
   display: grid;
   place-items: center;
-  width: min(100%, 16rem);
+  width: min(100%, 14.5rem);
   aspect-ratio: 1;
 }
 
@@ -144,6 +150,15 @@
 @media (max-width: 700px) {
   .payment-layout {
     grid-template-columns: 1fr;
+  }
+
+  .payment-form-block {
+    padding-right: 0;
+  }
+
+  .payment-qr-block {
+    max-width: none;
+    justify-self: stretch;
   }
 
   .payment-grid {
