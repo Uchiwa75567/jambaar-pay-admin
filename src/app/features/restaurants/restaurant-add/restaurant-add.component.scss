@@ -75,6 +75,18 @@
   }
 }
 
+.field-input-invalid {
+  border-color: $red-danger !important;
+  background: rgba($red-danger, 0.03);
+}
+
+.field-error {
+  color: $red-danger;
+  font-family: var(--font-family-base);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
 // Override PrimeNG InputText
 :host ::ng-deep .p-inputtext {
   width: 100%;
@@ -119,6 +131,11 @@
   }
 }
 
+:host ::ng-deep .cuisine-dropdown-invalid {
+  border-color: $red-danger !important;
+  background: rgba($red-danger, 0.03);
+}
+
 // ── Phone input group ─────────────────────────────────────────────────────────
 .phone-input {
   display: flex;
@@ -131,6 +148,12 @@
   &:focus-within {
     border-color: $orange-accent;
   }
+}
+
+.phone-input.group-invalid,
+.balance-input.group-invalid {
+  border-color: $red-danger;
+  background: rgba($red-danger, 0.03);
 }
 
 .phone-prefix {

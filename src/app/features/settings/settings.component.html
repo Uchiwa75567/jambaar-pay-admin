@@ -1,4 +1,4 @@
-<div class="settings-wrapper">
+<form class="settings-wrapper" (ngSubmit)="onSubmit()" novalidate>
 
   <!-- Section 1: Parametre Généraux -->
   <div class="settings-card">
@@ -12,7 +12,10 @@
         class="field-input"
         [(ngModel)]="form.platformName"
         name="platformName"
+        [class.field-input-invalid]="submitted() && !!platformNameError"
+        placeholder="Ex : Jambaar Pay Admin"
         aria-label="Nom de la plateforme" />
+      <small class="field-error" *ngIf="submitted() && !!platformNameError">{{ platformNameError }}</small>
     </div>
 
     <div class="field">
@@ -23,7 +26,10 @@
         class="field-input"
         [(ngModel)]="form.address"
         name="address"
+        [class.field-input-invalid]="submitted() && !!addressError"
+        placeholder="Ex : VDN, Dakar"
         aria-label="Adresse" />
+      <small class="field-error" *ngIf="submitted() && !!addressError">{{ addressError }}</small>
     </div>
 
     <div class="field">
@@ -34,7 +40,10 @@
         class="field-input"
         [(ngModel)]="form.supportPhone"
         name="supportPhone"
+        [class.field-input-invalid]="submitted() && !!supportPhoneError"
+        placeholder="Ex : 78 000 11 22"
         aria-label="Téléphone support" />
+      <small class="field-error" *ngIf="submitted() && !!supportPhoneError">{{ supportPhoneError }}</small>
     </div>
   </div>
 
@@ -50,7 +59,10 @@
         class="field-input"
         [(ngModel)]="form.maxTransactionAmount"
         name="maxTransactionAmount"
+        [class.field-input-invalid]="submitted() && !!maxTransactionAmountError"
+        placeholder="Ex : 100000"
         aria-label="Montant maximum par transaction en FCFA" />
+      <small class="field-error" *ngIf="submitted() && !!maxTransactionAmountError">{{ maxTransactionAmountError }}</small>
     </div>
 
     <div class="field">
@@ -61,14 +73,19 @@
         class="field-input"
         [(ngModel)]="form.maxTransactionsPerDay"
         name="maxTransactionsPerDay"
+        [class.field-input-invalid]="submitted() && !!maxTransactionsPerDayError"
+        placeholder="Ex : 10"
         aria-label="Nombre de transactions par jour" />
+      <small class="field-error" *ngIf="submitted() && !!maxTransactionsPerDayError">{{ maxTransactionsPerDayError }}</small>
     </div>
   </div>
+
+  <p class="success-message" *ngIf="successMessage()">{{ successMessage() }}</p>
 
   <!-- Actions -->
   <div class="form-actions">
     <button type="button" class="btn-cancel" (click)="onCancel()">Annuler</button>
-    <button type="button" class="btn-submit" (click)="onSubmit()">Enrégister les modification</button>
+    <button type="submit" class="btn-submit">Enrégister les modification</button>
   </div>
 
-</div>
+</form>

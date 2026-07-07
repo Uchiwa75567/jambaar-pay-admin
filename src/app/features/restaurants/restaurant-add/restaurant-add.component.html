@@ -13,7 +13,9 @@
           [(ngModel)]="form.name"
           name="name"
           required
-          placeholder="Ex: le Djolof" />
+          [class.field-input-invalid]="submitted() && !!nameError"
+          placeholder="Ex : Le Djolof" />
+        <small class="field-error" *ngIf="submitted() && !!nameError">{{ nameError }}</small>
       </div>
       <div class="field">
         <label class="field-label">Type de cuisine <span class="required">*</span></label>
@@ -21,10 +23,11 @@
           [options]="cuisineOptions"
           [(ngModel)]="form.cuisineType"
           name="cuisineType"
-          placeholder="Selectionner ..."
-          styleClass="cuisine-dropdown"
+          placeholder="Selectionnez un type de cuisine"
+          [styleClass]="'cuisine-dropdown' + (submitted() && cuisineTypeError ? ' cuisine-dropdown-invalid' : '')"
           appendTo="body">
         </p-dropdown>
+        <small class="field-error" *ngIf="submitted() && !!cuisineTypeError">{{ cuisineTypeError }}</small>
       </div>
     </div>
 
@@ -39,7 +42,9 @@
           [(ngModel)]="form.managerName"
           name="managerName"
           required
-          placeholder="Mouhamed Ndiaye" />
+          [class.field-input-invalid]="submitted() && !!managerNameError"
+          placeholder="Ex : Mouhamed Ndiaye" />
+        <small class="field-error" *ngIf="submitted() && !!managerNameError">{{ managerNameError }}</small>
       </div>
     </div>
 
@@ -54,11 +59,13 @@
           [(ngModel)]="form.email"
           name="email"
           required
-          placeholder="ledjolof@gmail.com" />
+          [class.field-input-invalid]="submitted() && !!emailError"
+          placeholder="Ex : contact@restaurant.sn" />
+        <small class="field-error" *ngIf="submitted() && !!emailError">{{ emailError }}</small>
       </div>
       <div class="field">
         <label class="field-label">Numero de téléphone<span class="required">*</span></label>
-        <div class="phone-input">
+        <div class="phone-input" [class.group-invalid]="submitted() && !!phoneError">
           <span class="phone-prefix">+221</span>
           <input
             pInputText
@@ -67,8 +74,10 @@
             [(ngModel)]="form.phone"
             name="phone"
             required
-            placeholder="78 270 82 39" />
+            [class.field-input-invalid]="submitted() && !!phoneError"
+            placeholder="Ex : 78 270 82 39" />
         </div>
+        <small class="field-error" *ngIf="submitted() && !!phoneError">{{ phoneError }}</small>
       </div>
     </div>
 
@@ -82,20 +91,24 @@
           class="field-input"
           [(ngModel)]="form.ninea"
           name="ninea"
-          placeholder="0001122" />
+          [class.field-input-invalid]="submitted() && !!nineaError"
+          placeholder="Ex : SN-DKR-2024-R-5678" />
+        <small class="field-error" *ngIf="submitted() && !!nineaError">{{ nineaError }}</small>
       </div>
       <div class="field">
         <label class="field-label">Solde Initial</label>
-        <div class="balance-input">
+        <div class="balance-input" [class.group-invalid]="submitted() && !!initialBalanceError">
           <input
             pInputText
             type="text"
             class="field-input balance-number"
             [(ngModel)]="form.initialBalance"
             name="initialBalance"
-            placeholder="200000" />
+            [class.field-input-invalid]="submitted() && !!initialBalanceError"
+            placeholder="Ex : 200000" />
           <span class="balance-suffix">Fcfa</span>
         </div>
+        <small class="field-error" *ngIf="submitted() && !!initialBalanceError">{{ initialBalanceError }}</small>
       </div>
     </div>
 
@@ -109,7 +122,9 @@
           class="field-input"
           [(ngModel)]="form.address"
           name="address"
-          placeholder="Mermoz VDN" />
+          [class.field-input-invalid]="submitted() && !!addressError"
+          placeholder="Ex : Mermoz VDN" />
+        <small class="field-error" *ngIf="submitted() && !!addressError">{{ addressError }}</small>
       </div>
     </div>
 

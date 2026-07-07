@@ -7,11 +7,16 @@
   min-height: 0;
 }
 
+.file-input {
+  display: none;
+}
+
 .employee-actions {
   display: flex;
   align-items: center;
   gap: 0.9375rem;
   margin: 1.25rem 0 1.5rem;
+  flex-wrap: wrap;
 }
 
 .action-btn {
@@ -51,6 +56,23 @@
 .action-secondary:last-child {
   width: 11.125rem;
   color: #9a9a9a;
+}
+
+.export-action {
+  width: auto;
+  padding: 0 1rem;
+}
+
+.feedback-message {
+  margin: -0.75rem 0 1rem;
+  color: $green-valid;
+  font-family: var(--font-family-base);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.feedback-message.is-error {
+  color: $red-danger;
 }
 
 .employees-card {
@@ -198,7 +220,7 @@
     border-bottom: 1px solid rgba(113, 113, 113, 0.26) !important;
     color: var(--color-text-primary) !important;
     font-family: var(--font-family-base) !important;
-    font-size: 1.25rem !important;
+    font-size: 0.95rem !important;
     font-weight: 500 !important;
     text-transform: none;
     letter-spacing: 0;
@@ -209,8 +231,8 @@
     border: 0 !important;
     color: #444 !important;
     font-family: var(--font-family-base) !important;
-    font-size: 1.125rem !important;
-    font-weight: 800 !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
   }
 
   .p-datatable-tbody > tr > td.status-valid {

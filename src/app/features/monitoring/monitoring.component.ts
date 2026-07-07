@@ -6,6 +6,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { KpiCardComponent } from '../../shared/components/kpi-card/kpi-card.component';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
+import { DataTransferService, ExportColumn, ImportedRecord } from '../../core/services/data-transfer.service';
+import { DatasetStorageService } from '../../core/services/dataset-storage.service';
 
 export interface MonitoringTransaction {
   id: string;
@@ -31,6 +33,8 @@ const MOCK_TRANSACTIONS: MonitoringTransaction[] = [
 ];
 
 type StatusFilter = 'Tous' | 'Validé' | 'En attente' | 'Échoué';
+type FeedbackState = { type: 'success' | 'error'; message: string } | null;
+const MONITORING_STORAGE_KEY = 'jp_monitoring_dataset';
 
 @Component({
   selector: 'app-monitoring',
@@ -40,10 +44,13 @@ type StatusFilter = 'Tous' | 'Validé' | 'En attente' | 'Échoué';
   styleUrls: ['./monitoring.component.scss'],
 })
 export class MonitoringComponent {
+  private readonly allTransactions = signal<MonitoringTransaction[]>([]);
+
   searchTerm   = signal('');
   statusFilter = signal<StatusFilter>('Tous');
   pageSize     = signal(6);
   currentPage  = signal(1);
+  feedback     = signal<FeedbackState>(null);
 
   pageSizeMenuOpen = signal(false);
   filterMenuOpen   = signal(false);
@@ -61,7 +68,7 @@ export class MonitoringComponent {
   filtered = computed(() => {
     const q  = this.searchTerm().toLowerCase();
     const sf = this.statusFilter();
-    return MOCK_TRANSACTIONS.filter(t => {
+    return this.allTransactions().filter(t => {
       if (q && !(t.employee.toLowerCase().includes(q) || t.company.toLowerCase().includes(q) || t.restaurant.toLowerCase().includes(q))) return false;
       if (sf !== 'Tous' && t.status !== sf) return false;
       return true;
@@ -84,7 +91,23 @@ export class MonitoringComponent {
     return this.filtered().slice(start, start + this.pageSize());
   });
 
-  constructor(private el: ElementRef) {}
+  private readonly exportColumns: ExportColumn<MonitoringTransaction>[] = [
+    { header: 'ID', value: transaction => transaction.id },
+    { header: 'Salarie', value: transaction => transaction.employee },
+    { header: 'Entreprise', value: transaction => transaction.company },
+    { header: 'Restaurant', value: transaction => transaction.restaurant },
+    { header: 'Montant', value: transaction => transaction.amount },
+    { header: 'Date', value: transaction => transaction.date },
+    { header: 'Statut', value: transaction => transaction.status },
+  ];
+
+  constructor(
+    private el: ElementRef,
+    private dataTransfer: DataTransferService,
+    private datasetStorage: DatasetStorageService,
+  ) {
+    this.allTransactions.set(this.datasetStorage.readArray(MONITORING_STORAGE_KEY, MOCK_TRANSACTIONS));
+  }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(e: MouseEvent): void {
@@ -93,6 +116,11 @@ export class MonitoringComponent {
       this.filterMenuOpen.set(false);
       this.exportMenuOpen.set(false);
     }
+  }
+
+  onSearchChange(value: string): void {
+    this.searchTerm.set(value);
+    this.currentPage.set(1);
   }
 
   setPageSize(size: number): void {
@@ -120,6 +148,98 @@ export class MonitoringComponent {
   }
 
   toggleExportMenu(): void { this.exportMenuOpen.update(v => !v); }
-  exportPDF(): void        { this.exportMenuOpen.set(false); }
-  exportExcel(): void      { this.exportMenuOpen.set(false); }
+
+  async onImportFileSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    try {
+      const records = await this.dataTransfer.readRecords(file);
+      const imported = records
+        .map((record, index) => this.mapImportedTransaction(record, index))
+        .filter((transaction): transaction is MonitoringTransaction => transaction !== null);
+
+      if (!imported.length) {
+        throw new Error('Aucune transaction exploitable n’a ete trouvee dans le fichier.');
+      }
+
+      const merged = this.mergeById(this.allTransactions(), imported);
+      this.persistTransactions(merged);
+      this.currentPage.set(1);
+      this.setFeedback('success', `${imported.length} transaction(s) importee(s) avec succes.`);
+    } catch (error) {
+      this.setFeedback('error', error instanceof Error ? error.message : 'Import impossible.');
+    } finally {
+      input.value = '';
+    }
+  }
+
+  exportPDF(): void {
+    try {
+      this.dataTransfer.exportPdf('Transactions de monitoring', this.filtered(), this.exportColumns);
+      this.setFeedback('success', 'Vue PDF ouverte pour les transactions.');
+    } catch (error) {
+      this.setFeedback('error', error instanceof Error ? error.message : 'Export PDF impossible.');
+    } finally {
+      this.exportMenuOpen.set(false);
+    }
+  }
+
+  exportExcel(): void {
+    this.dataTransfer.exportCsv('transactions-monitoring-jambaarpay', this.filtered(), this.exportColumns);
+    this.exportMenuOpen.set(false);
+    this.setFeedback('success', 'Export Excel prepare pour les transactions.');
+  }
+
+  private mapImportedTransaction(record: ImportedRecord, index: number): MonitoringTransaction | null {
+    const employee = this.dataTransfer.getValue(record, ['employee', 'salarie', 'salarie']);
+    const company = this.dataTransfer.getValue(record, ['company', 'entreprise']);
+    const restaurant = this.dataTransfer.getValue(record, ['restaurant']);
+
+    if (!employee || !company || !restaurant) {
+      return null;
+    }
+
+    const status = this.normalizeStatus(this.dataTransfer.getValue(record, ['status', 'statut']));
+
+    return {
+      id: this.dataTransfer.getValue(record, ['id', 'identifiant']) || `import-transaction-${Date.now()}-${index}`,
+      employee,
+      company,
+      restaurant,
+      amount: this.dataTransfer.getValue(record, ['amount', 'montant']) || '0',
+      date: this.dataTransfer.getValue(record, ['date']) || new Date().toISOString().slice(0, 10),
+      status,
+    };
+  }
+
+  private normalizeStatus(value: string): MonitoringTransaction['status'] {
+    const normalized = value.trim().toLowerCase();
+    if (normalized.startsWith('ec') || normalized.startsWith('ech')) {
+      return 'Échoué';
+    }
+    if (normalized.startsWith('en')) {
+      return 'En attente';
+    }
+    return 'Validé';
+  }
+
+  private mergeById(current: MonitoringTransaction[], imported: MonitoringTransaction[]): MonitoringTransaction[] {
+    const map = new Map(current.map(transaction => [transaction.id, transaction]));
+    imported.forEach(transaction => map.set(transaction.id, transaction));
+    return Array.from(map.values());
+  }
+
+  private persistTransactions(transactions: MonitoringTransaction[]): void {
+    this.allTransactions.set(transactions);
+    this.datasetStorage.writeArray(MONITORING_STORAGE_KEY, transactions);
+  }
+
+  private setFeedback(type: 'success' | 'error', message: string): void {
+    this.feedback.set({ type, message });
+  }
 }

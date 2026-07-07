@@ -1,0 +1,237 @@
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+}
+
+.restaurant-page {
+  display: grid;
+  grid-template-rows: minmax(0, 0.92fr) minmax(0, 1fr);
+  gap: 1rem;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid rgba(25, 24, 49, 0.08);
+  border-radius: 1.1rem;
+  box-shadow: 0 10px 24px rgba(24, 23, 47, 0.08);
+}
+
+.restaurant-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.9fr);
+  gap: 1rem;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.panel {
+  overflow: hidden;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1rem 0.8rem;
+  border-bottom: 1px solid rgba(34, 33, 58, 0.08);
+}
+
+.panel-head h2 {
+  margin: 0;
+  color: #1d1c31;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.panel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #2f66f5;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.payment-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.payment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid rgba(34, 33, 58, 0.08);
+}
+
+.payment-identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.payment-avatar {
+  display: grid;
+  place-items: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.tone-blue { background: #dcebff; color: #2d5ed7; }
+.tone-violet { background: #efe1ff; color: #7a42d6; }
+.tone-green { background: #d8f5e4; color: #24995a; }
+.tone-sky { background: #ddedff; color: #3478d8; }
+.tone-gold { background: #fff0c8; color: #c97718; }
+
+.payment-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.payment-meta strong {
+  color: #1f1f34;
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.payment-meta span {
+  color: #8b8897;
+  font-size: 0.82rem;
+}
+
+.payment-amount {
+  color: #0fbe7f;
+  font-size: 0.92rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.qr-panel {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  min-height: 100%;
+}
+
+.qr-frame {
+  display: grid;
+  place-items: center;
+  width: min(100%, 16.5rem);
+  aspect-ratio: 1;
+}
+
+.qr-code {
+  width: 100%;
+  height: auto;
+}
+
+.companies-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0 0 0.2rem;
+}
+
+.panel-head-table {
+  border-bottom: 0;
+  padding-bottom: 0.55rem;
+}
+
+.panel-counter {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(34, 33, 58, 0.08);
+  border-radius: 999px;
+  color: #777485;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.companies-table {
+  min-height: 0;
+  padding: 0 0.85rem 0.85rem;
+}
+
+.companies-header,
+.companies-row {
+  display: grid;
+  grid-template-columns: minmax(14rem, 1.7fr) minmax(6rem, 0.7fr) minmax(8rem, 0.9fr) minmax(5rem, 0.5fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.companies-header {
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.8rem;
+  background: #23223b;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.companies-row {
+  padding: 0.78rem 0.9rem;
+  border-bottom: 1px solid rgba(34, 33, 58, 0.08);
+  color: #22213a;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-pill {
+  display: inline-flex;
+  justify-self: start;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: #fff0e6;
+  color: #f07a2a;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.status-pill.is-inactive {
+  background: #eef1f5;
+  color: #667085;
+}
+
+@media (max-width: 1300px) {
+  .restaurant-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-page {
+    grid-template-rows: auto auto;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .companies-header,
+  .companies-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .payment-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .companies-header,
+  .companies-row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,91 +1,42 @@
-import { Component, computed, ElementRef, HostListener, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
-
-interface EmployeeRow {
-  name: string;
-  email: string;
-  phone: string;
-  balance: string;
-  status: 'Validé';
-}
-
-type StatusFilter = 'Tous' | 'Validé';
+import {
+  EmployeeStatusFilter,
+  EnterpriseEmployeesFacade,
+} from './enterprise-employees.facade';
 
 @Component({
   selector: 'app-enterprise-employees',
   standalone: true,
   imports: [CommonModule, FormsModule, TableModule, InputTextModule],
+  providers: [EnterpriseEmployeesFacade],
   templateUrl: './enterprise-employees.component.html',
   styleUrls: ['./enterprise-employees.component.scss'],
 })
 export class EnterpriseEmployeesComponent {
-  private readonly allEmployees: EmployeeRow[] = Array.from({ length: 144 }, () => ({
-    name: '#38932987',
-    email: 'sal@gmail.com',
-    phone: '777777777',
-    balance: '2 000 Fcfa',
-    status: 'Validé',
-  }));
+  readonly searchTerm = this.facade.searchTerm;
+  readonly statusFilter = this.facade.statusFilter;
+  readonly pageSize = this.facade.pageSize;
+  readonly currentPage = this.facade.currentPage;
+  readonly feedback = this.facade.feedback;
+  readonly statusOptions = this.facade.statusOptions;
+  readonly pageSizeOptions = this.facade.pageSizeOptions;
+  readonly visiblePages = this.facade.visiblePages;
+  readonly totalPages = this.facade.totalPages;
+  readonly employees = this.facade.employees;
 
-  searchTerm = signal('');
-  statusFilter = signal<StatusFilter>('Tous');
-  pageSize = signal(5);
-  currentPage = signal(1);
-  filterMenuOpen = signal(false);
-  pageSizeMenuOpen = signal(false);
+  readonly filterMenuOpen = signal(false);
+  readonly pageSizeMenuOpen = signal(false);
 
-  readonly statusOptions: StatusFilter[] = ['Tous', 'Validé'];
-  readonly pageSizeOptions = [5, 10];
-
-  filteredEmployees = computed(() => {
-    const query = this.searchTerm().trim().toLowerCase();
-    const status = this.statusFilter();
-
-    return this.allEmployees.filter(employee => {
-      const matchesSearch = !query || [
-        employee.name,
-        employee.email,
-        employee.phone,
-        employee.balance,
-      ].some(value => value.toLowerCase().includes(query));
-      const matchesStatus = status === 'Tous' || employee.status === status;
-      return matchesSearch && matchesStatus;
-    });
-  });
-
-  totalPages = computed(() =>
-    Math.max(1, Math.ceil(this.filteredEmployees().length / this.pageSize()))
-  );
-
-  visiblePages = computed<(number | '...')[]>(() => {
-    const total = this.totalPages();
-    const current = this.currentPage();
-
-    if (total <= 6) {
-      return Array.from({ length: total }, (_, index) => index + 1);
-    }
-
-    if (current <= 3) {
-      return [1, 2, 3, '...', total];
-    }
-
-    if (current >= total - 2) {
-      return [1, '...', total - 2, total - 1, total];
-    }
-
-    return [1, '...', current - 1, current, current + 1, '...', total];
-  });
-
-  employees = computed(() => {
-    const start = (this.currentPage() - 1) * this.pageSize();
-    return this.filteredEmployees().slice(start, start + this.pageSize());
-  });
-
-  constructor(private router: Router, private el: ElementRef) {}
+  constructor(
+    private readonly router: Router,
+    private readonly el: ElementRef,
+    private readonly facade: EnterpriseEmployeesFacade,
+  ) {}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -99,18 +50,54 @@ export class EnterpriseEmployeesComponent {
     this.router.navigate(['/enterprise-employees/add']);
   }
 
+  async onImportEmployees(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    try {
+      await this.facade.importEmployees(file);
+    } catch (error) {
+      this.facade.setErrorFeedback(error, 'Import impossible.');
+    } finally {
+      input.value = '';
+    }
+  }
+
+  async onImportBalances(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    try {
+      await this.facade.importBalances(file);
+    } catch (error) {
+      this.facade.setErrorFeedback(error, 'Import des soldes impossible.');
+    } finally {
+      input.value = '';
+    }
+  }
+
+  exportEmployees(): void {
+    this.facade.exportEmployees();
+  }
+
   onSearchChange(value: string): void {
-    this.searchTerm.set(value);
-    this.currentPage.set(1);
+    this.facade.setSearchTerm(value);
   }
 
   toggleFilterMenu(): void {
     this.filterMenuOpen.update(open => !open);
   }
 
-  setStatusFilter(status: StatusFilter): void {
-    this.statusFilter.set(status);
-    this.currentPage.set(1);
+  setStatusFilter(status: EmployeeStatusFilter): void {
+    this.facade.setStatusFilter(status);
     this.filterMenuOpen.set(false);
   }
 
@@ -119,26 +106,19 @@ export class EnterpriseEmployeesComponent {
   }
 
   setPageSize(size: number): void {
-    this.pageSize.set(size);
-    this.currentPage.set(1);
+    this.facade.setPageSize(size);
     this.pageSizeMenuOpen.set(false);
   }
 
   setPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages()) {
-      this.currentPage.set(page);
-    }
+    this.facade.setPage(page);
   }
 
   previousPage(): void {
-    if (this.currentPage() > 1) {
-      this.currentPage.update(page => page - 1);
-    }
+    this.facade.previousPage();
   }
 
   nextPage(): void {
-    if (this.currentPage() < this.totalPages()) {
-      this.currentPage.update(page => page + 1);
-    }
+    this.facade.nextPage();
   }
 }

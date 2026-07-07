@@ -41,11 +41,11 @@
               name="companyName"
               type="text"
               [(ngModel)]="form.companyName"
-              placeholder="Entreprise"
+              placeholder="Ex : Jambaar Services"
               autocomplete="organization"
-              [class.input-invalid]="showRequiredError(form.companyName)" />
+              [class.input-invalid]="submitted() && !!companyNameError" />
           </div>
-          <small *ngIf="showRequiredError(form.companyName)" class="field-error">Le nom de l'entreprise est requis.</small>
+          <small *ngIf="submitted() && !!companyNameError" class="field-error">{{ companyNameError }}</small>
         </div>
 
         <div class="field">
@@ -58,11 +58,11 @@
               name="email"
               type="email"
               [(ngModel)]="form.email"
-              placeholder="Adresseemail@gmail.com"
+              placeholder="Ex : contact@entreprise.sn"
               autocomplete="email"
               [class.input-invalid]="showEmailError()" />
           </div>
-          <small *ngIf="showEmailError()" class="field-error">Veuillez saisir une adresse email valide.</small>
+          <small *ngIf="showEmailError()" class="field-error">{{ emailError }}</small>
         </div>
 
         <div class="field">
@@ -75,11 +75,11 @@
               name="phone"
               type="tel"
               [(ngModel)]="form.phone"
-              placeholder="77 772 98 88"
+              placeholder="Ex : 77 123 45 67"
               autocomplete="tel"
-              [class.input-invalid]="showRequiredError(form.phone)" />
+              [class.input-invalid]="showPhoneError()" />
           </div>
-          <small *ngIf="showRequiredError(form.phone)" class="field-error">Le téléphone est requis.</small>
+          <small *ngIf="showPhoneError()" class="field-error">{{ phoneError }}</small>
         </div>
 
         <div class="field">
@@ -91,11 +91,11 @@
               name="hrManager"
               type="text"
               [(ngModel)]="form.hrManager"
-              placeholder="Nom du responsable RH"
+              placeholder="Ex : Mariama Ndiaye"
               autocomplete="name"
-              [class.input-invalid]="showRequiredError(form.hrManager)" />
+              [class.input-invalid]="submitted() && !!hrManagerError" />
           </div>
-          <small *ngIf="showRequiredError(form.hrManager)" class="field-error">Le responsable RH est requis.</small>
+          <small *ngIf="submitted() && !!hrManagerError" class="field-error">{{ hrManagerError }}</small>
         </div>
 
         <div class="field-grid">
@@ -107,8 +107,9 @@
               name="sector"
               type="text"
               [(ngModel)]="form.sector"
-              [class.input-invalid]="showRequiredError(form.sector)" />
-            <small *ngIf="showRequiredError(form.sector)" class="field-error">Le secteur est requis.</small>
+              placeholder="Ex : Restauration collective"
+              [class.input-invalid]="submitted() && !!sectorError" />
+            <small *ngIf="submitted() && !!sectorError" class="field-error">{{ sectorError }}</small>
           </div>
 
           <div class="field">
@@ -120,8 +121,9 @@
               type="number"
               min="1"
               [(ngModel)]="form.employeeCount"
-              [class.input-invalid]="showRequiredError(form.employeeCount)" />
-            <small *ngIf="showRequiredError(form.employeeCount)" class="field-error">Le nombre de salariés est requis.</small>
+              placeholder="Ex : 150"
+              [class.input-invalid]="showEmployeeCountError()" />
+            <small *ngIf="showEmployeeCountError()" class="field-error">{{ employeeCountError }}</small>
           </div>
         </div>
 
@@ -133,9 +135,9 @@
             name="ninea"
             type="text"
             [(ngModel)]="form.ninea"
-            placeholder="77 772 98 88"
-            [class.input-invalid]="showRequiredError(form.ninea)" />
-          <small *ngIf="showRequiredError(form.ninea)" class="field-error">Le NINEA ou RCCM est requis.</small>
+            placeholder="Ex : SN-DKR-2024-A-1234"
+            [class.input-invalid]="showNineaError()" />
+          <small *ngIf="showNineaError()" class="field-error">{{ nineaError }}</small>
         </div>
 
         <button type="submit" class="btn-submit">Continuer</button>
@@ -154,10 +156,10 @@
             name="location"
             type="text"
             [(ngModel)]="form.location"
-            placeholder="Adresse complète de localisation"
+            placeholder="Ex : Sacre-Coeur 3, VDN"
             autocomplete="street-address"
-            [class.input-invalid]="showRequiredError(form.location)" />
-          <small *ngIf="showRequiredError(form.location)" class="field-error">La localisation est requise.</small>
+            [class.input-invalid]="submitted() && !!locationError" />
+          <small *ngIf="submitted() && !!locationError" class="field-error">{{ locationError }}</small>
         </div>
 
         <div class="field">
@@ -169,8 +171,9 @@
             type="text"
             [(ngModel)]="form.city"
             autocomplete="address-level2"
-            [class.input-invalid]="showRequiredError(form.city)" />
-          <small *ngIf="showRequiredError(form.city)" class="field-error">La ville est requise.</small>
+            placeholder="Ex : Dakar"
+            [class.input-invalid]="submitted() && !!cityError" />
+          <small *ngIf="submitted() && !!cityError" class="field-error">{{ cityError }}</small>
         </div>
 
         <div class="field">
@@ -182,14 +185,14 @@
               name="password"
               [type]="showPassword() ? 'text' : 'password'"
               [(ngModel)]="form.password"
-              placeholder="**************"
+              placeholder="Creez un mot de passe"
               autocomplete="new-password"
               [class.input-invalid]="showPasswordError()" />
             <button type="button" class="eye-btn" (click)="togglePassword()" aria-label="Afficher le mot de passe">
               <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
             </button>
           </div>
-          <small *ngIf="showPasswordError()" class="field-error">Le mot de passe doit contenir au moins 8 caractères.</small>
+          <small *ngIf="showPasswordError()" class="field-error">{{ passwordError }}</small>
         </div>
 
         <div class="field">
@@ -201,14 +204,14 @@
               name="confirmPassword"
               [type]="showConfirmPassword() ? 'text' : 'password'"
               [(ngModel)]="form.confirmPassword"
-              placeholder="**************"
+              placeholder="Confirmez votre mot de passe"
               autocomplete="new-password"
               [class.input-invalid]="showConfirmPasswordError()" />
             <button type="button" class="eye-btn" (click)="toggleConfirmPassword()" aria-label="Afficher la confirmation">
               <i [class]="showConfirmPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
             </button>
           </div>
-          <small *ngIf="showConfirmPasswordError()" class="field-error">Les mots de passe ne correspondent pas.</small>
+          <small *ngIf="showConfirmPasswordError()" class="field-error">{{ confirmPasswordError }}</small>
         </div>
 
         <button type="submit" class="btn-submit">S'inscrire</button>

@@ -13,7 +13,9 @@
           [(ngModel)]="form.name"
           name="name"
           required
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!nameError"
+          placeholder="Ex : Sonatel SA" />
+        <small class="field-error" *ngIf="submitted() && !!nameError">{{ nameError }}</small>
       </div>
       <div class="field">
         <label class="field-label">Secteur d'activité <span class="required">*</span></label>
@@ -24,7 +26,9 @@
           [(ngModel)]="form.sector"
           name="sector"
           required
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!sectorError"
+          placeholder="Ex : Telecommunications" />
+        <small class="field-error" *ngIf="submitted() && !!sectorError">{{ sectorError }}</small>
       </div>
     </div>
 
@@ -39,7 +43,9 @@
           [(ngModel)]="form.managerName"
           name="managerName"
           required
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!managerNameError"
+          placeholder="Ex : Fatou Ndiaye" />
+        <small class="field-error" *ngIf="submitted() && !!managerNameError">{{ managerNameError }}</small>
       </div>
     </div>
 
@@ -54,7 +60,9 @@
           [(ngModel)]="form.email"
           name="email"
           required
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!emailError"
+          placeholder="Ex : contact@entreprise.sn" />
+        <small class="field-error" *ngIf="submitted() && !!emailError">{{ emailError }}</small>
       </div>
       <div class="field">
         <label class="field-label">Numero de téléphone<span class="required">*</span></label>
@@ -65,7 +73,9 @@
           [(ngModel)]="form.phone"
           name="phone"
           required
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!phoneError"
+          placeholder="Ex : 77 123 45 67" />
+        <small class="field-error" *ngIf="submitted() && !!phoneError">{{ phoneError }}</small>
       </div>
     </div>
 
@@ -79,7 +89,9 @@
           class="field-input"
           [(ngModel)]="form.ninea"
           name="ninea"
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!nineaError"
+          placeholder="Ex : SN-DKR-2024-A-1234" />
+        <small class="field-error" *ngIf="submitted() && !!nineaError">{{ nineaError }}</small>
       </div>
       <div class="field">
         <label class="field-label">Solde Initial</label>
@@ -89,7 +101,9 @@
           class="field-input"
           [(ngModel)]="form.initialBalance"
           name="initialBalance"
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!initialBalanceError"
+          placeholder="Ex : 500000" />
+        <small class="field-error" *ngIf="submitted() && !!initialBalanceError">{{ initialBalanceError }}</small>
       </div>
     </div>
 
@@ -103,7 +117,9 @@
           class="field-input"
           [(ngModel)]="form.address"
           name="address"
-          placeholder="" />
+          [class.field-input-invalid]="submitted() && !!addressError"
+          placeholder="Ex : Route de l'Aeroport, Dakar" />
+        <small class="field-error" *ngIf="submitted() && !!addressError">{{ addressError }}</small>
       </div>
     </div>
 

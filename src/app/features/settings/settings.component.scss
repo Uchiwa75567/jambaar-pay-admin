@@ -64,6 +64,26 @@
   &:focus        { border-color: $orange-accent; }
 }
 
+.field-input-invalid {
+  border-color: $red-danger !important;
+  background: rgba($red-danger, 0.03);
+}
+
+.field-error {
+  color: $red-danger;
+  font-family: var(--font-family-base);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.success-message {
+  margin: 0;
+  color: $green-valid;
+  font-family: var(--font-family-base);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
 // Override PrimeNG InputText
 :host ::ng-deep .p-inputtext {
   width: 100%;

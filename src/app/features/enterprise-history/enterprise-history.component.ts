@@ -1,6 +1,7 @@
 import { Component, computed, ElementRef, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
+import { DataTransferService, ExportColumn } from '../../core/services/data-transfer.service';
 
 interface HistoryTransaction {
   employee: string;
@@ -39,6 +40,13 @@ export class EnterpriseHistoryComponent {
   currentPage = signal(1);
   pageSizeMenuOpen = signal(false);
   readonly pageSizeOptions = [5, 10];
+  private readonly exportColumns: ExportColumn<HistoryTransaction>[] = [
+    { header: 'Salarie', value: transaction => transaction.employee },
+    { header: 'Restaurant', value: transaction => transaction.restaurant },
+    { header: 'Montant', value: transaction => transaction.amount },
+    { header: 'Date', value: transaction => transaction.date },
+    { header: 'Statut', value: transaction => transaction.status },
+  ];
 
   totalPages = computed(() => Math.max(1, Math.ceil(this.transactions.length / this.pageSize())));
 
@@ -56,7 +64,10 @@ export class EnterpriseHistoryComponent {
     return this.transactions.slice(start, start + this.pageSize());
   });
 
-  constructor(private el: ElementRef) {}
+  constructor(
+    private el: ElementRef,
+    private dataTransfer: DataTransferService,
+  ) {}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -91,5 +102,13 @@ export class EnterpriseHistoryComponent {
     if (this.currentPage() < this.totalPages()) {
       this.currentPage.update(page => page + 1);
     }
+  }
+
+  exportExcel(): void {
+    this.dataTransfer.exportCsv('historique-entreprise-jambaarpay', this.transactions, this.exportColumns);
+  }
+
+  exportPdf(): void {
+    this.dataTransfer.exportPdf('Historique des transactions', this.transactions, this.exportColumns);
   }
 }

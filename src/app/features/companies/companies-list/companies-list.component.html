@@ -5,15 +5,15 @@
     <div class="toolbar-actions">
       <div class="table-search">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" placeholder="Recherchez une entrep...."
-          [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" />
+        <input pInputText type="text" placeholder="Rechercher une entreprise"
+          [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" />
       </div>
 
       <!-- Filter dropdown -->
       <div class="dropdown-wrap">
         <button class="filter-btn" type="button" (click)="toggleFilterMenu()">
           <i class="pi pi-filter"></i>
-          <span>{{ filterLabel }}</span>
+          <span>{{ filterLabel() }}</span>
         </button>
         <div class="filter-menu" *ngIf="filterMenuOpen()">
           <p class="filter-group-label">Statut</p>
@@ -27,9 +27,24 @@
         </div>
       </div>
 
+      <input #companyImportInput class="file-input" type="file" accept=".csv,.json" (change)="onImportFileSelected($event)" />
+      <button class="btn-secondary" type="button" (click)="companyImportInput.click()">Importer</button>
+
+      <div class="export-wrapper">
+        <button class="btn-secondary" type="button" (click)="toggleExportMenu()">Exporter</button>
+        <div class="export-menu" *ngIf="exportMenuOpen()">
+          <button class="export-item" type="button" (click)="exportExcel()">Exporter Excel</button>
+          <button class="export-item" type="button" (click)="exportPdf()">Exporter PDF</button>
+        </div>
+      </div>
+
       <button class="btn-add" type="button" routerLink="/companies/add">Ajouter une entreprise</button>
     </div>
   </div>
+
+  <p class="feedback-message" *ngIf="feedback() as state" [class.is-error]="state.type === 'error'">
+    {{ state.message }}
+  </p>
 
   <p-table [value]="companies()" styleClass="companies-table">
     <ng-template pTemplate="header">
@@ -53,7 +68,7 @@
           <button class="action-btn" (click)="actionMenu.toggle($event)" aria-label="Actions entreprise">
             <i class="pi pi-ellipsis-v"></i>
           </button>
-          <p-menu #actionMenu [popup]="true" [model]="getMenuItems(company)" appendTo="body"></p-menu>
+          <p-menu #actionMenu [popup]="true" [model]="getMenuItems()" appendTo="body" styleClass="row-action-menu"></p-menu>
         </td>
       </tr>
     </ng-template>

@@ -1,4 +1,7 @@
 <div class="employee-actions">
+  <input #employeesImportInput class="file-input" type="file" accept=".csv,.json" (change)="onImportEmployees($event)" />
+  <input #balancesImportInput class="file-input" type="file" accept=".csv,.json" (change)="onImportBalances($event)" />
+
   <button type="button" class="action-btn action-primary" (click)="goToAddEmployee()">
     <svg class="action-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M7.66667 11H5.16667C4.0616 11 3.00179 11.439 2.22039 12.2204C1.43899 13.0018 1 14.0616 1 15.1667V16H7.70833M13.5 10.1667V13.5M13.5 13.5V16.8333M13.5 13.5H10.1667M13.5 13.5H16.8333M11.8333 4.75C11.8333 5.74456 11.4382 6.69839 10.735 7.40165C10.0317 8.10491 9.0779 8.5 8.08333 8.5C7.08877 8.5 6.13495 8.10491 5.43168 7.40165C4.72842 6.69839 4.33333 5.74456 4.33333 4.75C4.33333 3.75544 4.72842 2.80161 5.43168 2.09835C6.13495 1.39509 7.08877 1 8.08333 1C9.0779 1 10.0317 1.39509 10.735 2.09835C11.4382 2.80161 11.8333 3.75544 11.8333 4.75Z" stroke="white" stroke-width="2" stroke-linecap="square"/>
@@ -6,7 +9,7 @@
     <span>Ajouter un salarié</span>
   </button>
 
-  <button type="button" class="action-btn action-secondary">
+  <button type="button" class="action-btn action-secondary" (click)="employeesImportInput.click()">
     <svg class="action-icon excel-icon" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g clip-path="url(#clip0_excel_import)">
         <path d="M2.5 3.5V1.5C2.5 1.23478 2.60536 0.98043 2.79289 0.792893C2.98043 0.605357 3.23478 0.5 3.5 0.5H13.5C13.7652 0.5 14.0196 0.605357 14.2071 0.792893C14.3946 0.98043 14.5 1.23478 14.5 1.5V13.5C14.5 13.7652 14.3946 14.0196 14.2071 14.2071C14.0196 14.3946 13.7652 14.5 13.5 14.5H3.5C3.23478 14.5 2.98043 14.3946 2.79289 14.2071C2.60536 14.0196 2.5 13.7652 2.5 13.5V11.5M2.5 5.5L6.5 9.5M2.5 9.5L6.5 5.5M1.5 3.5H7.5C7.76522 3.5 8.01957 3.60536 8.20711 3.79289C8.39464 3.98043 8.5 4.23478 8.5 4.5V10.5C8.5 10.7652 8.39464 11.0196 8.20711 11.2071C8.01957 11.3946 7.76522 11.5 7.5 11.5H1.5C1.23478 11.5 0.98043 11.3946 0.792893 11.2071C0.605357 11.0196 0.5 10.7652 0.5 10.5V4.5C0.5 4.23478 0.605357 3.98043 0.792893 3.79289C0.98043 3.60536 1.23478 3.5 1.5 3.5Z" stroke="#767676"/>
@@ -20,7 +23,7 @@
     <span>Import Excel</span>
   </button>
 
-  <button type="button" class="action-btn action-secondary">
+  <button type="button" class="action-btn action-secondary" (click)="balancesImportInput.click()">
     <svg class="action-icon wallet-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M5 6.6665H8.33333" stroke="#857474" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M17.3608 7.5H15.1925C13.705 7.5 12.5 8.61917 12.5 10C12.5 11.3808 13.7058 12.5 15.1917 12.5H17.3608C17.4308 12.5 17.465 12.5 17.4942 12.4983C17.9442 12.4708 18.3025 12.1383 18.3317 11.7208C18.3333 11.6942 18.3333 11.6617 18.3333 11.5975V8.4025C18.3333 8.33833 18.3333 8.30583 18.3317 8.27917C18.3017 7.86167 17.9442 7.52917 17.4942 7.50167C17.4658 7.5 17.4308 7.5 17.3608 7.5Z" stroke="#857474" stroke-width="1.5"/>
@@ -29,7 +32,16 @@
     </svg>
     <span>Charger les soldes</span>
   </button>
+
+  <button type="button" class="action-btn action-secondary export-action" (click)="exportEmployees()">
+    <i class="pi pi-download" aria-hidden="true"></i>
+    <span>Exporter Excel</span>
+  </button>
 </div>
+
+<p class="feedback-message" *ngIf="feedback() as state" [class.is-error]="state.type === 'error'">
+  {{ state.message }}
+</p>
 
 <section class="employees-card">
   <div class="employees-header">
@@ -43,7 +55,7 @@
           type="text"
           [ngModel]="searchTerm()"
           (ngModelChange)="onSearchChange($event)"
-          placeholder="Recherchez une entrep...."
+          placeholder="Rechercher un salarie"
           aria-label="Rechercher un salarié" />
       </div>
 

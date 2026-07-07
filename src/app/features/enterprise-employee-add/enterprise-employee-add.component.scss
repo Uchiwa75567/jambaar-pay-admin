@@ -78,6 +78,18 @@
   border-color: #7c7c7c;
 }
 
+.field input.input-invalid {
+  border-color: $red-danger;
+  background: rgba($red-danger, 0.03);
+}
+
+.field-error {
+  color: $red-danger;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
 .helper-text {
   max-width: 50.875rem;
   margin: 3rem 0 3.25rem 0.375rem;

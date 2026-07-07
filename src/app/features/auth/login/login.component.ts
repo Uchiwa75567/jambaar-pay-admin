@@ -7,6 +7,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../../core/services/auth.service';
 import { LoginForm } from '../../../core/models/auth.models';
+import { isValidEmail } from '../../../core/utils/form-validation';
 
 @Component({
   selector: 'app-login',
@@ -26,14 +27,13 @@ export class LoginComponent {
   submitted = signal(false);
 
   readonly passwordMinLength = 8;
-  private readonly emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   constructor(private auth: AuthService, private router: Router) {}
 
   get emailError(): string {
     const email = this.form.email.trim();
     if (!email) return 'Veuillez renseigner votre adresse email.';
-    if (!this.emailPattern.test(email)) return 'Veuillez saisir une adresse email valide.';
+    if (!isValidEmail(email)) return 'Veuillez saisir une adresse email valide.';
     return '';
   }
 

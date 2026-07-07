@@ -1,0 +1,103 @@
+<section class="settings-page">
+  <article class="settings-card settings-card-wide">
+    <div class="section-head">
+      <h2>Informations du restaurant</h2>
+      <p>Mettez à jour vos informations d'identité et de contact.</p>
+    </div>
+
+    <div class="settings-grid">
+      <label class="field">
+        <span>Nom</span>
+        <input [(ngModel)]="restaurantName" type="text" />
+      </label>
+
+      <label class="field">
+        <span>Responsable</span>
+        <input [(ngModel)]="managerName" type="text" />
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input [(ngModel)]="email" type="email" />
+      </label>
+
+      <label class="field">
+        <span>Téléphone</span>
+        <input [(ngModel)]="phone" type="text" />
+      </label>
+
+      <label class="field">
+        <span>Adresse</span>
+        <input [(ngModel)]="address" type="text" />
+      </label>
+
+      <label class="field">
+        <span>NINEA</span>
+        <input [(ngModel)]="ninea" type="text" />
+      </label>
+    </div>
+
+    <div class="settings-actions settings-actions-right">
+      <button type="button" class="primary-btn">Sauvegarder</button>
+    </div>
+  </article>
+
+  <section class="settings-bottom-grid">
+    <article class="settings-card">
+      <div class="section-head">
+        <h2>Notifications</h2>
+        <p>Gérez les alertes et les sons de confirmation.</p>
+      </div>
+
+      <div class="toggle-list">
+        <button type="button" class="toggle-item" (click)="paymentAlertEnabled = !paymentAlertEnabled">
+          <div class="toggle-copy">
+            <strong>Alerte à chaque paiement</strong>
+            <span>Recevoir une alerte à chaque transaction</span>
+          </div>
+          <span class="toggle-switch" [class.is-active]="paymentAlertEnabled">
+            <span class="toggle-thumb"></span>
+          </span>
+        </button>
+
+        <button type="button" class="toggle-item" (click)="confirmationSoundEnabled = !confirmationSoundEnabled">
+          <div class="toggle-copy">
+            <strong>Son de confirmation</strong>
+            <span>Jouer un son lors de la validation</span>
+          </div>
+          <span class="toggle-switch" [class.is-active]="confirmationSoundEnabled">
+            <span class="toggle-thumb"></span>
+          </span>
+        </button>
+      </div>
+    </article>
+
+    <article class="settings-card">
+      <div class="section-head">
+        <h2>Sécurité</h2>
+        <p>Modifier votre mot de passe.</p>
+      </div>
+
+      <div class="settings-grid settings-grid-single">
+        <label class="field">
+          <span>Mot de passe actuel</span>
+          <input [(ngModel)]="currentPassword" type="password" />
+        </label>
+
+        <label class="field">
+          <span>Nouveau mot de passe</span>
+          <input [(ngModel)]="newPassword" type="password" />
+        </label>
+
+        <label class="field">
+          <span>Confirmer</span>
+          <input [(ngModel)]="confirmPassword" type="password" />
+        </label>
+      </div>
+
+      <div class="settings-actions settings-actions-right">
+        <button type="button" class="primary-btn">Mettre à jour</button>
+      </div>
+    </article>
+  </section>
+</section>

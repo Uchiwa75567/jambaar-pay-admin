@@ -62,6 +62,52 @@ app-root {
   overflow: auto;
 }
 
+.p-menu.row-action-menu {
+  min-width: 11.5rem !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  overflow: hidden;
+}
+
+.p-menu.row-action-menu .p-menu-list {
+  padding: 0.375rem 0 !important;
+}
+
+.p-menu.row-action-menu .p-menuitem-content {
+  margin: 0 0.375rem;
+  border-radius: 0.5rem;
+}
+
+.p-menu.row-action-menu .p-menuitem-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.625rem !important;
+  padding: 0.625rem 0.75rem !important;
+  text-decoration: none !important;
+}
+
+.p-menu.row-action-menu .p-menuitem-icon {
+  color: #7b7b8a !important;
+  font-size: 0.875rem !important;
+}
+
+.p-menu.row-action-menu .p-menuitem-text {
+  color: var(--color-text-primary) !important;
+  font-family: var(--font-family-base) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+.p-menu.row-action-menu .p-menuitem-content:hover {
+  background: #f7f7f9 !important;
+}
+
+.p-menu.row-action-menu .p-menuitem.danger-item .p-menuitem-icon,
+.p-menu.row-action-menu .p-menuitem.danger-item .p-menuitem-text {
+  color: #d83b32 !important;
+}
+
 // Status badge utilities
 .badge-valid {
   background: #DCFCE7;

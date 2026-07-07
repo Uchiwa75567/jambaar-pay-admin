@@ -32,6 +32,11 @@
   scrollbar-gutter: stable;
 }
 
+.page-content.page-content-compact {
+  overflow: hidden;
+  padding-bottom: 0.85rem;
+}
+
 @media (max-width: 1200px) {
   .main-content {
     margin-left: $sidebar-width-min;

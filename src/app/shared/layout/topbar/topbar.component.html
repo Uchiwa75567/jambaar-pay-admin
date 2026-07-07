@@ -11,7 +11,7 @@
 
   <div class="topbar-right">
     <a
-      *ngIf="!isEnterprise"
+      *ngIf="showSettingsLink"
       routerLink="/settings"
       routerLinkActive="settings-active"
       class="icon-btn"
@@ -26,6 +26,14 @@
       aria-label="Paramètres non disponibles"
       aria-disabled="true">
       <img src="assets/icons/icon-settings.svg" alt="" class="settings-icon" aria-hidden="true" />
+    </button>
+
+    <button
+      *ngIf="isRestaurant"
+      type="button"
+      class="icon-btn notification-btn"
+      aria-label="Notifications du restaurant">
+      <i class="pi pi-bell icon-glyph" aria-hidden="true"></i>
     </button>
 
     <button

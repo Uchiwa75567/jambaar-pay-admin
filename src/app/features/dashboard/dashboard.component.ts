@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
           border: { display: false },
           ticks: {
             color: '#1A1A2E',
-            font: { size: 11, family: 'Inter', weight: '600' },
+            font: { size: 11, family: 'Segoe UI', weight: '600' },
             padding: 14,
             maxRotation: 0,
             minRotation: 0,
@@ -147,7 +147,7 @@ export class DashboardComponent implements OnInit {
           max: 110,
           grid: { color: 'rgba(0,0,0,0.045)' },
           border: { display: false },
-          ticks: { stepSize: 25, color: '#1A1A2E', font: { size: 12, family: 'Inter', weight: '600' } },
+          ticks: { stepSize: 25, color: '#1A1A2E', font: { size: 12, family: 'Segoe UI', weight: '600' } },
           position: 'left',
         },
       },

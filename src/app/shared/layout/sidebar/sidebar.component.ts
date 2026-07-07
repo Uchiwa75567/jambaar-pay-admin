@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { USER_ROLES } from '../../../core/models/auth.models';
 import { AuthService } from '../../../core/services/auth.service';
 
 interface NavItem {
@@ -32,10 +33,26 @@ export class SidebarComponent {
     { label: 'Historique', iconSrc: 'assets/icons/icon-audit.svg', route: '/enterprise-history' },
   ];
 
+  private readonly restaurantNavItems: NavItem[] = [
+    { label: 'Dashboard Global', iconSrc: 'assets/icons/icon-dashboard.svg', route: '/restaurant-dashboard' },
+    { label: 'Nouveau paiement', iconSrc: 'assets/icons/icon-transactions.svg', route: '/restaurant-payments' },
+    { label: 'Parametres', iconSrc: 'assets/icons/icon-settings.svg', route: '/restaurant-settings' },
+  ];
+
   constructor(private auth: AuthService) {}
 
   get navItems(): NavItem[] {
-    return this.auth.getProfile()?.role === 'Entreprise' ? this.enterpriseNavItems : this.adminNavItems;
+    const role = this.auth.getProfile()?.role;
+
+    if (role === USER_ROLES.enterprise) {
+      return this.enterpriseNavItems;
+    }
+
+    if (role === USER_ROLES.restaurant) {
+      return this.restaurantNavItems;
+    }
+
+    return this.adminNavItems;
   }
 
   logout(): void {

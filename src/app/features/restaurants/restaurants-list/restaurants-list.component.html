@@ -5,8 +5,8 @@
     <div class="toolbar-actions">
       <div class="table-search">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" placeholder="Recherchez un restaurant..."
-          [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" />
+        <input pInputText type="text" placeholder="Rechercher un restaurant"
+          [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" />
       </div>
 
       <!-- Filter dropdown -->
@@ -22,9 +22,24 @@
         </div>
       </div>
 
+      <input #restaurantImportInput class="file-input" type="file" accept=".csv,.json" (change)="onImportFileSelected($event)" />
+      <button class="btn-secondary" type="button" (click)="restaurantImportInput.click()">Importer</button>
+
+      <div class="export-wrapper">
+        <button class="btn-secondary" type="button" (click)="toggleExportMenu()">Exporter</button>
+        <div class="export-menu" *ngIf="exportMenuOpen()">
+          <button class="export-item" type="button" (click)="exportExcel()">Exporter Excel</button>
+          <button class="export-item" type="button" (click)="exportPdf()">Exporter PDF</button>
+        </div>
+      </div>
+
       <button class="btn-add" type="button" routerLink="/restaurants/add">Ajouter un restaurant</button>
     </div>
   </div>
+
+  <p class="feedback-message" *ngIf="feedback() as state" [class.is-error]="state.type === 'error'">
+    {{ state.message }}
+  </p>
 
   <p-table [value]="restaurants()" styleClass="restaurants-table">
     <ng-template pTemplate="header">
@@ -46,7 +61,7 @@
           <button class="action-btn" (click)="actionMenu.toggle($event)" aria-label="Actions restaurant">
             <i class="pi pi-ellipsis-v"></i>
           </button>
-          <p-menu #actionMenu [popup]="true" [model]="getMenuItems(restaurant)" appendTo="body"></p-menu>
+          <p-menu #actionMenu [popup]="true" [model]="getMenuItems()" appendTo="body" styleClass="row-action-menu"></p-menu>
         </td>
       </tr>
     </ng-template>

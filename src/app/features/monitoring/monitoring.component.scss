@@ -51,6 +51,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .table-search {
@@ -152,6 +154,32 @@
 // ── Export dropdown wrapper ───────────────────────────────────────────────────
 .export-wrapper {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.file-input {
+  display: none;
+}
+
+.btn-import {
+  height: 2.625rem;
+  padding: 0 1.25rem;
+  border: 1px solid #dedede;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #696969;
+  font-family: var(--font-family-base);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+
+  &:hover {
+    border-color: #bbb;
+    background: #fafafa;
+  }
 }
 
 .btn-export {
@@ -213,6 +241,19 @@
   flex-shrink: 0;
 }
 
+.feedback-message {
+  margin: 0;
+  padding: 0 1.5rem;
+  color: $green-valid;
+  font-family: var(--font-family-base);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.feedback-message.is-error {
+  color: $red-danger;
+}
+
 // ── PrimeNG Table ─────────────────────────────────────────────────────────────
 :host ::ng-deep .monitoring-table {
   flex: 1;
@@ -223,8 +264,8 @@
     background: #fff !important;
     color: $text-primary !important;
     font-family: var(--font-family-base) !important;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
     text-transform: none;
   }
 
@@ -234,7 +275,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
     color: #454545;
     font-family: var(--font-family-base) !important;
-    font-size: 0.9375rem !important;
+    font-size: 0.875rem !important;
     font-weight: 400 !important;
   }
 
@@ -249,7 +290,7 @@
   background: transparent;
   color: $green-valid;
   font-family: var(--font-family-base);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 400;
 }
 
@@ -260,7 +301,7 @@
   background: transparent;
   color: #d4a017;
   font-family: var(--font-family-base);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 400;
 }
 
@@ -271,12 +312,12 @@
   background: transparent;
   color: $red-danger;
   font-family: var(--font-family-base);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 400;
 }
 
 .txn-id {
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   color: $text-primary !important;
 }
 

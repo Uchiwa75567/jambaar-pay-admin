@@ -18,8 +18,8 @@
     <div class="toolbar-right">
       <div class="table-search">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" placeholder="Recherchez une entrep...."
-          [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" />
+        <input pInputText type="text" placeholder="Rechercher une transaction, une entreprise ou un restaurant"
+          [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" />
       </div>
 
       <!-- Filter dropdown -->
@@ -37,6 +37,8 @@
 
       <!-- Export dropdown -->
       <div class="export-wrapper">
+        <input #monitoringImportInput class="file-input" type="file" accept=".csv,.json" (change)="onImportFileSelected($event)" />
+        <button class="btn-import" type="button" (click)="monitoringImportInput.click()">Importer</button>
         <button class="btn-export" type="button" (click)="toggleExportMenu()">Exporter</button>
         <div class="export-menu" *ngIf="exportMenuOpen()">
           <button class="export-item" type="button" (click)="exportPDF()">
@@ -51,6 +53,10 @@
       </div>
     </div>
   </div>
+
+  <p class="feedback-message" *ngIf="feedback() as state" [class.is-error]="state.type === 'error'">
+    {{ state.message }}
+  </p>
 
   <p-table [value]="transactions()" styleClass="monitoring-table">
     <ng-template pTemplate="header">

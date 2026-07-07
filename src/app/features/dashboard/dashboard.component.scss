@@ -271,8 +271,8 @@
     border-bottom: 1px solid rgba(113, 113, 113, 0.26) !important;
     color: $text-primary !important;
     font-family: var(--font-family-base) !important;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
     text-transform: none;
     letter-spacing: 0;
   }
@@ -283,8 +283,8 @@
     border-bottom: 0 !important;
     color: #444 !important;
     font-family: var(--font-family-base) !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
   }
 
   .p-datatable-tbody > tr:last-child > td {
@@ -303,8 +303,8 @@
   background: transparent;
   color: $green-valid;
   font-family: var(--font-family-base);
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 // ── Responsive ────────────────────────────────────────────────────────────────

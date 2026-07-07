@@ -100,6 +100,12 @@
     transition: filter 0.2s;
   }
 
+  .icon-glyph {
+    color: #1f1e34;
+    font-size: 1.25rem;
+    transition: color 0.2s;
+  }
+
   &.settings-active .settings-icon {
     filter: $filter-orange;
   }
@@ -111,6 +117,10 @@
       background: transparent;
     }
   }
+}
+
+.notification-btn:hover .icon-glyph {
+  color: $orange-accent;
 }
 
 .mobile-logout-btn {

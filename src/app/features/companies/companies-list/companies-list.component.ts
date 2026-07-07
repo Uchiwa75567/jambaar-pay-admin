@@ -1,4 +1,4 @@
-import { Component, signal, computed, HostListener, ElementRef } from '@angular/core';
+import { Component, ElementRef, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -8,142 +8,133 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component';
-import { Company } from '../../../core/models/company.models';
-
-const MOCK_COMPANIES: Company[] = [
-  { id: '1',  name: 'Sonatel SA',       employeeCount: 567, totalBalance: 878_929, registrationDate: '2026-04-15', status: 'Actif'   },
-  { id: '2',  name: 'Orange SN',        employeeCount: 342, totalBalance: 450_000, registrationDate: '2026-04-10', status: 'Actif'   },
-  { id: '3',  name: 'Ecobank Sénégal',  employeeCount: 210, totalBalance: 320_500, registrationDate: '2026-03-22', status: 'Inactif' },
-  { id: '4',  name: 'Expresso Télécom', employeeCount: 180, totalBalance: 215_300, registrationDate: '2026-03-15', status: 'Actif'   },
-  { id: '5',  name: 'Total Sénégal',    employeeCount: 420, totalBalance: 610_000, registrationDate: '2026-03-01', status: 'Actif'   },
-  { id: '6',  name: 'Tigo SN',          employeeCount: 290, totalBalance: 380_750, registrationDate: '2026-02-18', status: 'Inactif' },
-  { id: '7',  name: 'CBAO',             employeeCount: 150, totalBalance: 190_000, registrationDate: '2026-02-05', status: 'Actif'   },
-  { id: '8',  name: 'Société Générale', employeeCount: 320, totalBalance: 500_200, registrationDate: '2026-01-20', status: 'Actif'   },
-  { id: '9',  name: 'Attijariwafa',     employeeCount: 275, totalBalance: 430_100, registrationDate: '2026-01-12', status: 'Inactif' },
-  { id: '10', name: 'BHS Sénégal',      employeeCount: 130, totalBalance: 160_000, registrationDate: '2025-12-10', status: 'Actif'   },
-  { id: '11', name: 'Orabank SN',        employeeCount: 195, totalBalance: 280_400, registrationDate: '2025-11-22', status: 'Actif'   },
-  { id: '12', name: 'UBA Sénégal',       employeeCount: 110, totalBalance: 140_600, registrationDate: '2025-10-15', status: 'Inactif' },
-];
-
-type StatusFilter = 'Tous' | 'Actif' | 'Inactif';
-type DateFilter   = 'Tous' | 'Ce mois' | 'Ce trimestre' | 'Cette année';
+import {
+  CompaniesListFacade,
+  CompanyDateFilter,
+  CompanyStatusFilter,
+} from './companies-list.facade';
 
 @Component({
   selector: 'app-companies-list',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, TableModule, ButtonModule, InputTextModule, MenuModule, StatusBadgeComponent],
+  providers: [CompaniesListFacade],
   templateUrl: './companies-list.component.html',
   styleUrls: ['./companies-list.component.scss'],
 })
 export class CompaniesListComponent {
-  searchTerm   = signal('');
-  statusFilter = signal<StatusFilter>('Tous');
-  dateFilter   = signal<DateFilter>('Tous');
-  pageSize     = signal(5);
-  currentPage  = signal(1);
+  readonly searchTerm = this.facade.searchTerm;
+  readonly statusFilter = this.facade.statusFilter;
+  readonly dateFilter = this.facade.dateFilter;
+  readonly pageSize = this.facade.pageSize;
+  readonly currentPage = this.facade.currentPage;
+  readonly feedback = this.facade.feedback;
+  readonly filterLabel = this.facade.filterLabel;
+  readonly pageSizeOptions = this.facade.pageSizeOptions;
+  readonly statusOptions = this.facade.statusOptions;
+  readonly dateOptions = this.facade.dateOptions;
+  readonly visiblePages = this.facade.visiblePages;
+  readonly totalPages = this.facade.totalPages;
+  readonly companies = this.facade.companies;
 
-  pageSizeMenuOpen = signal(false);
-  filterMenuOpen   = signal(false);
+  readonly pageSizeMenuOpen = signal(false);
+  readonly filterMenuOpen = signal(false);
+  readonly exportMenuOpen = signal(false);
 
-  pageSizeOptions  = [5, 10];
-  statusOptions: StatusFilter[] = ['Tous', 'Actif', 'Inactif'];
-  dateOptions: DateFilter[]     = ['Tous', 'Ce mois', 'Ce trimestre', 'Cette année'];
-
-  get filterLabel(): string {
-    const s = this.statusFilter();
-    const d = this.dateFilter();
-    if (s !== 'Tous') return s;
-    if (d !== 'Tous') return d;
-    return 'Tous';
-  }
-
-  private get now() { return new Date(); }
-
-  private inDateRange(dateStr: string, range: DateFilter): boolean {
-    if (range === 'Tous') return true;
-    const d = new Date(dateStr);
-    const now = this.now;
-    if (range === 'Ce mois')      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-    if (range === 'Ce trimestre') return d.getFullYear() === now.getFullYear() && Math.floor(d.getMonth() / 3) === Math.floor(now.getMonth() / 3);
-    if (range === 'Cette année')  return d.getFullYear() === now.getFullYear();
-    return true;
-  }
-
-  filtered = computed(() => {
-    const q  = this.searchTerm().toLowerCase();
-    const sf = this.statusFilter();
-    const df = this.dateFilter();
-    return MOCK_COMPANIES.filter(c => {
-      if (q && !c.name.toLowerCase().includes(q)) return false;
-      if (sf !== 'Tous' && c.status !== sf) return false;
-      if (!this.inDateRange(c.registrationDate, df)) return false;
-      return true;
-    });
-  });
-
-  totalPages  = computed(() => Math.max(1, Math.ceil(this.filtered().length / this.pageSize())));
-
-  visiblePages = computed<(number | '...')[]>(() => {
-    const total = this.totalPages();
-    const current = this.currentPage();
-    if (total <= 6) return Array.from({ length: total }, (_, index) => index + 1);
-    if (current <= 3) return [1, 2, 3, '...', total];
-    if (current >= total - 2) return [1, '...', total - 2, total - 1, total];
-    return [1, '...', current - 1, current, current + 1, '...', total];
-  });
-
-  companies = computed(() => {
-    const start = (this.currentPage() - 1) * this.pageSize();
-    return this.filtered().slice(start, start + this.pageSize());
-  });
-
-  constructor(private el: ElementRef) {}
+  constructor(
+    private readonly el: ElementRef,
+    private readonly facade: CompaniesListFacade
+  ) {}
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(e: MouseEvent): void {
-    if (!this.el.nativeElement.contains(e.target)) {
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.el.nativeElement.contains(event.target)) {
       this.pageSizeMenuOpen.set(false);
       this.filterMenuOpen.set(false);
+      this.exportMenuOpen.set(false);
     }
   }
 
+  onSearchChange(value: string): void {
+    this.facade.setSearchTerm(value);
+  }
+
   setPageSize(size: number): void {
-    this.pageSize.set(size);
-    this.currentPage.set(1);
+    this.facade.setPageSize(size);
     this.pageSizeMenuOpen.set(false);
   }
 
   setPage(page: number | '...'): void {
-    if (page === '...') return;
-    if (page < 1 || page > this.totalPages()) return;
-    this.currentPage.set(page);
+    this.facade.setPage(page);
   }
 
-  prevPage(): void { if (this.currentPage() > 1) this.currentPage.update(p => p - 1); }
-  nextPage(): void { if (this.currentPage() < this.totalPages()) this.currentPage.update(p => p + 1); }
+  prevPage(): void {
+    this.facade.prevPage();
+  }
 
-  setStatusFilter(s: StatusFilter): void {
-    this.statusFilter.set(s);
-    this.dateFilter.set('Tous');
-    this.currentPage.set(1);
+  nextPage(): void {
+    this.facade.nextPage();
+  }
+
+  setStatusFilter(status: CompanyStatusFilter): void {
+    this.facade.setStatusFilter(status);
     this.filterMenuOpen.set(false);
   }
 
-  setDateFilter(d: DateFilter): void {
-    this.dateFilter.set(d);
-    this.statusFilter.set('Tous');
-    this.currentPage.set(1);
+  setDateFilter(date: CompanyDateFilter): void {
+    this.facade.setDateFilter(date);
     this.filterMenuOpen.set(false);
   }
 
-  toggleFilterMenu(): void   { this.filterMenuOpen.update(v => !v); }
-  togglePageSizeMenu(): void { this.pageSizeMenuOpen.update(v => !v); }
+  toggleFilterMenu(): void {
+    this.filterMenuOpen.update(isOpen => !isOpen);
+  }
 
-  getMenuItems(company: Company): MenuItem[] {
+  togglePageSizeMenu(): void {
+    this.pageSizeMenuOpen.update(isOpen => !isOpen);
+  }
+
+  toggleExportMenu(): void {
+    this.exportMenuOpen.update(isOpen => !isOpen);
+  }
+
+  getMenuItems(): MenuItem[] {
     return [
       { label: 'Voir détails', icon: 'pi pi-eye' },
-      { label: 'Modifier',     icon: 'pi pi-pencil' },
-      { label: 'Désactiver',   icon: 'pi pi-ban', styleClass: 'text-red-500' },
+      { label: 'Modifier', icon: 'pi pi-pencil' },
+      { label: 'Désactiver', icon: 'pi pi-ban', styleClass: 'danger-item' },
     ];
+  }
+
+  async onImportFileSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    try {
+      await this.facade.importCompanies(file);
+    } catch (error) {
+      this.facade.setErrorFeedback(error, 'Import impossible.');
+    } finally {
+      input.value = '';
+    }
+  }
+
+  exportExcel(): void {
+    this.facade.exportExcel();
+    this.exportMenuOpen.set(false);
+  }
+
+  exportPdf(): void {
+    try {
+      this.facade.exportPdf();
+    } catch (error) {
+      this.facade.setErrorFeedback(error, 'Export PDF impossible.');
+    } finally {
+      this.exportMenuOpen.set(false);
+    }
   }
 }

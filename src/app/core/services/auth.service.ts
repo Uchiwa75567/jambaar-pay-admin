@@ -1,7 +1,7 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from './storage.service';
-import { AuthState, AdminProfile, LoginForm } from '../models/auth.models';
+import { AuthState, AdminProfile, LoginForm, UserRole, USER_ROLES } from '../models/auth.models';
 
 const TOKEN_KEY = 'jp_token';
 const USER_KEY  = 'jp_user';
@@ -9,6 +9,8 @@ const ADMIN_EMAIL = 'admin@jambaarpay.com';
 const ADMIN_PASSWORD = 'Admin@1234';
 const ENTERPRISE_EMAIL = 'entreprise@jambaarpay.com';
 const ENTERPRISE_PASSWORD = 'Entreprise@1234';
+const RESTAURANT_EMAIL = 'restaurant@jambaarpay.com';
+const RESTAURANT_PASSWORD = 'Restaurant@1234';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -34,15 +36,22 @@ export class AuthService {
         id: '1',
         name: 'Abdoulaye Diallo',
         email: ADMIN_EMAIL,
-        role: 'Admin Principal',
+        role: USER_ROLES.admin,
         password: ADMIN_PASSWORD,
       },
       {
         id: '2',
         name: 'Sonatel SA',
         email: ENTERPRISE_EMAIL,
-        role: 'Entreprise',
+        role: USER_ROLES.enterprise,
         password: ENTERPRISE_PASSWORD,
+      },
+      {
+        id: '3',
+        name: 'Restaurant Le Djolof',
+        email: RESTAURANT_EMAIL,
+        role: USER_ROLES.restaurant,
+        password: RESTAURANT_PASSWORD,
       },
     ];
     const user = mockUsers.find(item => item.email === email && item.password === form.password);
@@ -70,7 +79,29 @@ export class AuthService {
   }
 
   getLandingRoute(): string {
-    return this.getProfile()?.role === 'Entreprise' ? '/enterprise-dashboard' : '/dashboard';
+    if (this.getRole() === USER_ROLES.enterprise) {
+      return '/enterprise-dashboard';
+    }
+
+    if (this.getRole() === USER_ROLES.restaurant) {
+      return '/restaurant-dashboard';
+    }
+
+    return '/dashboard';
+  }
+
+  getRedirectRoute(): string {
+    return this.isAuthenticated() ? this.getLandingRoute() : '/login';
+  }
+
+  getRole(): UserRole | null {
+    return this._state().role ?? this.getProfile()?.role ?? null;
+  }
+
+  hasRole(roles: UserRole | UserRole[]): boolean {
+    const allowedRoles = Array.isArray(roles) ? roles : [roles];
+    const currentRole = this.getRole();
+    return currentRole !== null && allowedRoles.includes(currentRole);
   }
 
   logout(): void {

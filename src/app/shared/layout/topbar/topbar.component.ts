@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { USER_ROLES } from '../../../core/models/auth.models';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -19,7 +20,15 @@ export class TopbarComponent {
   constructor(private auth: AuthService) {}
 
   get isEnterprise(): boolean {
-    return this.profile?.role === 'Entreprise';
+    return this.profile?.role === USER_ROLES.enterprise;
+  }
+
+  get isRestaurant(): boolean {
+    return this.profile?.role === USER_ROLES.restaurant;
+  }
+
+  get showSettingsLink(): boolean {
+    return !this.isEnterprise && !this.isRestaurant;
   }
 
   get initials(): string {
