@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
+import { Company } from '../../../core/models/company.models';
+import { CompaniesRepositoryService } from '../../../core/services/companies-repository.service';
 import {
   hasMinLength,
   hasValue,
@@ -34,7 +36,10 @@ export class CompanyAddComponent {
     address: '',
   };
 
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly companiesRepository: CompaniesRepositoryService,
+  ) {}
 
   onCancel(): void {
     this.router.navigate(['/companies']);
@@ -47,7 +52,7 @@ export class CompanyAddComponent {
       return;
     }
 
-    // TODO: call API
+    this.companiesRepository.upsert(this.buildCompany());
     this.router.navigate(['/companies']);
   }
 
@@ -107,5 +112,22 @@ export class CompanyAddComponent {
     if (!this.form.address.trim()) return '';
     if (!hasMinLength(this.form.address, 5)) return 'L’adresse doit contenir au moins 5 caracteres.';
     return '';
+  }
+
+  private buildCompany(): Company {
+    return {
+      id: `company-${Date.now()}`,
+      name: this.form.name.trim(),
+      employeeCount: 0,
+      totalBalance: this.toNumber(this.form.initialBalance),
+      registrationDate: new Date().toISOString().slice(0, 10),
+      status: 'Actif',
+    };
+  }
+
+  private toNumber(value: string): number {
+    const normalized = value.replace(/[^\d.-]/g, '');
+    const parsed = Number(normalized);
+    return Number.isFinite(parsed) ? parsed : 0;
   }
 }

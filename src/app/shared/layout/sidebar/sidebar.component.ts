@@ -36,13 +36,14 @@ export class SidebarComponent {
   private readonly restaurantNavItems: NavItem[] = [
     { label: 'Dashboard Global', iconSrc: 'assets/icons/icon-dashboard.svg', route: '/restaurant-dashboard' },
     { label: 'Nouveau paiement', iconSrc: 'assets/icons/icon-transactions.svg', route: '/restaurant-payments' },
+    { label: 'Historique', iconSrc: 'assets/icons/icon-audit.svg', route: '/restaurant-history' },
     { label: 'Parametres', iconSrc: 'assets/icons/icon-settings.svg', route: '/restaurant-settings' },
   ];
 
   constructor(private auth: AuthService) {}
 
   get navItems(): NavItem[] {
-    const role = this.auth.getProfile()?.role;
+    const role = this.auth.getRole();
 
     if (role === USER_ROLES.enterprise) {
       return this.enterpriseNavItems;

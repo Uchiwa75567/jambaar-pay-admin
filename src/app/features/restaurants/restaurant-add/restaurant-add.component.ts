@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { Restaurant } from '../../../core/models/restaurant.models';
+import { RestaurantsRepositoryService } from '../../../core/services/restaurants-repository.service';
 import {
   hasMinLength,
   hasValue,
@@ -43,7 +45,10 @@ export class RestaurantAddComponent {
     { label: 'Internationale',value: 'internationale'},
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly restaurantsRepository: RestaurantsRepositoryService,
+  ) {}
 
   onCancel(): void {
     this.router.navigate(['/restaurants']);
@@ -56,7 +61,7 @@ export class RestaurantAddComponent {
       return;
     }
 
-    // TODO: call API
+    this.restaurantsRepository.upsert(this.buildRestaurant());
     this.router.navigate(['/restaurants']);
   }
 
@@ -116,5 +121,24 @@ export class RestaurantAddComponent {
     if (!this.form.address.trim()) return '';
     if (!hasMinLength(this.form.address, 5)) return 'L’adresse doit contenir au moins 5 caracteres.';
     return '';
+  }
+
+  private buildRestaurant(): Restaurant {
+    return {
+      id: `restaurant-${Date.now()}`,
+      name: this.form.name.trim(),
+      address: this.form.address.trim() || 'Non renseignee',
+      phone: this.form.phone.trim() || undefined,
+      totalTransactions: 0,
+      totalVolume: this.toNumber(this.form.initialBalance),
+      registrationDate: new Date().toISOString().slice(0, 10),
+      status: 'Actif',
+    };
+  }
+
+  private toNumber(value: string): number {
+    const normalized = value.replace(/[^\d.-]/g, '');
+    const parsed = Number(normalized);
+    return Number.isFinite(parsed) ? parsed : 0;
   }
 }

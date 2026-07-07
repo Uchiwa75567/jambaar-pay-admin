@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { RestaurantPaymentsService } from '../../core/services/restaurant-payments.service';
 
 interface RecentPayment {
   initials: string;
@@ -26,6 +27,8 @@ interface PartnerCompany {
   styleUrls: ['./restaurant-dashboard.component.scss'],
 })
 export class RestaurantDashboardComponent {
+  readonly qrPhoneNumber = this.restaurantPayments.qrPhoneNumber;
+  readonly qrCodeUrl = this.restaurantPayments.qrCodeUrl;
   readonly recentPayments: RecentPayment[] = [
     { initials: 'SM', customer: 'Sophie Martin', table: 'Table 4', time: '13h25', amount: '+ 14 500 FCFA', tone: 'blue' },
     { initials: 'JD', customer: 'Jean Dupont', table: 'Table 12', time: '13h42', amount: '+ 8 200 FCFA', tone: 'violet' },
@@ -39,4 +42,6 @@ export class RestaurantDashboardComponent {
     { name: 'Air Senegal', employees: '420', amount: '6 800 000', status: 'Inactif' },
     { name: 'CFAO Senegal', employees: '1 860', amount: '27 100 000', status: 'Actif' },
   ];
+
+  constructor(private readonly restaurantPayments: RestaurantPaymentsService) {}
 }

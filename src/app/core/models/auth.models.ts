@@ -12,17 +12,18 @@ export interface LoginForm {
   rememberMe: boolean;
 }
 
-export interface AuthState {
-  userId: string | null;
-  token: string | null;
-  role: UserRole | null;
-  isAuthenticated: boolean;
-}
-
 export interface AdminProfile {
   id: string;
   name: string;
   email: string;
   role: UserRole;
   avatarUrl?: string;
+}
+
+export interface AuthState {
+  userId: string | null;
+  token: string | null;
+  role: UserRole | null;
+  profile: AdminProfile | null;
+  isAuthenticated: boolean;
 }

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { USER_ROLES } from '../../../core/models/auth.models';
+import { AdminProfile, USER_ROLES } from '../../../core/models/auth.models';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -15,9 +15,11 @@ export class TopbarComponent {
   @Input() pageTitle = 'Dashboard';
   @Input() pageSubtitle = '';
 
-  profile = this.auth.getProfile();
-
   constructor(private auth: AuthService) {}
+
+  get profile(): AdminProfile | null {
+    return this.auth.profile();
+  }
 
   get isEnterprise(): boolean {
     return this.profile?.role === USER_ROLES.enterprise;
@@ -29,11 +31,6 @@ export class TopbarComponent {
 
   get showSettingsLink(): boolean {
     return !this.isEnterprise && !this.isRestaurant;
-  }
-
-  get initials(): string {
-    if (!this.profile?.name) return 'A';
-    return this.profile.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
   }
 
   logout(): void {

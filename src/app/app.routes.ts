@@ -13,6 +13,7 @@ import { EnterpriseEmployeesComponent } from './features/enterprise-employees/en
 import { EnterpriseEmployeeAddComponent } from './features/enterprise-employee-add/enterprise-employee-add.component';
 import { EnterpriseHistoryComponent } from './features/enterprise-history/enterprise-history.component';
 import { RestaurantDashboardComponent } from './features/restaurant-dashboard/restaurant-dashboard.component';
+import { RestaurantHistoryComponent } from './features/restaurant-history/restaurant-history.component';
 import { RestaurantPaymentsComponent } from './features/restaurant-payments/restaurant-payments.component';
 import { RestaurantSettingsComponent } from './features/restaurant-settings/restaurant-settings.component';
 import { CompaniesListComponent } from './features/companies/companies-list/companies-list.component';
@@ -58,6 +59,7 @@ const restaurantRoutes = withRoles(
   [
     { path: 'restaurant-dashboard', component: RestaurantDashboardComponent },
     { path: 'restaurant-payments', component: RestaurantPaymentsComponent },
+    { path: 'restaurant-history', component: RestaurantHistoryComponent },
     { path: 'restaurant-settings', component: RestaurantSettingsComponent },
   ],
   [USER_ROLES.restaurant]
@@ -75,7 +77,7 @@ export const routes: Routes = [
       ...adminRoutes,
       ...enterpriseRoutes,
       ...restaurantRoutes,
-      { path: 'settings', component: SettingsComponent },
+      ...withRoles([{ path: 'settings', component: SettingsComponent }], [USER_ROLES.admin]),
     ],
   },
   { path: '**', canActivate: [landingGuard], children: [] },

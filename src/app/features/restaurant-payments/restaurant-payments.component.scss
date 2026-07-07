@@ -131,6 +131,25 @@
   height: auto;
 }
 
+.qr-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.9rem;
+  text-align: center;
+}
+
+.qr-meta strong {
+  color: #23223b;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.qr-meta span {
+  color: #7f7c8d;
+  font-size: 0.8rem;
+}
+
 .secondary-btn,
 .primary-btn {
   padding: 0.85rem 1.2rem;
@@ -142,9 +161,30 @@
   color: #2a2940;
 }
 
+.secondary-btn-static {
+  cursor: default;
+  opacity: 1;
+}
+
 .primary-btn {
   background: #f07a2a;
   color: #fff;
+}
+
+.primary-btn:disabled {
+  opacity: 0.72;
+  cursor: default;
+}
+
+.feedback-message {
+  margin: 1rem 0 0;
+  color: #228b50;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.feedback-message.is-error {
+  color: #c74747;
 }
 
 @media (max-width: 700px) {

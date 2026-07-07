@@ -26,6 +26,7 @@ export class MainLayoutComponent {
     '/enterprise-history': { title: 'Historique des transaction', subtitle: 'Consultez toutes les transactions' },
     '/restaurant-dashboard': { title: 'Dashboard Global', subtitle: "Vue d'ensemble de votre restaurant" },
     '/restaurant-payments': { title: 'Nouveau paiement', subtitle: 'Encaissez rapidement vos clients et partenaires' },
+    '/restaurant-history': { title: 'Historique des paiements', subtitle: 'Retrouvez toutes les transactions de votre restaurant' },
     '/restaurant-settings': { title: 'Parametres', subtitle: 'Configurez votre espace restaurant' },
     '/companies':       { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },
     '/companies/add':   { title: 'Gestion des Entreprises',   subtitle: 'Gérer toutes les entreprises partenaires'        },

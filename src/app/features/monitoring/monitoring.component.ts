@@ -8,6 +8,7 @@ import { KpiCardComponent } from '../../shared/components/kpi-card/kpi-card.comp
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 import { DataTransferService, ExportColumn, ImportedRecord } from '../../core/services/data-transfer.service';
 import { DatasetStorageService } from '../../core/services/dataset-storage.service';
+import { buildVisiblePages, sliceCurrentPage } from '../../core/utils/pagination';
 
 export interface MonitoringTransaction {
   id: string;
@@ -78,17 +79,11 @@ export class MonitoringComponent {
   totalPages = computed(() => Math.max(1, Math.ceil(this.filtered().length / this.pageSize())));
 
   visiblePages = computed<(number | '...')[]>(() => {
-    const total = this.totalPages();
-    const current = this.currentPage();
-    if (total <= 6) return Array.from({ length: total }, (_, index) => index + 1);
-    if (current <= 3) return [1, 2, 3, '...', total];
-    if (current >= total - 2) return [1, '...', total - 2, total - 1, total];
-    return [1, '...', current - 1, current, current + 1, '...', total];
+    return buildVisiblePages(this.totalPages(), this.currentPage());
   });
 
   transactions = computed(() => {
-    const start = (this.currentPage() - 1) * this.pageSize();
-    return this.filtered().slice(start, start + this.pageSize());
+    return sliceCurrentPage(this.filtered(), this.currentPage(), this.pageSize());
   });
 
   private readonly exportColumns: ExportColumn<MonitoringTransaction>[] = [

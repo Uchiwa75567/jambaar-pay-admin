@@ -2,6 +2,7 @@ import { Component, computed, ElementRef, HostListener, signal } from '@angular/
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { DataTransferService, ExportColumn } from '../../core/services/data-transfer.service';
+import { buildVisiblePages, sliceCurrentPage } from '../../core/utils/pagination';
 
 interface HistoryTransaction {
   employee: string;
@@ -51,17 +52,11 @@ export class EnterpriseHistoryComponent {
   totalPages = computed(() => Math.max(1, Math.ceil(this.transactions.length / this.pageSize())));
 
   visiblePages = computed<(number | '...')[]>(() => {
-    const total = this.totalPages();
-    const current = this.currentPage();
-    if (total <= 6) return Array.from({ length: total }, (_, index) => index + 1);
-    if (current <= 3) return [1, 2, 3, '...', total];
-    if (current >= total - 2) return [1, '...', total - 2, total - 1, total];
-    return [1, '...', current - 1, current, current + 1, '...', total];
+    return buildVisiblePages(this.totalPages(), this.currentPage());
   });
 
   paginatedTransactions = computed(() => {
-    const start = (this.currentPage() - 1) * this.pageSize();
-    return this.transactions.slice(start, start + this.pageSize());
+    return sliceCurrentPage(this.transactions, this.currentPage(), this.pageSize());
   });
 
   constructor(

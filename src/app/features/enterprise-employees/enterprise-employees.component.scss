@@ -24,8 +24,10 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: auto;
+  min-width: fit-content;
   height: 2.375rem;
-  padding: 0 0.625rem;
+  padding: 0 0.875rem;
   border-radius: 0.375rem;
   font-family: var(--font-family-base);
   font-size: 0.875rem;
@@ -33,34 +35,44 @@
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .action-icon {
+  display: block;
   flex: 0 0 auto;
 }
 
 .action-primary {
-  width: 10.1875rem;
   border: 1px solid #E8722A;
   background: #E8722A;
   color: #fff;
 }
 
 .action-secondary {
-  width: 8.8125rem;
   border: 1px solid #9a9a9a;
   background: #fff;
   color: #9a9a9a;
 }
 
 .action-secondary:last-child {
-  width: 11.125rem;
   color: #9a9a9a;
 }
 
 .export-action {
-  width: auto;
   padding: 0 1rem;
+}
+
+.action-btn .pi,
+.table-search .pi,
+.filter-btn .pi,
+.rows-btn .pi,
+.row-action .pi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  line-height: 1;
 }
 
 .feedback-message {

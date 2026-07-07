@@ -1,32 +1,17 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { Company } from '../../../core/models/company.models';
 import { DataTransferService, ExportColumn, ImportedRecord } from '../../../core/services/data-transfer.service';
-import { DatasetStorageService } from '../../../core/services/dataset-storage.service';
+import { CompaniesRepositoryService } from '../../../core/services/companies-repository.service';
+import { buildVisiblePages, sliceCurrentPage } from '../../../core/utils/pagination';
 
 export type CompanyStatusFilter = 'Tous' | 'Actif' | 'Inactif';
 export type CompanyDateFilter = 'Tous' | 'Ce mois' | 'Ce trimestre' | 'Cette année';
 export type CompanyFeedbackState = { type: 'success' | 'error'; message: string } | null;
 
-const COMPANIES_STORAGE_KEY = 'jp_companies_dataset';
 const DEFAULT_PAGE_SIZE = 5;
 const PAGE_SIZE_OPTIONS = [5, 10];
 const STATUS_OPTIONS: CompanyStatusFilter[] = ['Tous', 'Actif', 'Inactif'];
 const DATE_OPTIONS: CompanyDateFilter[] = ['Tous', 'Ce mois', 'Ce trimestre', 'Cette année'];
-
-const MOCK_COMPANIES: Company[] = [
-  { id: '1', name: 'Sonatel SA', employeeCount: 567, totalBalance: 878_929, registrationDate: '2026-04-15', status: 'Actif' },
-  { id: '2', name: 'Orange SN', employeeCount: 342, totalBalance: 450_000, registrationDate: '2026-04-10', status: 'Actif' },
-  { id: '3', name: 'Ecobank Sénégal', employeeCount: 210, totalBalance: 320_500, registrationDate: '2026-03-22', status: 'Inactif' },
-  { id: '4', name: 'Expresso Télécom', employeeCount: 180, totalBalance: 215_300, registrationDate: '2026-03-15', status: 'Actif' },
-  { id: '5', name: 'Total Sénégal', employeeCount: 420, totalBalance: 610_000, registrationDate: '2026-03-01', status: 'Actif' },
-  { id: '6', name: 'Tigo SN', employeeCount: 290, totalBalance: 380_750, registrationDate: '2026-02-18', status: 'Inactif' },
-  { id: '7', name: 'CBAO', employeeCount: 150, totalBalance: 190_000, registrationDate: '2026-02-05', status: 'Actif' },
-  { id: '8', name: 'Société Générale', employeeCount: 320, totalBalance: 500_200, registrationDate: '2026-01-20', status: 'Actif' },
-  { id: '9', name: 'Attijariwafa', employeeCount: 275, totalBalance: 430_100, registrationDate: '2026-01-12', status: 'Inactif' },
-  { id: '10', name: 'BHS Sénégal', employeeCount: 130, totalBalance: 160_000, registrationDate: '2025-12-10', status: 'Actif' },
-  { id: '11', name: 'Orabank SN', employeeCount: 195, totalBalance: 280_400, registrationDate: '2025-11-22', status: 'Actif' },
-  { id: '12', name: 'UBA Sénégal', employeeCount: 110, totalBalance: 140_600, registrationDate: '2025-10-15', status: 'Inactif' },
-];
 
 @Injectable()
 export class CompaniesListFacade {
@@ -87,34 +72,18 @@ export class CompaniesListFacade {
   readonly totalPages = computed(() => Math.max(1, Math.ceil(this.filteredCompanies().length / this.pageSize())));
 
   readonly visiblePages = computed<(number | '...')[]>(() => {
-    const total = this.totalPages();
-    const current = this.currentPage();
-
-    if (total <= 6) {
-      return Array.from({ length: total }, (_, index) => index + 1);
-    }
-
-    if (current <= 3) {
-      return [1, 2, 3, '...', total];
-    }
-
-    if (current >= total - 2) {
-      return [1, '...', total - 2, total - 1, total];
-    }
-
-    return [1, '...', current - 1, current, current + 1, '...', total];
+    return buildVisiblePages(this.totalPages(), this.currentPage());
   });
 
   readonly companies = computed(() => {
-    const start = (this.currentPage() - 1) * this.pageSize();
-    return this.filteredCompanies().slice(start, start + this.pageSize());
+    return sliceCurrentPage(this.filteredCompanies(), this.currentPage(), this.pageSize());
   });
 
   constructor(
     private readonly dataTransfer: DataTransferService,
-    private readonly datasetStorage: DatasetStorageService
+    private readonly companiesRepository: CompaniesRepositoryService,
   ) {
-    this.allCompanies.set(this.datasetStorage.readArray(COMPANIES_STORAGE_KEY, MOCK_COMPANIES));
+    this.allCompanies.set(this.companiesRepository.readAll());
   }
 
   setSearchTerm(value: string): void {
@@ -255,7 +224,7 @@ export class CompaniesListFacade {
 
   private persistCompanies(companies: Company[]): void {
     this.allCompanies.set(companies);
-    this.datasetStorage.writeArray(COMPANIES_STORAGE_KEY, companies);
+    this.companiesRepository.saveAll(companies);
   }
 
   private setFeedback(type: 'success' | 'error', message: string): void {

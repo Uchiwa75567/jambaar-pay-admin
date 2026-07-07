@@ -3,7 +3,7 @@
     <article class="panel payments-panel">
       <div class="panel-head">
         <h2>Paiements recents</h2>
-        <a class="panel-link" routerLink="/restaurant-payments">Voir tout <i class="pi pi-chevron-right"></i></a>
+        <a class="panel-link" routerLink="/restaurant-history">Voir tout <i class="pi pi-chevron-right"></i></a>
       </div>
 
       <div class="payment-list">
@@ -22,61 +22,11 @@
 
     <aside class="panel qr-panel" aria-label="Code QR du restaurant">
       <div class="qr-frame">
-        <svg viewBox="0 0 210 210" class="qr-code" role="img" aria-label="Code QR">
-          <rect width="210" height="210" fill="#fff"></rect>
-          <rect x="0" y="0" width="42" height="42" fill="#000"></rect>
-          <rect x="7" y="7" width="28" height="28" fill="#fff"></rect>
-          <rect x="14" y="14" width="14" height="14" fill="#000"></rect>
-          <rect x="168" y="0" width="42" height="42" fill="#000"></rect>
-          <rect x="175" y="7" width="28" height="28" fill="#fff"></rect>
-          <rect x="182" y="14" width="14" height="14" fill="#000"></rect>
-          <rect x="0" y="168" width="42" height="42" fill="#000"></rect>
-          <rect x="7" y="175" width="28" height="28" fill="#fff"></rect>
-          <rect x="14" y="182" width="14" height="14" fill="#000"></rect>
-          <rect x="56" y="0" width="14" height="14" fill="#000"></rect>
-          <rect x="70" y="14" width="14" height="14" fill="#000"></rect>
-          <rect x="84" y="0" width="14" height="14" fill="#000"></rect>
-          <rect x="98" y="14" width="14" height="14" fill="#000"></rect>
-          <rect x="56" y="42" width="14" height="14" fill="#000"></rect>
-          <rect x="70" y="56" width="14" height="14" fill="#000"></rect>
-          <rect x="84" y="42" width="14" height="14" fill="#000"></rect>
-          <rect x="98" y="56" width="14" height="14" fill="#000"></rect>
-          <rect x="42" y="70" width="14" height="14" fill="#000"></rect>
-          <rect x="56" y="84" width="14" height="14" fill="#000"></rect>
-          <rect x="70" y="70" width="14" height="14" fill="#000"></rect>
-          <rect x="84" y="84" width="14" height="14" fill="#000"></rect>
-          <rect x="98" y="70" width="14" height="14" fill="#000"></rect>
-          <rect x="126" y="56" width="14" height="14" fill="#000"></rect>
-          <rect x="140" y="70" width="14" height="14" fill="#000"></rect>
-          <rect x="154" y="56" width="14" height="14" fill="#000"></rect>
-          <rect x="168" y="70" width="14" height="14" fill="#000"></rect>
-          <rect x="112" y="84" width="14" height="14" fill="#000"></rect>
-          <rect x="126" y="98" width="14" height="14" fill="#000"></rect>
-          <rect x="140" y="84" width="14" height="14" fill="#000"></rect>
-          <rect x="154" y="98" width="14" height="14" fill="#000"></rect>
-          <rect x="42" y="112" width="14" height="14" fill="#000"></rect>
-          <rect x="70" y="112" width="14" height="14" fill="#000"></rect>
-          <rect x="84" y="126" width="14" height="14" fill="#000"></rect>
-          <rect x="98" y="112" width="14" height="14" fill="#000"></rect>
-          <rect x="126" y="112" width="14" height="14" fill="#000"></rect>
-          <rect x="154" y="112" width="14" height="14" fill="#000"></rect>
-          <rect x="168" y="126" width="14" height="14" fill="#000"></rect>
-          <rect x="56" y="140" width="14" height="14" fill="#000"></rect>
-          <rect x="70" y="154" width="14" height="14" fill="#000"></rect>
-          <rect x="84" y="140" width="14" height="14" fill="#000"></rect>
-          <rect x="112" y="140" width="14" height="14" fill="#000"></rect>
-          <rect x="126" y="154" width="14" height="14" fill="#000"></rect>
-          <rect x="140" y="140" width="14" height="14" fill="#000"></rect>
-          <rect x="168" y="140" width="14" height="14" fill="#000"></rect>
-          <rect x="42" y="168" width="14" height="14" fill="#000"></rect>
-          <rect x="56" y="182" width="14" height="14" fill="#000"></rect>
-          <rect x="70" y="168" width="14" height="14" fill="#000"></rect>
-          <rect x="98" y="168" width="14" height="14" fill="#000"></rect>
-          <rect x="112" y="182" width="14" height="14" fill="#000"></rect>
-          <rect x="126" y="168" width="14" height="14" fill="#000"></rect>
-          <rect x="154" y="168" width="14" height="14" fill="#000"></rect>
-          <rect x="168" y="182" width="14" height="14" fill="#000"></rect>
-        </svg>
+        <img
+          [src]="qrCodeUrl()"
+          class="qr-code"
+          [alt]="'QR code du restaurant pour le numéro ' + qrPhoneNumber()"
+        />
       </div>
     </aside>
   </section>

@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class RestaurantSettingsComponent {
   restaurantName = 'Restaurant Le Djoloff';
   managerName = 'Mamadou Djoloff';
-  phone = '+221 77 123 45 67';
+  phone = '771234567';
   email = 'contact@ledjoloff.sn';
   address = 'Plateau, Dakar';
   ninea = '000000000000';

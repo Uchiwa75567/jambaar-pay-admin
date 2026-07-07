@@ -18,11 +18,12 @@ export class AuthService {
     userId: null,
     token: null,
     role: null,
+    profile: null,
     isAuthenticated: false,
   });
 
   readonly isAuthenticated = computed(() => this._state().isAuthenticated);
-  readonly currentUser     = computed(() => this._state());
+  readonly profile = computed(() => this._state().profile);
 
   constructor(private storage: StorageService, private router: Router) {
     this.restoreSession();
@@ -64,15 +65,10 @@ export class AuthService {
         email: user.email,
         role: user.role,
       };
-      const store = !form.rememberMe;
-      this.storage.set(TOKEN_KEY, mockToken, store);
-      this.storage.set(USER_KEY, JSON.stringify(profile), store);
-      this._state.set({
-        userId: profile.id,
-        token: mockToken,
-        role: profile.role,
-        isAuthenticated: true,
-      });
+      const useSessionStorage = !form.rememberMe;
+      this.storage.set(TOKEN_KEY, mockToken, useSessionStorage);
+      this.storage.set(USER_KEY, JSON.stringify(profile), useSessionStorage);
+      this.setAuthenticatedState(profile, mockToken);
       return true;
     }
     return false;
@@ -105,9 +101,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.storage.remove(TOKEN_KEY);
-    this.storage.remove(USER_KEY);
-    this._state.set({ userId: null, token: null, role: null, isAuthenticated: false });
+    this.clearSession();
     this.router.navigate(['/login']);
   }
 
@@ -116,16 +110,67 @@ export class AuthService {
   }
 
   getProfile(): AdminProfile | null {
-    const raw = this.storage.get(USER_KEY) ?? this.storage.get(USER_KEY, true);
-    return raw ? JSON.parse(raw) : null;
+    return this._state().profile ?? this.readStoredProfile();
   }
 
   private restoreSession(): void {
-    const token = this.storage.get(TOKEN_KEY) ?? this.storage.get(TOKEN_KEY, true);
-    const raw   = this.storage.get(USER_KEY)  ?? this.storage.get(USER_KEY, true);
-    if (token && raw) {
-      const profile: AdminProfile = JSON.parse(raw);
-      this._state.set({ userId: profile.id, token, role: profile.role, isAuthenticated: true });
+    const token = this.getToken();
+    const profile = this.readStoredProfile();
+
+    if (!token || !profile) {
+      this.clearSession();
+      return;
     }
+
+    this.setAuthenticatedState(profile, token);
+  }
+
+  private setAuthenticatedState(profile: AdminProfile, token: string): void {
+    this._state.set({
+      userId: profile.id,
+      token,
+      role: profile.role,
+      profile,
+      isAuthenticated: true,
+    });
+  }
+
+  private clearSession(): void {
+    this.storage.remove(TOKEN_KEY);
+    this.storage.remove(USER_KEY);
+    this._state.set({
+      userId: null,
+      token: null,
+      role: null,
+      profile: null,
+      isAuthenticated: false,
+    });
+  }
+
+  private readStoredProfile(): AdminProfile | null {
+    const raw = this.storage.get(USER_KEY) ?? this.storage.get(USER_KEY, true);
+
+    if (!raw) {
+      return null;
+    }
+
+    try {
+      const parsed = JSON.parse(raw);
+      return this.isAdminProfile(parsed) ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private isAdminProfile(value: unknown): value is AdminProfile {
+    if (!value || typeof value !== 'object') {
+      return false;
+    }
+
+    const profile = value as Partial<AdminProfile>;
+    return typeof profile.id === 'string'
+      && typeof profile.name === 'string'
+      && typeof profile.email === 'string'
+      && typeof profile.role === 'string';
   }
 }

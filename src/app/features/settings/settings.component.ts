@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
+import { PlatformSettings, PlatformSettingsService } from '../../core/services/platform-settings.service';
 import {
   hasMinLength,
   hasValue,
@@ -10,14 +11,6 @@ import {
   isPositiveNumber,
   isValidSenegalPhone,
 } from '../../core/utils/form-validation';
-
-interface SettingsForm {
-  platformName: string;
-  address: string;
-  supportPhone: string;
-  maxTransactionAmount: string;
-  maxTransactionsPerDay: string;
-}
 
 @Component({
   selector: 'app-settings',
@@ -30,15 +23,14 @@ export class SettingsComponent {
   submitted = signal(false);
   successMessage = signal('');
 
-  form: SettingsForm = {
-    platformName: '',
-    address: '',
-    supportPhone: '',
-    maxTransactionAmount: '',
-    maxTransactionsPerDay: '',
-  };
+  form: PlatformSettings;
 
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly settingsService: PlatformSettingsService,
+  ) {
+    this.form = this.settingsService.read();
+  }
 
   onCancel(): void {
     this.router.navigate(['/dashboard']);
@@ -52,8 +44,7 @@ export class SettingsComponent {
       return;
     }
 
-    // TODO: connect to API
-    console.log('Settings saved:', this.form);
+    this.settingsService.save(this.form);
     this.successMessage.set('Les parametres ont ete valides et sont prets a etre enregistres.');
   }
 
