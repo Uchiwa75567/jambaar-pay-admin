@@ -77,6 +77,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
 }
 
 .payment-avatar {
@@ -99,12 +100,16 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  min-width: 0;
 }
 
 .payment-meta strong {
   color: #1f1f34;
   font-size: 0.94rem;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .payment-meta span {
@@ -162,6 +167,7 @@
 .companies-table {
   min-height: 0;
   padding: 0 0.85rem 0.85rem;
+  overflow-x: auto;
 }
 
 .companies-header,
@@ -225,13 +231,131 @@
 }
 
 @media (max-width: 680px) {
+  :host {
+    height: auto;
+  }
+
+  .restaurant-page {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+  }
+
+  .panel {
+    border-radius: 0.9rem;
+  }
+
+  .panel-head {
+    gap: 0.75rem;
+    padding: 0.85rem 0.875rem 0.7rem;
+  }
+
+  .panel-head h2 {
+    font-size: 0.94rem;
+  }
+
+  .panel-link,
+  .panel-counter {
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .payment-row {
+    gap: 0.75rem;
+    padding: 0.8rem 0.875rem;
+  }
+
+  .payment-identity {
+    gap: 0.75rem;
+  }
+
+  .payment-avatar {
+    width: 2.35rem;
+    height: 2.35rem;
+    font-size: 0.82rem;
+  }
+
+  .payment-meta strong {
+    font-size: 0.86rem;
+  }
+
+  .payment-meta span,
+  .payment-amount {
+    font-size: 0.78rem;
+  }
+
+  .payment-amount {
+    margin-left: auto;
+  }
+
+  .qr-panel {
+    min-height: auto;
+    padding: 0.75rem;
+  }
+
+  .qr-frame {
+    width: min(100%, 15rem);
+  }
+
+  .companies-panel {
+    overflow: visible;
+  }
+
+  .companies-table {
+    padding: 0 0.75rem 0.75rem;
+    overflow: visible;
+  }
+
+  .companies-header {
+    display: none;
+  }
+
+  .companies-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(34, 33, 58, 0.08);
+    font-size: 0.86rem;
+  }
+
+  .companies-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.4rem;
+    padding: 0.35rem 0.15rem;
+  }
+
+  .companies-cell::before {
+    content: attr(data-label);
+    color: #777485;
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+
+  .status-pill {
+    justify-self: auto;
+    padding: 0.38rem 0.7rem;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .restaurant-page {
+    gap: 0.875rem;
+  }
+
   .payment-row {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .companies-header,
-  .companies-row {
-    grid-template-columns: 1fr;
+  .payment-amount {
+    margin-left: 3.1rem;
+  }
+
+  .qr-frame {
+    width: min(100%, 13.5rem);
   }
 }

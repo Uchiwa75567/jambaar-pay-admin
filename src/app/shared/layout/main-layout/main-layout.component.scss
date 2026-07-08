@@ -73,6 +73,12 @@
     scrollbar-gutter: auto;
     scroll-padding-bottom: 1.5rem;
   }
+
+  .page-content.page-content-compact {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 1.5rem;
+  }
 }
 
 @media (max-height: 720px) and (min-width: 769px) {
