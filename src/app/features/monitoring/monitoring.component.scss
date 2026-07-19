@@ -159,29 +159,6 @@
   gap: 0.75rem;
 }
 
-.file-input {
-  display: none;
-}
-
-.btn-import {
-  height: 2.625rem;
-  padding: 0 1.25rem;
-  border: 1px solid #dedede;
-  border-radius: 0.5rem;
-  background: #fff;
-  color: #696969;
-  font-family: var(--font-family-base);
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-
-  &:hover {
-    border-color: #bbb;
-    background: #fafafa;
-  }
-}
-
 .btn-export {
   height: 2.625rem;
   padding: 0 1.5rem;

@@ -42,8 +42,6 @@
 
       <!-- Export dropdown -->
       <div class="export-wrapper">
-        <input #monitoringImportInput class="file-input" type="file" accept=".csv,.json" (change)="onImportFileSelected($event)" />
-        <button class="btn-import" type="button" (click)="monitoringImportInput.click()">Importer</button>
         <button class="btn-export" type="button" (click)="toggleExportMenu()">Exporter</button>
         @if (exportMenuOpen()) {
           <div class="export-menu">
