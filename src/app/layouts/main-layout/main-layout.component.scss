@@ -1,0 +1,99 @@
+@use '../../../styles/variables' as *;
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1000;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--radius-md);
+  background: var(--color-text-primary);
+  color: #fff;
+  transform: translateY(-150%);
+  transition: transform 160ms ease;
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+.app-shell {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: $bg-main;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+  height: 100dvh;
+  margin-left: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+}
+
+// page-content is a flex column so that app-dashboard (router child) can fill it
+.page-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.125rem 3.1875rem 1rem 3.625rem;
+  background: #fff;
+  scrollbar-gutter: stable;
+}
+
+.page-content.page-content-compact {
+  overflow: hidden;
+  padding-bottom: 0.85rem;
+}
+
+@media (max-width: 1200px) {
+  .main-content {
+    margin-left: $sidebar-width-min;
+  }
+
+  .page-content {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    --mobile-nav-space:
+      calc(max(var(--mobile-nav-height), 4.75rem) + env(safe-area-inset-bottom, 0px));
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .main-content {
+    height: calc(100vh - var(--mobile-nav-space));
+    height: calc(100dvh - var(--mobile-nav-space));
+    margin-left: 0;
+    overflow: hidden;
+  }
+
+  .page-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.875rem 0.875rem 1.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: auto;
+    scroll-padding-bottom: 1.5rem;
+  }
+}
+
+@media (max-height: 720px) and (min-width: 769px) {
+  .page-content {
+    padding-block: 0.75rem;
+  }
+}

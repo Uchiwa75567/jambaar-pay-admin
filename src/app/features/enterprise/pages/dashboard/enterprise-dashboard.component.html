@@ -1,0 +1,39 @@
+<div class="enterprise-kpi-grid">
+  @for (kpi of kpis; track kpi) {
+    <article class="enterprise-kpi-card">
+      <div class="kpi-head">
+        <span class="kpi-icon">
+          <img [src]="kpi.iconSrc" [alt]="kpi.label" />
+        </span>
+        <span class="kpi-change">{{ kpi.changeLabel }}</span>
+      </div>
+      <strong class="kpi-value">{{ kpi.value }}</strong>
+      <span class="kpi-label">{{ kpi.label }}</span>
+    </article>
+  }
+</div>
+
+<section class="transactions-card">
+  <h2>Transaction recentes</h2>
+
+  <p-table [value]="transactions" styleClass="enterprise-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Salarié</th>
+        <th>Restaurants</th>
+        <th>Montant</th>
+        <th>Date</th>
+        <th>Statut</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td data-label="Salarié">{{ row.employee }}</td>
+        <td data-label="Restaurants">{{ row.restaurant }}</td>
+        <td data-label="Montant">{{ row.amount }}</td>
+        <td data-label="Date">{{ row.date }}</td>
+        <td data-label="Statut" class="status-valid">{{ row.status }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</section>

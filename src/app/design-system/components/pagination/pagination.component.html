@@ -1,0 +1,49 @@
+<div class="pagination-shell">
+  <label class="page-size-field">
+    <span>Lignes par page</span>
+    <select
+      [value]="pageSize()"
+      (change)="selectPageSize($event)"
+      aria-label="Nombre de lignes par page">
+      @for (size of pageSizeOptions(); track size) {
+        <option [value]="size">{{ size }}</option>
+      }
+    </select>
+  </label>
+
+  <nav class="page-navigation" [attr.aria-label]="ariaLabel()">
+    <button
+      type="button"
+      class="page-direction"
+      [disabled]="currentPage() <= 1"
+      (click)="previousPage()">
+      <span aria-hidden="true">‹</span>
+      <span class="direction-label">Préc.</span>
+    </button>
+
+    @for (page of visiblePages(); track $index) {
+      @if (page === '...') {
+        <span class="page-ellipsis" aria-hidden="true">…</span>
+      } @else {
+        <button
+          type="button"
+          class="page-number"
+          [class.is-active]="currentPage() === page"
+          [attr.aria-current]="currentPage() === page ? 'page' : null"
+          [attr.aria-label]="'Page ' + page"
+          (click)="selectPage(page)">
+          {{ page < 10 ? '0' + page : page }}
+        </button>
+      }
+    }
+
+    <button
+      type="button"
+      class="page-direction"
+      [disabled]="currentPage() >= totalPages()"
+      (click)="nextPage()">
+      <span class="direction-label">Suiv.</span>
+      <span aria-hidden="true">›</span>
+    </button>
+  </nav>
+</div>

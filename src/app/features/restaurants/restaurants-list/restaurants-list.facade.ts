@@ -1,8 +1,9 @@
-import { Injectable, computed, signal } from '@angular/core';
-import { Restaurant } from '../../../core/models/restaurant.models';
+import { computed, Injectable, signal, inject } from '@angular/core';
+import { finalize, firstValueFrom, take } from 'rxjs';
 import { DataTransferService, ExportColumn, ImportedRecord } from '../../../core/services/data-transfer.service';
-import { RestaurantsRepositoryService } from '../../../core/services/restaurants-repository.service';
-import { buildVisiblePages, sliceCurrentPage } from '../../../core/utils/pagination';
+import { sliceCurrentPage } from '../../../core/utils/pagination';
+import { RESTAURANTS_REPOSITORY, RestaurantsRepository } from '../application/restaurants.repository';
+import { Restaurant } from '../domain/restaurant.model';
 
 export type RestaurantStatusFilter = 'Tous' | 'Actif' | 'Inactif';
 export type RestaurantFeedbackState = { type: 'success' | 'error'; message: string } | null;
@@ -13,6 +14,9 @@ const FILTER_OPTIONS: RestaurantStatusFilter[] = ['Tous', 'Actif', 'Inactif'];
 
 @Injectable()
 export class RestaurantsListFacade {
+  private readonly dataTransfer = inject(DataTransferService);
+  private readonly restaurantsRepository = inject<RestaurantsRepository>(RESTAURANTS_REPOSITORY);
+
   private readonly allRestaurants = signal<Restaurant[]>([]);
   private readonly exportColumns: ExportColumn<Restaurant>[] = [
     { header: 'ID', value: restaurant => restaurant.id },
@@ -30,6 +34,7 @@ export class RestaurantsListFacade {
   readonly pageSize = signal(DEFAULT_PAGE_SIZE);
   readonly currentPage = signal(1);
   readonly feedback = signal<RestaurantFeedbackState>(null);
+  readonly loading = signal(true);
 
   readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
   readonly filterOptions = FILTER_OPTIONS;
@@ -53,19 +58,18 @@ export class RestaurantsListFacade {
 
   readonly totalPages = computed(() => Math.max(1, Math.ceil(this.filteredRestaurants().length / this.pageSize())));
 
-  readonly visiblePages = computed<(number | '...')[]>(() => {
-    return buildVisiblePages(this.totalPages(), this.currentPage());
-  });
-
   readonly restaurants = computed(() => {
     return sliceCurrentPage(this.filteredRestaurants(), this.currentPage(), this.pageSize());
   });
 
-  constructor(
-    private readonly dataTransfer: DataTransferService,
-    private readonly restaurantsRepository: RestaurantsRepositoryService,
-  ) {
-    this.allRestaurants.set(this.restaurantsRepository.readAll());
+  constructor() {
+    this.restaurantsRepository.list().pipe(
+      take(1),
+      finalize(() => this.loading.set(false)),
+    ).subscribe({
+      next: restaurants => this.allRestaurants.set(restaurants),
+      error: error => this.setErrorFeedback(error, 'Chargement des restaurants impossible.'),
+    });
   }
 
   setSearchTerm(value: string): void {
@@ -86,18 +90,6 @@ export class RestaurantsListFacade {
     this.currentPage.set(page);
   }
 
-  prevPage(): void {
-    if (this.currentPage() > 1) {
-      this.currentPage.update(currentPage => currentPage - 1);
-    }
-  }
-
-  nextPage(): void {
-    if (this.currentPage() < this.totalPages()) {
-      this.currentPage.update(currentPage => currentPage + 1);
-    }
-  }
-
   setFilter(status: RestaurantStatusFilter): void {
     this.statusFilter.set(status);
     this.currentPage.set(1);
@@ -114,7 +106,7 @@ export class RestaurantsListFacade {
     }
 
     const mergedRestaurants = this.mergeById(this.allRestaurants(), importedRestaurants);
-    this.persistRestaurants(mergedRestaurants);
+    await this.persistRestaurants(mergedRestaurants);
     this.currentPage.set(1);
     this.setFeedback('success', `${importedRestaurants.length} restaurant(s) importe(s) avec succes.`);
   }
@@ -177,9 +169,9 @@ export class RestaurantsListFacade {
     return Array.from(restaurantsById.values());
   }
 
-  private persistRestaurants(restaurants: Restaurant[]): void {
+  private async persistRestaurants(restaurants: Restaurant[]): Promise<void> {
+    await firstValueFrom(this.restaurantsRepository.saveAll(restaurants));
     this.allRestaurants.set(restaurants);
-    this.restaurantsRepository.saveAll(restaurants);
   }
 
   private setFeedback(type: 'success' | 'error', message: string): void {

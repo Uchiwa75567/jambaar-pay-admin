@@ -1,0 +1,10 @@
+<div class="app-shell">
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <app-topbar [pageTitle]="pageTitle()" [pageSubtitle]="pageSubtitle()"></app-topbar>
+    <main id="main-content" class="page-content" [class.page-content-compact]="isCompactPage()" tabindex="-1">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+import { InjectionToken } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthSession, LoginCredentials } from '../domain/auth.models';
+
+export interface AuthRepository {
+  login(credentials: LoginCredentials): Observable<AuthSession | null>;
+}
+
+export const AUTH_REPOSITORY = new InjectionToken<AuthRepository>('AUTH_REPOSITORY');

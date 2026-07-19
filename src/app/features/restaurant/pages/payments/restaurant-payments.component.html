@@ -1,0 +1,71 @@
+<section class="payment-page">
+  <article class="payment-card">
+    <div class="payment-layout">
+      <div class="payment-form-block">
+        <div class="section-head">
+          <h2>Nouveau paiement</h2>
+          <p>Enregistrez rapidement un paiement via le QR fixe lié au numéro téléphone du restaurant.</p>
+        </div>
+
+        <div class="payment-grid">
+          <label class="field">
+            <span>Téléphone du mobile</span>
+            <input [(ngModel)]="customerPhone" type="text" placeholder="Ex : 77 123 45 67" />
+          </label>
+
+          <label class="field">
+            <span>Numero de table</span>
+            <input [(ngModel)]="tableNumber" type="text" placeholder="Ex : Table 4" />
+          </label>
+
+          <label class="field field-full">
+            <span>Montant</span>
+            <input [(ngModel)]="amount" type="text" placeholder="Ex : 14 500 FCFA" />
+          </label>
+        </div>
+
+        <div class="quick-amounts">
+          <span>Montants rapides</span>
+          <div class="quick-amount-list">
+            @for (quickAmount of quickAmounts; track quickAmount) {
+              <button type="button" (click)="amount = quickAmount + ' FCFA'">
+                {{ quickAmount }} FCFA
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="payment-actions">
+          <button type="button" class="secondary-btn secondary-btn-static" disabled>
+            QR fixe · {{ qrPhoneNumber() }}
+          </button>
+          <button type="button" class="primary-btn" [disabled]="submitting() || !isFormValid" (click)="submitPayment()">
+            {{ submitting() ? 'Validation...' : 'Valider le paiement' }}
+          </button>
+        </div>
+
+        <app-feedback-message [state]="feedback()" />
+      </div>
+
+      <aside class="payment-qr-block" aria-label="Code QR du restaurant">
+        <div class="payment-qr-frame">
+          @if (qrCodeStatus() === 'ready') {
+            <img
+              [src]="qrCodeUrl()"
+              class="payment-qr-code"
+              [alt]="'QR code du restaurant pour le numéro ' + qrPhoneNumber()" />
+          } @else if (qrCodeStatus() === 'error') {
+            <app-empty-state message="QR code indisponible." icon="pi pi-exclamation-triangle" />
+          } @else {
+            <app-loading-state message="Génération du QR code…" />
+          }
+        </div>
+        <div class="qr-meta">
+          <strong>QR fixe téléphone</strong>
+          <span>Numéro lié {{ qrPhoneNumber() }}</span>
+          <span>La déduplication et l'idempotence se font au moment de la demande de paiement</span>
+        </div>
+      </aside>
+    </div>
+  </article>
+</section>

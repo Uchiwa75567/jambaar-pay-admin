@@ -1,0 +1,21 @@
+<article class="kpi-card">
+  <div class="kpi-top">
+    <div class="kpi-icon">
+      @if (iconSrc()) {
+        <img [src]="iconSrc()" alt="" class="icon-img" aria-hidden="true" />
+      }
+      @if (!iconSrc()) {
+        <i [class]="icon()" aria-hidden="true"></i>
+      }
+    </div>
+    <span class="kpi-change">{{ displayChange() }}</span>
+  </div>
+  <div class="kpi-value">
+    {{ value() }}@if (unit()) {
+    <span class="kpi-unit"> {{ unit() }}</span>
+  }
+</div>
+@if (label()) {
+  <span class="kpi-label">{{ label() }}</span>
+}
+</article>

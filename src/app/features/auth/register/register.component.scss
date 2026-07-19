@@ -93,65 +93,6 @@ $border: #b9b9b9;
   font-size: 1rem;
 }
 
-.stepper {
-  display: grid;
-  grid-template-columns: max-content 1fr max-content;
-  align-items: center;
-  gap: 1.125rem;
-  margin-bottom: 1.6875rem;
-}
-
-.step {
-  display: inline-flex;
-  align-items: center;
-  gap: 1.4375rem;
-  color: #9c9c9c;
-  font-size: 1.125rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.step.active,
-.step.done {
-  color: #9c9c9c;
-}
-
-.step-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5625rem;
-  height: 1.5625rem;
-  border-radius: 50%;
-  background: #dedede;
-  color: #fff;
-  font-size: 0.875rem;
-  font-weight: 800;
-}
-
-.step.active .step-number,
-.step.done .step-number {
-  background: $orange;
-}
-
-.step-line {
-  height: 1px;
-  background: #d8d8d8;
-}
-
-.success-alert {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  margin-bottom: 1rem;
-  padding: 0.8125rem 0.9375rem;
-  border-radius: 0.625rem;
-  background: #dcfce7;
-  color: #15803d;
-  font-size: 0.875rem;
-  font-weight: 700;
-}
-
 .register-form,
 .field {
   display: flex;

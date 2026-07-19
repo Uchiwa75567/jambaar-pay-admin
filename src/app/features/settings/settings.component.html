@@ -5,8 +5,9 @@
     <h2 class="section-title">Parametre Généraux</h2>
 
     <div class="field">
-      <label class="field-label">Nom de la plateforme</label>
+      <label class="field-label" for="platform-name">Nom de la plateforme</label>
       <input
+        id="platform-name"
         pInputText
         type="text"
         class="field-input"
@@ -15,12 +16,15 @@
         [class.field-input-invalid]="submitted() && !!platformNameError"
         placeholder="Ex : Jambaar Pay Admin"
         aria-label="Nom de la plateforme" />
-      <small class="field-error" *ngIf="submitted() && !!platformNameError">{{ platformNameError }}</small>
+      @if (submitted() && !!platformNameError) {
+        <small class="field-error">{{ platformNameError }}</small>
+      }
     </div>
 
     <div class="field">
-      <label class="field-label">Adresse</label>
+      <label class="field-label" for="platform-address">Adresse</label>
       <input
+        id="platform-address"
         pInputText
         type="text"
         class="field-input"
@@ -29,12 +33,15 @@
         [class.field-input-invalid]="submitted() && !!addressError"
         placeholder="Ex : VDN, Dakar"
         aria-label="Adresse" />
-      <small class="field-error" *ngIf="submitted() && !!addressError">{{ addressError }}</small>
+      @if (submitted() && !!addressError) {
+        <small class="field-error">{{ addressError }}</small>
+      }
     </div>
 
     <div class="field">
-      <label class="field-label">Téléphone support</label>
+      <label class="field-label" for="support-phone">Téléphone support</label>
       <input
+        id="support-phone"
         pInputText
         type="tel"
         class="field-input"
@@ -43,7 +50,9 @@
         [class.field-input-invalid]="submitted() && !!supportPhoneError"
         placeholder="Ex : 78 000 11 22"
         aria-label="Téléphone support" />
-      <small class="field-error" *ngIf="submitted() && !!supportPhoneError">{{ supportPhoneError }}</small>
+      @if (submitted() && !!supportPhoneError) {
+        <small class="field-error">{{ supportPhoneError }}</small>
+      }
     </div>
   </div>
 
@@ -52,8 +61,9 @@
     <h2 class="section-title">Limites et Quotas</h2>
 
     <div class="field">
-      <label class="field-label">Montant maximum par transaction (FCFA)</label>
+      <label class="field-label" for="max-transaction-amount">Montant maximum par transaction (FCFA)</label>
       <input
+        id="max-transaction-amount"
         pInputText
         type="number"
         class="field-input"
@@ -62,12 +72,15 @@
         [class.field-input-invalid]="submitted() && !!maxTransactionAmountError"
         placeholder="Ex : 100000"
         aria-label="Montant maximum par transaction en FCFA" />
-      <small class="field-error" *ngIf="submitted() && !!maxTransactionAmountError">{{ maxTransactionAmountError }}</small>
+      @if (submitted() && !!maxTransactionAmountError) {
+        <small class="field-error">{{ maxTransactionAmountError }}</small>
+      }
     </div>
 
     <div class="field">
-      <label class="field-label">Nombre de transactions par jour</label>
+      <label class="field-label" for="max-transactions-per-day">Nombre de transactions par jour</label>
       <input
+        id="max-transactions-per-day"
         pInputText
         type="number"
         class="field-input"
@@ -76,16 +89,18 @@
         [class.field-input-invalid]="submitted() && !!maxTransactionsPerDayError"
         placeholder="Ex : 10"
         aria-label="Nombre de transactions par jour" />
-      <small class="field-error" *ngIf="submitted() && !!maxTransactionsPerDayError">{{ maxTransactionsPerDayError }}</small>
+      @if (submitted() && !!maxTransactionsPerDayError) {
+        <small class="field-error">{{ maxTransactionsPerDayError }}</small>
+      }
     </div>
   </div>
 
-  <p class="success-message" *ngIf="successMessage()">{{ successMessage() }}</p>
+  <app-feedback-message [state]="feedback()" />
 
   <!-- Actions -->
   <div class="form-actions">
     <button type="button" class="btn-cancel" (click)="onCancel()">Annuler</button>
-    <button type="submit" class="btn-submit">Enrégister les modification</button>
+    <button type="submit" class="btn-submit">Enregistrer les modifications</button>
   </div>
 
 </form>

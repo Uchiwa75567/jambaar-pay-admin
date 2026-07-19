@@ -1,25 +1,27 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
-import { AuthService } from '../../../core/services/auth.service';
-import { LoginForm } from '../../../core/models/auth.models';
+import { firstValueFrom } from 'rxjs';
+import { AuthFacade } from '../../../core/auth/application/auth.facade';
+import { LoginForm } from '../../../core/auth/domain/auth.models';
 import { isValidEmail } from '../../../core/utils/form-validation';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  host: {
-    class: 'login-page',
-  },
-  imports: [CommonModule, FormsModule, RouterLink, InputTextModule, CheckboxModule, ButtonModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+    selector: 'app-login',
+    host: {
+        class: 'login-page',
+    },
+    imports: [FormsModule, RouterLink, InputTextModule],
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
+  private readonly auth = inject(AuthFacade);
+  private readonly router = inject(Router);
+
   form: LoginForm = { email: '', password: '', rememberMe: false };
   showPassword = signal(false);
   loading = signal(false);
@@ -27,8 +29,6 @@ export class LoginComponent {
   submitted = signal(false);
 
   readonly passwordMinLength = 8;
-
-  constructor(private auth: AuthService, private router: Router) {}
 
   get emailError(): string {
     const email = this.form.email.trim();
@@ -62,7 +62,7 @@ export class LoginComponent {
     this.showPassword.update(v => !v);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.submitted.set(true);
     this.error.set('');
     this.form.email = this.form.email.trim();
@@ -71,15 +71,20 @@ export class LoginComponent {
       return;
     }
 
-    this.loading.set(true);
-    setTimeout(() => {
-      const ok = this.auth.login(this.form);
-      this.loading.set(false);
-      if (ok) {
-        this.router.navigate([this.auth.getLandingRoute()]);
-      } else {
-        this.error.set('Email ou mot de passe incorrect.');
+    try {
+      this.loading.set(true);
+      const authenticated = await firstValueFrom(this.auth.login(this.form));
+
+      if (authenticated) {
+        await this.router.navigate([this.auth.getLandingRoute()]);
+        return;
       }
-    }, 600);
+
+      this.error.set('Email ou mot de passe incorrect.');
+    } catch {
+      this.error.set('Le service de connexion est temporairement indisponible.');
+    } finally {
+      this.loading.set(false);
+    }
   }
 }

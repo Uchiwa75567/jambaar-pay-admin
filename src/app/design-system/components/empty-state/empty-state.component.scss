@@ -1,0 +1,16 @@
+.empty-state {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  min-height: 7rem;
+  padding: var(--spacing-md);
+  text-align: center;
+}
+
+i {
+  color: var(--color-border);
+  font-size: 1.75rem;
+}

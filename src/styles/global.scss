@@ -13,12 +13,42 @@ html, body {
   font-size: var(--font-size-base);
   color: var(--color-text-primary);
   background-color: var(--color-bg-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 app-root {
   display: block;
   height: 100%;
   overflow: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 @supports (height: 100dvh) {
@@ -106,52 +136,6 @@ app-root {
 .p-menu.row-action-menu .p-menuitem.danger-item .p-menuitem-icon,
 .p-menu.row-action-menu .p-menuitem.danger-item .p-menuitem-text {
   color: #d83b32 !important;
-}
-
-// Status badge utilities
-.badge-valid {
-  background: #DCFCE7;
-  color: var(--color-green-valid);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.badge-pending {
-  background: #FFF3E8;
-  color: #E8731A;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.badge-failed {
-  background: #FEE2E2;
-  color: #DC2626;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.badge-active {
-  background: #DCFCE7;
-  color: var(--color-green-valid);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.badge-inactive {
-  background: #F3F4F6;
-  color: #6B7280;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
 }
 
 // Shared page header (used across feature pages)
@@ -313,7 +297,7 @@ app-root {
   border-color: var(--color-orange-accent) !important;
   color: #fff !important;
   &:hover {
-    background: darken($orange-accent, 8%) !important;
-    border-color: darken($orange-accent, 8%) !important;
+    background: $orange-hover !important;
+    border-color: $orange-hover !important;
   }
 }

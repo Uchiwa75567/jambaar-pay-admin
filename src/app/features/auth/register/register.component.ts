@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
@@ -28,16 +28,18 @@ interface RegisterForm {
 }
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  host: {
-    class: 'register-page',
-  },
-  imports: [CommonModule, FormsModule, RouterLink, InputTextModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+    selector: 'app-register',
+    host: {
+        class: 'register-page',
+    },
+    imports: [FormsModule, RouterLink, InputTextModule],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent {
+  private router = inject(Router);
+
   step = signal<1 | 2>(1);
   showPassword = signal(false);
   showConfirmPassword = signal(false);
@@ -76,8 +78,6 @@ export class RegisterComponent {
       && !this.passwordError
       && !this.confirmPasswordError;
   }
-
-  constructor(private router: Router) {}
 
   nextStep(): void {
     this.submitted.set(true);

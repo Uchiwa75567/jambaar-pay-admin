@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { Restaurant } from '../../../core/models/restaurant.models';
-import { RestaurantsRepositoryService } from '../../../core/services/restaurants-repository.service';
+import { SelectModule } from 'primeng/select';
+import { firstValueFrom } from 'rxjs';
+import { FeedbackMessage, FeedbackMessageComponent } from '../../../design-system/components/feedback-message/feedback-message.component';
+import { RESTAURANTS_REPOSITORY, RestaurantsRepository } from '../application/restaurants.repository';
+import { Restaurant } from '../domain/restaurant.model';
 import {
   hasMinLength,
   hasValue,
@@ -17,14 +19,19 @@ import {
 } from '../../../core/utils/form-validation';
 
 @Component({
-  selector: 'app-restaurant-add',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, InputTextModule, DropdownModule],
-  templateUrl: './restaurant-add.component.html',
-  styleUrls: ['./restaurant-add.component.scss'],
+    selector: 'app-restaurant-add',
+    imports: [FormsModule, RouterModule, InputTextModule, SelectModule, FeedbackMessageComponent],
+    templateUrl: './restaurant-add.component.html',
+    styleUrls: ['./restaurant-add.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RestaurantAddComponent {
+  private readonly router = inject(Router);
+  private readonly restaurantsRepository = inject<RestaurantsRepository>(RESTAURANTS_REPOSITORY);
+
   submitted = signal(false);
+  submitting = signal(false);
+  feedback = signal<FeedbackMessage | null>(null);
 
   form = {
     name: '',
@@ -45,24 +52,30 @@ export class RestaurantAddComponent {
     { label: 'Internationale',value: 'internationale'},
   ];
 
-  constructor(
-    private readonly router: Router,
-    private readonly restaurantsRepository: RestaurantsRepositoryService,
-  ) {}
-
   onCancel(): void {
     this.router.navigate(['/restaurants']);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.submitted.set(true);
+    this.feedback.set(null);
 
-    if (!this.isFormValid()) {
+    if (!this.isFormValid() || this.submitting()) {
       return;
     }
 
-    this.restaurantsRepository.upsert(this.buildRestaurant());
-    this.router.navigate(['/restaurants']);
+    this.submitting.set(true);
+    try {
+      await firstValueFrom(this.restaurantsRepository.upsert(this.buildRestaurant()));
+      await this.router.navigate(['/restaurants']);
+    } catch {
+      this.feedback.set({
+        type: 'error',
+        message: 'Le restaurant n’a pas pu être enregistré. Veuillez réessayer.',
+      });
+    } finally {
+      this.submitting.set(false);
+    }
   }
 
   isFormValid(): boolean {

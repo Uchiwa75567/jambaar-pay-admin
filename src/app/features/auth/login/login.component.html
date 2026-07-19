@@ -11,10 +11,12 @@
         <p>Connectez-vous sur votre espace Jambaar Pay</p>
       </div>
 
-      <div *ngIf="error()" class="error-alert">
-        <i class="pi pi-exclamation-circle"></i>
-        <span>{{ error() }}</span>
-      </div>
+      @if (error()) {
+        <div class="error-alert">
+          <i class="pi pi-exclamation-circle"></i>
+          <span>{{ error() }}</span>
+        </div>
+      }
 
       <form (ngSubmit)="onSubmit()" #f="ngForm" class="login-form">
         <div class="field">
@@ -35,7 +37,9 @@
               aria-describedby="email-error"
               class="w-full" />
           </div>
-          <small id="email-error" class="field-error" *ngIf="shouldShowEmailError()">{{ emailError }}</small>
+          @if (shouldShowEmailError()) {
+            <small id="email-error" class="field-error">{{ emailError }}</small>
+          }
         </div>
 
         <div class="field">
@@ -60,7 +64,9 @@
               <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
             </button>
           </div>
-          <small id="password-error" class="field-error" *ngIf="shouldShowPasswordError()">{{ passwordError }}</small>
+          @if (shouldShowPasswordError()) {
+            <small id="password-error" class="field-error">{{ passwordError }}</small>
+          }
         </div>
 
         <div class="form-options">
@@ -72,8 +78,12 @@
         </div>
 
         <button type="submit" class="btn-submit" [disabled]="loading()">
-          <span *ngIf="!loading()">Se connecter</span>
-          <span *ngIf="loading()"><i class="pi pi-spin pi-spinner"></i> Connexion...</span>
+          @if (!loading()) {
+            <span>Se connecter</span>
+          }
+          @if (loading()) {
+            <span><i class="pi pi-spin pi-spinner"></i> Connexion...</span>
+          }
         </button>
 
         <p class="register-link">

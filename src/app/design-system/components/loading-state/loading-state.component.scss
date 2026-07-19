@@ -1,0 +1,14 @@
+.loading-state {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  min-height: 7rem;
+  padding: var(--spacing-md);
+}
+
+i {
+  color: var(--color-orange-accent);
+  font-size: 1.25rem;
+}

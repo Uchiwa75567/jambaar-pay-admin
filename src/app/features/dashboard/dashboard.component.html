@@ -1,15 +1,16 @@
 <!-- KPI Cards -->
 <div class="kpi-grid">
-  <app-kpi-card
-    *ngFor="let kpi of kpis"
-    [label]="kpi.label"
-    [value]="kpi.value"
-    [change]="kpi.change"
-    [changeLabel]="kpi.changeLabel ?? ''"
-    [unit]="kpi.unit ?? ''"
-    [icon]="kpi.icon ?? 'pi pi-chart-line'"
-    [iconSrc]="kpi.iconSrc ?? ''">
-  </app-kpi-card>
+  @for (kpi of kpis; track kpi) {
+    <app-kpi-card
+      [label]="kpi.label"
+      [value]="kpi.value"
+      [change]="kpi.change"
+      [changeLabel]="kpi.changeLabel ?? ''"
+      [unit]="kpi.unit ?? ''"
+      [icon]="kpi.icon ?? 'pi pi-chart-line'"
+      [iconSrc]="kpi.iconSrc ?? ''">
+    </app-kpi-card>
+  }
 </div>
 
 <!-- Chart + Top Restaurants -->
@@ -17,24 +18,26 @@
   <div class="panel chart-panel">
     <h3 class="panel-title">Transactions par jours</h3>
     <div class="chart-container">
-      <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+      <p-chart type="line" [data]="chartData" [options]="chartOptions" />
     </div>
   </div>
 
   <div class="panel top-restaurants-panel">
     <h3 class="panel-title">Top Restaurants</h3>
     <ul class="restaurant-list">
-      <li *ngFor="let r of topRestaurants" class="restaurant-item">
-        <div class="rank-badge">{{ r.rank }}</div>
-        <div class="restaurant-info">
-          <span class="restaurant-name">{{ r.name }}</span>
-          <span class="restaurant-transactions">{{ r.transactions }} Transactions</span>
-        </div>
-        <div class="restaurant-volume">
-          <span class="volume-amount">{{ r.volume | number:'1.0-0' }}</span>
-          <span class="volume-unit">FCFA</span>
-        </div>
-      </li>
+      @for (r of topRestaurants; track r) {
+        <li class="restaurant-item">
+          <div class="rank-badge">{{ r.rank }}</div>
+          <div class="restaurant-info">
+            <span class="restaurant-name">{{ r.name }}</span>
+            <span class="restaurant-transactions">{{ r.transactions }} Transactions</span>
+          </div>
+          <div class="restaurant-volume">
+            <span class="volume-amount">{{ r.volume | number:'1.0-0' }}</span>
+            <span class="volume-unit">FCFA</span>
+          </div>
+        </li>
+      }
     </ul>
   </div>
 </div>

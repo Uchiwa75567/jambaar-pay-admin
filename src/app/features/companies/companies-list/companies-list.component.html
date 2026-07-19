@@ -15,16 +15,22 @@
           <i class="pi pi-filter"></i>
           <span>{{ filterLabel() }}</span>
         </button>
-        <div class="filter-menu" *ngIf="filterMenuOpen()">
-          <p class="filter-group-label">Statut</p>
-          <button *ngFor="let s of statusOptions" class="filter-item"
-            [class.active]="statusFilter() === s"
-            type="button" (click)="setStatusFilter(s)">{{ s }}</button>
-          <p class="filter-group-label">Période</p>
-          <button *ngFor="let d of dateOptions" class="filter-item"
-            [class.active]="dateFilter() === d"
-            type="button" (click)="setDateFilter(d)">{{ d }}</button>
-        </div>
+        @if (filterMenuOpen()) {
+          <div class="filter-menu">
+            <p class="filter-group-label">Statut</p>
+            @for (s of statusOptions; track s) {
+              <button class="filter-item"
+                [class.active]="statusFilter() === s"
+              type="button" (click)="setStatusFilter(s)">{{ s }}</button>
+            }
+            <p class="filter-group-label">Période</p>
+            @for (d of dateOptions; track d) {
+              <button class="filter-item"
+                [class.active]="dateFilter() === d"
+              type="button" (click)="setDateFilter(d)">{{ d }}</button>
+            }
+          </div>
+        }
       </div>
 
       <input #companyImportInput class="file-input" type="file" accept=".csv,.json" (change)="onImportFileSelected($event)" />
@@ -32,19 +38,19 @@
 
       <div class="export-wrapper">
         <button class="btn-secondary" type="button" (click)="toggleExportMenu()">Exporter</button>
-        <div class="export-menu" *ngIf="exportMenuOpen()">
-          <button class="export-item" type="button" (click)="exportExcel()">Exporter Excel</button>
-          <button class="export-item" type="button" (click)="exportPdf()">Exporter PDF</button>
-        </div>
+        @if (exportMenuOpen()) {
+          <div class="export-menu">
+            <button class="export-item" type="button" (click)="exportExcel()">Exporter Excel</button>
+            <button class="export-item" type="button" (click)="exportPdf()">Exporter PDF</button>
+          </div>
+        }
       </div>
 
       <button class="btn-add" type="button" routerLink="/companies/add">Ajouter une entreprise</button>
     </div>
   </div>
 
-  <p class="feedback-message" *ngIf="feedback() as state" [class.is-error]="state.type === 'error'">
-    {{ state.message }}
-  </p>
+  <app-feedback-message [state]="feedback()" />
 
   <p-table [value]="companies()" styleClass="companies-table">
     <ng-template pTemplate="header">
@@ -68,41 +74,29 @@
           <button class="action-btn" (click)="actionMenu.toggle($event)" aria-label="Actions entreprise">
             <i class="pi pi-ellipsis-v"></i>
           </button>
-          <p-menu #actionMenu [popup]="true" [model]="getMenuItems()" appendTo="body" styleClass="row-action-menu"></p-menu>
+          <p-menu #actionMenu [popup]="true" [model]="menuItems" appendTo="body" styleClass="row-action-menu"></p-menu>
         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-      <tr><td colspan="6" class="empty-message">Aucune entreprise trouvée.</td></tr>
+      <tr>
+        <td colspan="6" class="empty-message">
+          @if (loading()) {
+            <app-loading-state message="Chargement des entreprises…" />
+          } @else {
+            <app-empty-state message="Aucune entreprise trouvée." />
+          }
+        </td>
+      </tr>
     </ng-template>
   </p-table>
 
-  <div class="table-footer">
-    <!-- Rows per page -->
-    <div class="dropdown-wrap">
-      <button class="rows-btn" type="button" (click)="togglePageSizeMenu()">
-        <span>lignes par page</span>
-        <strong>{{ pageSize() }}</strong>
-        <i class="pi pi-chevron-down" style="font-size:11px"></i>
-      </button>
-      <div class="rows-menu" *ngIf="pageSizeMenuOpen()">
-        <button *ngFor="let s of pageSizeOptions" class="rows-item"
-          [class.active]="pageSize() === s"
-          type="button" (click)="setPageSize(s)">{{ s }}</button>
-      </div>
-    </div>
-
-    <!-- Pagination -->
-    <nav class="pagination" aria-label="Pagination">
-      <span class="prev" [class.disabled]="currentPage() === 1" (click)="prevPage()">Prec</span>
-      <ng-container *ngFor="let p of visiblePages()">
-        <span *ngIf="p !== '...'" class="page"
-          [class.active]="currentPage() === p"
-          [class.outlined]="currentPage() !== p"
-          (click)="setPage(p)">{{ p < 10 ? '0' + p : p }}</span>
-        <span *ngIf="p === '...'" class="dots">...</span>
-      </ng-container>
-      <span class="next" [class.disabled]="currentPage() === totalPages()" (click)="nextPage()">Suiv</span>
-    </nav>
-  </div>
+  <app-pagination
+    [currentPage]="currentPage()"
+    [totalPages]="totalPages()"
+    [pageSize]="pageSize()"
+    [pageSizeOptions]="pageSizeOptions"
+    ariaLabel="Pagination des entreprises"
+    (pageChange)="setPage($event)"
+    (pageSizeChange)="setPageSize($event)" />
 </section>

@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
-import { PlatformSettings, PlatformSettingsService } from '../../core/services/platform-settings.service';
+import { firstValueFrom } from 'rxjs';
+import { FeedbackMessageComponent } from '../../design-system/components/feedback-message/feedback-message.component';
+import { SettingsFacade } from './application/settings.facade';
 import {
   hasMinLength,
   hasValue,
@@ -13,39 +15,37 @@ import {
 } from '../../core/utils/form-validation';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule],
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+    selector: 'app-settings',
+    imports: [FormsModule, InputTextModule, FeedbackMessageComponent],
+    providers: [SettingsFacade],
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent {
+  private readonly router = inject(Router);
+  private readonly facade = inject(SettingsFacade);
+
   submitted = signal(false);
-  successMessage = signal('');
-
-  form: PlatformSettings;
-
-  constructor(
-    private readonly router: Router,
-    private readonly settingsService: PlatformSettingsService,
-  ) {
-    this.form = this.settingsService.read();
-  }
+  readonly form = this.facade.form;
+  readonly feedback = this.facade.feedback;
 
   onCancel(): void {
     this.router.navigate(['/dashboard']);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.submitted.set(true);
-    this.successMessage.set('');
 
     if (!this.isFormValid()) {
       return;
     }
 
-    this.settingsService.save(this.form);
-    this.successMessage.set('Les parametres ont ete valides et sont prets a etre enregistres.');
+    try {
+      await firstValueFrom(this.facade.save());
+    } catch {
+      // La facade expose l'erreur normalisée au template.
+    }
   }
 
   private isFormValid(): boolean {

@@ -1,0 +1,65 @@
+<section class="restaurant-page">
+  <section class="restaurant-content-grid">
+    <article class="panel payments-panel">
+      <div class="panel-head">
+        <h2>Paiements recents</h2>
+        <a class="panel-link" routerLink="/restaurant-history">Voir tout <i class="pi pi-chevron-right"></i></a>
+      </div>
+
+      <div class="payment-list">
+        @for (payment of recentPayments; track payment) {
+          <article class="payment-row">
+            <div class="payment-identity">
+              <span class="payment-avatar" [class]="'payment-avatar tone-' + payment.tone">{{ payment.initials }}</span>
+              <div class="payment-meta">
+                <strong>{{ payment.customer }}</strong>
+                <span>{{ payment.table }} · {{ payment.time }}</span>
+              </div>
+            </div>
+            <strong class="payment-amount">{{ payment.amount }}</strong>
+          </article>
+        }
+      </div>
+    </article>
+
+    <aside class="panel qr-panel" aria-label="Code QR du restaurant">
+      <div class="qr-frame">
+        @if (qrCodeStatus() === 'ready') {
+          <img
+            [src]="qrCodeUrl()"
+            class="qr-code"
+            [alt]="'QR code du restaurant pour le numéro ' + qrPhoneNumber()" />
+        } @else if (qrCodeStatus() === 'error') {
+          <app-empty-state message="QR code indisponible." icon="pi pi-exclamation-triangle" />
+        } @else {
+          <app-loading-state message="Génération du QR code…" />
+        }
+      </div>
+    </aside>
+  </section>
+
+  <section class="panel companies-panel">
+    <div class="panel-head panel-head-table">
+      <h2>Entreprises partenaires</h2>
+      <span class="panel-counter">{{ partnerCompanies.length }} partenaires</span>
+    </div>
+
+    <div class="companies-table">
+      <div class="companies-header">
+        <span>Nom de l'entreprise</span>
+        <span>Employes</span>
+        <span>Montant total (FCFA)</span>
+        <span>Statut</span>
+      </div>
+
+      @for (company of partnerCompanies; track company) {
+        <div class="companies-row">
+          <span>{{ company.name }}</span>
+          <span>{{ company.employees }}</span>
+          <span>{{ company.amount }}</span>
+          <span class="status-pill" [class.is-inactive]="company.status === 'Inactif'">{{ company.status }}</span>
+        </div>
+      }
+    </div>
+  </section>
+</section>

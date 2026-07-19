@@ -1,11 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
-import { Company } from '../../../core/models/company.models';
-import { CompaniesRepositoryService } from '../../../core/services/companies-repository.service';
+import { firstValueFrom } from 'rxjs';
+import { FeedbackMessage, FeedbackMessageComponent } from '../../../design-system/components/feedback-message/feedback-message.component';
+import { COMPANIES_REPOSITORY, CompaniesRepository } from '../application/companies.repository';
+import { Company } from '../domain/company.model';
 import {
   hasMinLength,
   hasValue,
@@ -16,14 +18,19 @@ import {
 } from '../../../core/utils/form-validation';
 
 @Component({
-  selector: 'app-company-add',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, InputTextModule],
-  templateUrl: './company-add.component.html',
-  styleUrls: ['./company-add.component.scss'],
+    selector: 'app-company-add',
+    imports: [FormsModule, RouterModule, InputTextModule, FeedbackMessageComponent],
+    templateUrl: './company-add.component.html',
+    styleUrls: ['./company-add.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompanyAddComponent {
+  private readonly router = inject(Router);
+  private readonly companiesRepository = inject<CompaniesRepository>(COMPANIES_REPOSITORY);
+
   submitted = signal(false);
+  submitting = signal(false);
+  feedback = signal<FeedbackMessage | null>(null);
 
   form = {
     name: '',
@@ -36,24 +43,30 @@ export class CompanyAddComponent {
     address: '',
   };
 
-  constructor(
-    private readonly router: Router,
-    private readonly companiesRepository: CompaniesRepositoryService,
-  ) {}
-
   onCancel(): void {
     this.router.navigate(['/companies']);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.submitted.set(true);
+    this.feedback.set(null);
 
-    if (!this.isFormValid()) {
+    if (!this.isFormValid() || this.submitting()) {
       return;
     }
 
-    this.companiesRepository.upsert(this.buildCompany());
-    this.router.navigate(['/companies']);
+    this.submitting.set(true);
+    try {
+      await firstValueFrom(this.companiesRepository.upsert(this.buildCompany()));
+      await this.router.navigate(['/companies']);
+    } catch {
+      this.feedback.set({
+        type: 'error',
+        message: 'L’entreprise n’a pas pu être enregistrée. Veuillez réessayer.',
+      });
+    } finally {
+      this.submitting.set(false);
+    }
   }
 
   isFormValid(): boolean {

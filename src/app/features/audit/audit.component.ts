@@ -1,109 +1,86 @@
-import { Component, signal, computed, HostListener, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
-import { buildVisiblePages, sliceCurrentPage } from '../../core/utils/pagination';
-
-export interface AuditLog {
-  action: string;
-  user: string;
-  details: string;
-  date: string;
-}
-
-const MOCK_LOGS: AuditLog[] = [
-  { action: 'Création entreprise',  user: 'Admin Principal', details: 'Sonatel SA ajoutée',         date: '2024-01-15 10:30' },
-  { action: 'Création restaurant',  user: 'Admin Principal', details: 'Le Djolof ajouté',            date: '2024-01-15 11:00' },
-  { action: 'Modification',         user: 'Admin Principal', details: 'Orange SN modifiée',          date: '2024-01-14 09:15' },
-  { action: 'Création entreprise',  user: 'Admin Principal', details: 'Ecobank ajoutée',             date: '2024-01-14 08:30' },
-  { action: 'Création restaurant',  user: 'Admin Principal', details: 'La Téranga ajoutée',          date: '2024-01-13 14:45' },
-  { action: 'Modification',         user: 'Admin Principal', details: 'Thiébou Ndar modifié',        date: '2024-01-13 13:20' },
-  { action: 'Suppression',          user: 'Admin Principal', details: 'Restaurant FoodGood supprimé',date: '2024-01-12 16:00' },
-  { action: 'Création entreprise',  user: 'Admin Principal', details: 'Total SN ajoutée',            date: '2024-01-12 10:00' },
-  { action: 'Modification',         user: 'Admin Principal', details: 'Tigo modifiée',               date: '2024-01-11 11:30' },
-  { action: 'Création restaurant',  user: 'Admin Principal', details: 'Dakar Bistro ajouté',         date: '2024-01-11 09:45' },
-  { action: 'Création entreprise',  user: 'Admin Principal', details: 'CBAO ajoutée',                date: '2024-01-10 14:00' },
-  { action: 'Suppression',          user: 'Admin Principal', details: 'Ancienne entreprise retirée', date: '2024-01-10 08:00' },
-];
-
-type ActionFilter = 'Tous' | 'Création entreprise' | 'Création restaurant' | 'Modification' | 'Suppression';
+import { TableModule } from 'primeng/table';
+import { EmptyStateComponent } from '../../design-system/components/empty-state/empty-state.component';
+import { FeedbackMessageComponent } from '../../design-system/components/feedback-message/feedback-message.component';
+import { LoadingStateComponent } from '../../design-system/components/loading-state/loading-state.component';
+import { PaginationComponent } from '../../design-system/components/pagination/pagination.component';
+import { AuditActionFilter, AuditFacade } from './application/audit.facade';
 
 @Component({
   selector: 'app-audit',
-  standalone: true,
-  imports: [CommonModule, FormsModule, TableModule, InputTextModule],
+  imports: [
+    FormsModule,
+    InputTextModule,
+    TableModule,
+    EmptyStateComponent,
+    FeedbackMessageComponent,
+    LoadingStateComponent,
+    PaginationComponent,
+  ],
+  providers: [AuditFacade],
   templateUrl: './audit.component.html',
-  styleUrls: ['./audit.component.scss'],
+  styleUrl: './audit.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuditComponent {
-  searchTerm   = signal('');
-  actionFilter = signal<ActionFilter>('Tous');
-  pageSize     = signal(6);
-  currentPage  = signal(1);
+  private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly facade = inject(AuditFacade);
 
-  pageSizeMenuOpen = signal(false);
-  filterMenuOpen   = signal(false);
-  exportMenuOpen   = signal(false);
-
-  pageSizeOptions = [6, 12, 18];
-  filterOptions: ActionFilter[] = ['Tous', 'Création entreprise', 'Création restaurant', 'Modification', 'Suppression'];
-
-  filtered = computed(() => {
-    const q  = this.searchTerm().toLowerCase();
-    const af = this.actionFilter();
-    return MOCK_LOGS.filter(l => {
-      if (q && !(l.action.toLowerCase().includes(q) || l.user.toLowerCase().includes(q) || l.details.toLowerCase().includes(q))) return false;
-      if (af !== 'Tous' && l.action !== af) return false;
-      return true;
-    });
-  });
-
-  totalPages = computed(() => Math.max(1, Math.ceil(this.filtered().length / this.pageSize())));
-
-  visiblePages = computed<(number | '...')[]>(() => {
-    return buildVisiblePages(this.totalPages(), this.currentPage());
-  });
-
-  logs = computed(() => {
-    return sliceCurrentPage(this.filtered(), this.currentPage(), this.pageSize());
-  });
-
-  constructor(private el: ElementRef) {}
+  readonly searchTerm = this.facade.searchTerm;
+  readonly actionFilter = this.facade.actionFilter;
+  readonly pageSize = this.facade.pageSize;
+  readonly currentPage = this.facade.currentPage;
+  readonly loading = this.facade.loading;
+  readonly feedback = this.facade.feedback;
+  readonly pageSizeOptions = this.facade.pageSizeOptions;
+  readonly filterOptions = this.facade.filterOptions;
+  readonly totalPages = this.facade.totalPages;
+  readonly logs = this.facade.logs;
+  readonly filterMenuOpen = signal(false);
+  readonly exportMenuOpen = signal(false);
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(e: MouseEvent): void {
-    if (!this.el.nativeElement.contains(e.target)) {
-      this.pageSizeMenuOpen.set(false);
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.element.nativeElement.contains(event.target as Node)) {
       this.filterMenuOpen.set(false);
       this.exportMenuOpen.set(false);
     }
   }
 
+  onSearchChange(value: string): void {
+    this.facade.setSearchTerm(value);
+  }
+
   setPageSize(size: number): void {
-    this.pageSize.set(size);
-    this.currentPage.set(1);
-    this.pageSizeMenuOpen.set(false);
+    this.facade.setPageSize(size);
   }
 
-  setPage(page: number | '...'): void {
-    if (page === '...') return;
-    if (page < 1 || page > this.totalPages()) return;
-    this.currentPage.set(page);
+  setPage(page: number): void {
+    this.facade.setPage(page);
   }
 
-  prevPage(): void { if (this.currentPage() > 1) this.currentPage.update(p => p - 1); }
-  nextPage(): void { if (this.currentPage() < this.totalPages()) this.currentPage.update(p => p + 1); }
+  toggleFilterMenu(): void {
+    this.filterMenuOpen.update(isOpen => !isOpen);
+  }
 
-  toggleFilterMenu(): void   { this.filterMenuOpen.update(v => !v); }
-  togglePageSizeMenu(): void { this.pageSizeMenuOpen.update(v => !v); }
-  toggleExportMenu(): void   { this.exportMenuOpen.update(v => !v); }
-  exportPDF(): void          { this.exportMenuOpen.set(false); }
-  exportExcel(): void        { this.exportMenuOpen.set(false); }
+  toggleExportMenu(): void {
+    this.exportMenuOpen.update(isOpen => !isOpen);
+  }
 
-  setFilter(f: ActionFilter): void {
-    this.actionFilter.set(f);
-    this.currentPage.set(1);
+  setFilter(filter: AuditActionFilter): void {
+    this.facade.setFilter(filter);
     this.filterMenuOpen.set(false);
+  }
+
+  exportPDF(): void {
+    this.facade.exportPdf();
+    this.exportMenuOpen.set(false);
+  }
+
+  exportExcel(): void {
+    this.facade.exportExcel();
+    this.exportMenuOpen.set(false);
   }
 }

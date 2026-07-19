@@ -1,24 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { DecimalPipe, SlicePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
-import { KpiCardComponent } from '../../shared/components/kpi-card/kpi-card.component';
-import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
+import { ChartData, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
+import { KpiCardComponent } from '../../design-system/components/kpi-card/kpi-card.component';
 import { FcfaCurrencyPipe } from '../../shared/pipes/fcfa-currency.pipe';
-import { DateFrPipe } from '../../shared/pipes/date-fr.pipe';
-import { DashboardKPI, TopRestaurant, RecentActivity } from '../../core/models/dashboard.models';
+import { DashboardKpi, RecentActivity, TopRestaurant } from './domain/dashboard.models';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule, RouterLink, CardModule, TableModule, ChartModule, KpiCardComponent, StatusBadgeComponent, FcfaCurrencyPipe, DateFrPipe],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+    selector: 'app-dashboard',
+    imports: [DecimalPipe, SlicePipe, RouterLink, TableModule, ChartModule, KpiCardComponent, FcfaCurrencyPipe],
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
-  kpis: DashboardKPI[] = [
+  kpis: DashboardKpi[] = [
     {
       label: 'Entreprises',
       value: 47,
@@ -67,8 +65,8 @@ export class DashboardComponent implements OnInit {
     status: 'Validé' as const,
   }));
 
-  chartData: any;
-  chartOptions: any;
+  chartData: ChartData<'line', number[], string> = { datasets: [] };
+  chartOptions: ChartOptions<'line'> = {};
 
   ngOnInit(): void {
     this.initChart();
@@ -85,7 +83,7 @@ export class DashboardComponent implements OnInit {
         data,
         fill: true,
         borderColor: '#fde67a',
-        backgroundColor: (context: any) => {
+        backgroundColor: (context: ScriptableContext<'line'>) => {
           const chart = context.chart;
           const area = chart.chartArea;
           if (!area) return 'rgba(253, 230, 122, 0.18)';
@@ -99,7 +97,7 @@ export class DashboardComponent implements OnInit {
         pointBackgroundColor: '#F7E47A',
         pointBorderColor: '#fff',
         pointBorderWidth: 3,
-        pointRadius: (ctx: any) => ctx.dataIndex === 5 ? 7 : 0,
+        pointRadius: (context: ScriptableContext<'line'>) => context.dataIndex === 5 ? 7 : 0,
         pointHoverRadius: 8,
       }],
     };
@@ -118,7 +116,7 @@ export class DashboardComponent implements OnInit {
           borderWidth: 1,
           padding: 10,
           callbacks: {
-            label: (ctx: any) => ` ${ctx.parsed.y}%`,
+            label: (context: TooltipItem<'line'>) => ` ${context.parsed.y}%`,
           },
         },
       },
@@ -136,7 +134,7 @@ export class DashboardComponent implements OnInit {
           border: { display: false },
           ticks: {
             color: '#1A1A2E',
-            font: { size: 11, family: 'Segoe UI', weight: '600' },
+            font: { size: 11, family: 'Segoe UI', weight: 600 },
             padding: 14,
             maxRotation: 0,
             minRotation: 0,
@@ -147,7 +145,7 @@ export class DashboardComponent implements OnInit {
           max: 110,
           grid: { color: 'rgba(0,0,0,0.045)' },
           border: { display: false },
-          ticks: { stepSize: 25, color: '#1A1A2E', font: { size: 12, family: 'Segoe UI', weight: '600' } },
+          ticks: { stepSize: 25, color: '#1A1A2E', font: { size: 12, family: 'Segoe UI', weight: 600 } },
           position: 'left',
         },
       },

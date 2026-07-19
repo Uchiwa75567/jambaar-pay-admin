@@ -1,0 +1,32 @@
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge-valid,
+.badge-active {
+  background: #dcfce7;
+  color: var(--color-green-valid);
+}
+
+.badge-pending {
+  background: #fff3e8;
+  color: #c95b16;
+}
+
+.badge-failed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-inactive {
+  background: #f3f4f6;
+  color: #4b5563;
+}

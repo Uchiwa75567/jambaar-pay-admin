@@ -1,8 +1,9 @@
-import { Injectable, computed, signal } from '@angular/core';
-import { Company } from '../../../core/models/company.models';
+import { computed, Injectable, signal, inject } from '@angular/core';
+import { finalize, firstValueFrom, take } from 'rxjs';
 import { DataTransferService, ExportColumn, ImportedRecord } from '../../../core/services/data-transfer.service';
-import { CompaniesRepositoryService } from '../../../core/services/companies-repository.service';
-import { buildVisiblePages, sliceCurrentPage } from '../../../core/utils/pagination';
+import { sliceCurrentPage } from '../../../core/utils/pagination';
+import { COMPANIES_REPOSITORY, CompaniesRepository } from '../application/companies.repository';
+import { Company } from '../domain/company.model';
 
 export type CompanyStatusFilter = 'Tous' | 'Actif' | 'Inactif';
 export type CompanyDateFilter = 'Tous' | 'Ce mois' | 'Ce trimestre' | 'Cette année';
@@ -15,6 +16,9 @@ const DATE_OPTIONS: CompanyDateFilter[] = ['Tous', 'Ce mois', 'Ce trimestre', 'C
 
 @Injectable()
 export class CompaniesListFacade {
+  private readonly dataTransfer = inject(DataTransferService);
+  private readonly companiesRepository = inject<CompaniesRepository>(COMPANIES_REPOSITORY);
+
   private readonly allCompanies = signal<Company[]>([]);
   private readonly exportColumns: ExportColumn<Company>[] = [
     { header: 'ID', value: company => company.id },
@@ -31,6 +35,7 @@ export class CompaniesListFacade {
   readonly pageSize = signal(DEFAULT_PAGE_SIZE);
   readonly currentPage = signal(1);
   readonly feedback = signal<CompanyFeedbackState>(null);
+  readonly loading = signal(true);
 
   readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
   readonly statusOptions = STATUS_OPTIONS;
@@ -71,19 +76,18 @@ export class CompaniesListFacade {
 
   readonly totalPages = computed(() => Math.max(1, Math.ceil(this.filteredCompanies().length / this.pageSize())));
 
-  readonly visiblePages = computed<(number | '...')[]>(() => {
-    return buildVisiblePages(this.totalPages(), this.currentPage());
-  });
-
   readonly companies = computed(() => {
     return sliceCurrentPage(this.filteredCompanies(), this.currentPage(), this.pageSize());
   });
 
-  constructor(
-    private readonly dataTransfer: DataTransferService,
-    private readonly companiesRepository: CompaniesRepositoryService,
-  ) {
-    this.allCompanies.set(this.companiesRepository.readAll());
+  constructor() {
+    this.companiesRepository.list().pipe(
+      take(1),
+      finalize(() => this.loading.set(false)),
+    ).subscribe({
+      next: companies => this.allCompanies.set(companies),
+      error: error => this.setErrorFeedback(error, 'Chargement des entreprises impossible.'),
+    });
   }
 
   setSearchTerm(value: string): void {
@@ -102,18 +106,6 @@ export class CompaniesListFacade {
     }
 
     this.currentPage.set(page);
-  }
-
-  prevPage(): void {
-    if (this.currentPage() > 1) {
-      this.currentPage.update(page => page - 1);
-    }
-  }
-
-  nextPage(): void {
-    if (this.currentPage() < this.totalPages()) {
-      this.currentPage.update(page => page + 1);
-    }
   }
 
   setStatusFilter(status: CompanyStatusFilter): void {
@@ -139,7 +131,7 @@ export class CompaniesListFacade {
     }
 
     const mergedCompanies = this.mergeById(this.allCompanies(), importedCompanies);
-    this.persistCompanies(mergedCompanies);
+    await this.persistCompanies(mergedCompanies);
     this.currentPage.set(1);
     this.setFeedback('success', `${importedCompanies.length} entreprise(s) importee(s) avec succes.`);
   }
@@ -222,9 +214,9 @@ export class CompaniesListFacade {
     return Array.from(companiesById.values());
   }
 
-  private persistCompanies(companies: Company[]): void {
+  private async persistCompanies(companies: Company[]): Promise<void> {
+    await firstValueFrom(this.companiesRepository.saveAll(companies));
     this.allCompanies.set(companies);
-    this.companiesRepository.saveAll(companies);
   }
 
   private setFeedback(type: 'success' | 'error', message: string): void {

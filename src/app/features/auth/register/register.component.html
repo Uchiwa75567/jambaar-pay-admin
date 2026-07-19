@@ -6,10 +6,12 @@
   <main class="register-right">
     <section class="register-panel" aria-labelledby="register-title">
       <div class="register-topline">
-        <button *ngIf="step() === 2" type="button" class="back-link" (click)="previousStep()">
-          <i class="pi pi-arrow-left"></i>
-          <span>Retour</span>
-        </button>
+        @if (step() === 2) {
+          <button type="button" class="back-link" (click)="previousStep()">
+            <i class="pi pi-arrow-left"></i>
+            <span>Retour</span>
+          </button>
+        }
         <h1 id="register-title">Inscrire votre entreprise</h1>
       </div>
 
@@ -25,201 +27,216 @@
         </div>
       </div>
 
-      <div *ngIf="successMessage()" class="success-alert">
-        <i class="pi pi-check-circle"></i>
-        <span>{{ successMessage() }}</span>
-      </div>
-
-      <form *ngIf="step() === 1" class="register-form" (ngSubmit)="nextStep()" novalidate>
-        <div class="field">
-          <label for="companyName">Nom de l'entreprise*</label>
-          <div class="input-wrapper">
-            <i class="pi pi-building input-icon"></i>
-            <input
-              pInputText
-              id="companyName"
-              name="companyName"
-              type="text"
-              [(ngModel)]="form.companyName"
-              placeholder="Ex : Jambaar Services"
-              autocomplete="organization"
-              [class.input-invalid]="submitted() && !!companyNameError" />
-          </div>
-          <small *ngIf="submitted() && !!companyNameError" class="field-error">{{ companyNameError }}</small>
+      @if (successMessage()) {
+        <div class="success-alert">
+          <i class="pi pi-check-circle"></i>
+          <span>{{ successMessage() }}</span>
         </div>
+      }
 
-        <div class="field">
-          <label for="email">Adresse email *</label>
-          <div class="input-wrapper">
-            <i class="pi pi-envelope input-icon"></i>
-            <input
-              pInputText
-              id="email"
-              name="email"
-              type="email"
-              [(ngModel)]="form.email"
-              placeholder="Ex : contact@entreprise.sn"
-              autocomplete="email"
-              [class.input-invalid]="showEmailError()" />
-          </div>
-          <small *ngIf="showEmailError()" class="field-error">{{ emailError }}</small>
-        </div>
-
-        <div class="field">
-          <label for="phone">Téléphone*</label>
-          <div class="input-wrapper phone-wrapper">
-            <span class="phone-prefix">+221</span>
-            <input
-              pInputText
-              id="phone"
-              name="phone"
-              type="tel"
-              [(ngModel)]="form.phone"
-              placeholder="Ex : 77 123 45 67"
-              autocomplete="tel"
-              [class.input-invalid]="showPhoneError()" />
-          </div>
-          <small *ngIf="showPhoneError()" class="field-error">{{ phoneError }}</small>
-        </div>
-
-        <div class="field">
-          <label for="hrManager">Responsable RH *</label>
-          <div class="input-wrapper">
-            <input
-              pInputText
-              id="hrManager"
-              name="hrManager"
-              type="text"
-              [(ngModel)]="form.hrManager"
-              placeholder="Ex : Mariama Ndiaye"
-              autocomplete="name"
-              [class.input-invalid]="submitted() && !!hrManagerError" />
-          </div>
-          <small *ngIf="submitted() && !!hrManagerError" class="field-error">{{ hrManagerError }}</small>
-        </div>
-
-        <div class="field-grid">
+      @if (step() === 1) {
+        <form class="register-form" (ngSubmit)="nextStep()" novalidate>
           <div class="field">
-            <label for="sector">Secteur d'activité</label>
-            <input
-              pInputText
-              id="sector"
-              name="sector"
-              type="text"
-              [(ngModel)]="form.sector"
-              placeholder="Ex : Restauration collective"
-              [class.input-invalid]="submitted() && !!sectorError" />
-            <small *ngIf="submitted() && !!sectorError" class="field-error">{{ sectorError }}</small>
+            <label for="companyName">Nom de l'entreprise*</label>
+            <div class="input-wrapper">
+              <i class="pi pi-building input-icon"></i>
+              <input
+                pInputText
+                id="companyName"
+                name="companyName"
+                type="text"
+                [(ngModel)]="form.companyName"
+                placeholder="Ex : Jambaar Services"
+                autocomplete="organization"
+                [class.input-invalid]="submitted() && !!companyNameError" />
+            </div>
+            @if (submitted() && !!companyNameError) {
+              <small class="field-error">{{ companyNameError }}</small>
+            }
           </div>
-
           <div class="field">
-            <label for="employeeCount">Nombre de salariés</label>
+            <label for="email">Adresse email *</label>
+            <div class="input-wrapper">
+              <i class="pi pi-envelope input-icon"></i>
+              <input
+                pInputText
+                id="email"
+                name="email"
+                type="email"
+                [(ngModel)]="form.email"
+                placeholder="Ex : contact@entreprise.sn"
+                autocomplete="email"
+                [class.input-invalid]="showEmailError()" />
+            </div>
+            @if (showEmailError()) {
+              <small class="field-error">{{ emailError }}</small>
+            }
+          </div>
+          <div class="field">
+            <label for="phone">Téléphone*</label>
+            <div class="input-wrapper phone-wrapper">
+              <span class="phone-prefix">+221</span>
+              <input
+                pInputText
+                id="phone"
+                name="phone"
+                type="tel"
+                [(ngModel)]="form.phone"
+                placeholder="Ex : 77 123 45 67"
+                autocomplete="tel"
+                [class.input-invalid]="showPhoneError()" />
+            </div>
+            @if (showPhoneError()) {
+              <small class="field-error">{{ phoneError }}</small>
+            }
+          </div>
+          <div class="field">
+            <label for="hrManager">Responsable RH *</label>
+            <div class="input-wrapper">
+              <input
+                pInputText
+                id="hrManager"
+                name="hrManager"
+                type="text"
+                [(ngModel)]="form.hrManager"
+                placeholder="Ex : Mariama Ndiaye"
+                autocomplete="name"
+                [class.input-invalid]="submitted() && !!hrManagerError" />
+            </div>
+            @if (submitted() && !!hrManagerError) {
+              <small class="field-error">{{ hrManagerError }}</small>
+            }
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label for="sector">Secteur d'activité</label>
+              <input
+                pInputText
+                id="sector"
+                name="sector"
+                type="text"
+                [(ngModel)]="form.sector"
+                placeholder="Ex : Restauration collective"
+                [class.input-invalid]="submitted() && !!sectorError" />
+              @if (submitted() && !!sectorError) {
+                <small class="field-error">{{ sectorError }}</small>
+              }
+            </div>
+            <div class="field">
+              <label for="employeeCount">Nombre de salariés</label>
+              <input
+                pInputText
+                id="employeeCount"
+                name="employeeCount"
+                type="number"
+                min="1"
+                [(ngModel)]="form.employeeCount"
+                placeholder="Ex : 150"
+                [class.input-invalid]="showEmployeeCountError()" />
+              @if (showEmployeeCountError()) {
+                <small class="field-error">{{ employeeCountError }}</small>
+              }
+            </div>
+          </div>
+          <div class="field">
+            <label for="ninea">NINEA / RCCM</label>
             <input
               pInputText
-              id="employeeCount"
-              name="employeeCount"
-              type="number"
-              min="1"
-              [(ngModel)]="form.employeeCount"
-              placeholder="Ex : 150"
-              [class.input-invalid]="showEmployeeCountError()" />
-            <small *ngIf="showEmployeeCountError()" class="field-error">{{ employeeCountError }}</small>
+              id="ninea"
+              name="ninea"
+              type="text"
+              [(ngModel)]="form.ninea"
+              placeholder="Ex : SN-DKR-2024-A-1234"
+              [class.input-invalid]="showNineaError()" />
+            @if (showNineaError()) {
+              <small class="field-error">{{ nineaError }}</small>
+            }
           </div>
-        </div>
+          <button type="submit" class="btn-submit">Continuer</button>
+          <p class="auth-switch">
+            J'ai déjà un compte ? <a routerLink="/login">Se connecter</a>
+          </p>
+        </form>
+      }
 
-        <div class="field">
-          <label for="ninea">NINEA / RCCM</label>
-          <input
-            pInputText
-            id="ninea"
-            name="ninea"
-            type="text"
-            [(ngModel)]="form.ninea"
-            placeholder="Ex : SN-DKR-2024-A-1234"
-            [class.input-invalid]="showNineaError()" />
-          <small *ngIf="showNineaError()" class="field-error">{{ nineaError }}</small>
-        </div>
-
-        <button type="submit" class="btn-submit">Continuer</button>
-
-        <p class="auth-switch">
-          J'ai déjà un compte ? <a routerLink="/login">Se connecter</a>
-        </p>
-      </form>
-
-      <form *ngIf="step() === 2" class="register-form register-form-short" (ngSubmit)="onSubmit()" novalidate>
-        <div class="field">
-          <label for="location">Localisation *</label>
-          <input
-            pInputText
-            id="location"
-            name="location"
-            type="text"
-            [(ngModel)]="form.location"
-            placeholder="Ex : Sacre-Coeur 3, VDN"
-            autocomplete="street-address"
-            [class.input-invalid]="submitted() && !!locationError" />
-          <small *ngIf="submitted() && !!locationError" class="field-error">{{ locationError }}</small>
-        </div>
-
-        <div class="field">
-          <label for="city">Ville *</label>
-          <input
-            pInputText
-            id="city"
-            name="city"
-            type="text"
-            [(ngModel)]="form.city"
-            autocomplete="address-level2"
-            placeholder="Ex : Dakar"
-            [class.input-invalid]="submitted() && !!cityError" />
-          <small *ngIf="submitted() && !!cityError" class="field-error">{{ cityError }}</small>
-        </div>
-
-        <div class="field">
-          <label for="password">Mot de passe *</label>
-          <div class="input-wrapper">
+      @if (step() === 2) {
+        <form class="register-form register-form-short" (ngSubmit)="onSubmit()" novalidate>
+          <div class="field">
+            <label for="location">Localisation *</label>
             <input
               pInputText
-              id="password"
-              name="password"
-              [type]="showPassword() ? 'text' : 'password'"
-              [(ngModel)]="form.password"
-              placeholder="Creez un mot de passe"
-              autocomplete="new-password"
-              [class.input-invalid]="showPasswordError()" />
-            <button type="button" class="eye-btn" (click)="togglePassword()" aria-label="Afficher le mot de passe">
-              <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
-            </button>
+              id="location"
+              name="location"
+              type="text"
+              [(ngModel)]="form.location"
+              placeholder="Ex : Sacre-Coeur 3, VDN"
+              autocomplete="street-address"
+              [class.input-invalid]="submitted() && !!locationError" />
+            @if (submitted() && !!locationError) {
+              <small class="field-error">{{ locationError }}</small>
+            }
           </div>
-          <small *ngIf="showPasswordError()" class="field-error">{{ passwordError }}</small>
-        </div>
-
-        <div class="field">
-          <label for="confirmPassword">Confirmer mot de passe *</label>
-          <div class="input-wrapper">
+          <div class="field">
+            <label for="city">Ville *</label>
             <input
               pInputText
-              id="confirmPassword"
-              name="confirmPassword"
-              [type]="showConfirmPassword() ? 'text' : 'password'"
-              [(ngModel)]="form.confirmPassword"
-              placeholder="Confirmez votre mot de passe"
-              autocomplete="new-password"
-              [class.input-invalid]="showConfirmPasswordError()" />
-            <button type="button" class="eye-btn" (click)="toggleConfirmPassword()" aria-label="Afficher la confirmation">
-              <i [class]="showConfirmPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
-            </button>
+              id="city"
+              name="city"
+              type="text"
+              [(ngModel)]="form.city"
+              autocomplete="address-level2"
+              placeholder="Ex : Dakar"
+              [class.input-invalid]="submitted() && !!cityError" />
+            @if (submitted() && !!cityError) {
+              <small class="field-error">{{ cityError }}</small>
+            }
           </div>
-          <small *ngIf="showConfirmPasswordError()" class="field-error">{{ confirmPasswordError }}</small>
-        </div>
-
-        <button type="submit" class="btn-submit">S'inscrire</button>
-
-        <p class="auth-switch">
-          J'ai déjà un compte ? <a routerLink="/login">Se connecter</a>
-        </p>
-      </form>
+          <div class="field">
+            <label for="password">Mot de passe *</label>
+            <div class="input-wrapper">
+              <input
+                pInputText
+                id="password"
+                name="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                [(ngModel)]="form.password"
+                placeholder="Creez un mot de passe"
+                autocomplete="new-password"
+                [class.input-invalid]="showPasswordError()" />
+              <button type="button" class="eye-btn" (click)="togglePassword()" aria-label="Afficher le mot de passe">
+                <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+              </button>
+            </div>
+            @if (showPasswordError()) {
+              <small class="field-error">{{ passwordError }}</small>
+            }
+          </div>
+          <div class="field">
+            <label for="confirmPassword">Confirmer mot de passe *</label>
+            <div class="input-wrapper">
+              <input
+                pInputText
+                id="confirmPassword"
+                name="confirmPassword"
+                [type]="showConfirmPassword() ? 'text' : 'password'"
+                [(ngModel)]="form.confirmPassword"
+                placeholder="Confirmez votre mot de passe"
+                autocomplete="new-password"
+                [class.input-invalid]="showConfirmPasswordError()" />
+              <button type="button" class="eye-btn" (click)="toggleConfirmPassword()" aria-label="Afficher la confirmation">
+                <i [class]="showConfirmPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+              </button>
+            </div>
+            @if (showConfirmPasswordError()) {
+              <small class="field-error">{{ confirmPasswordError }}</small>
+            }
+          </div>
+          <button type="submit" class="btn-submit">S'inscrire</button>
+          <p class="auth-switch">
+            J'ai déjà un compte ? <a routerLink="/login">Se connecter</a>
+          </p>
+        </form>
+      }
     </section>
   </main>
 </div>

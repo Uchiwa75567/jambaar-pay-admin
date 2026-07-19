@@ -1,48 +1,52 @@
-import { Component, ElementRef, HostListener, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, signal, inject } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component';
+import { EmptyStateComponent } from '../../../design-system/components/empty-state/empty-state.component';
+import { FeedbackMessageComponent } from '../../../design-system/components/feedback-message/feedback-message.component';
+import { LoadingStateComponent } from '../../../design-system/components/loading-state/loading-state.component';
+import { PaginationComponent } from '../../../design-system/components/pagination/pagination.component';
+import { StatusBadgeComponent } from '../../../design-system/components/status-badge/status-badge.component';
 import { RestaurantsListFacade, RestaurantStatusFilter } from './restaurants-list.facade';
 
 @Component({
-  selector: 'app-restaurants-list',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TableModule, ButtonModule, InputTextModule, MenuModule, StatusBadgeComponent],
-  providers: [RestaurantsListFacade],
-  templateUrl: './restaurants-list.component.html',
-  styleUrls: ['./restaurants-list.component.scss'],
+    selector: 'app-restaurants-list',
+    imports: [FormsModule, RouterModule, TableModule, InputTextModule, MenuModule, EmptyStateComponent, FeedbackMessageComponent, LoadingStateComponent, PaginationComponent, StatusBadgeComponent],
+    providers: [RestaurantsListFacade],
+    templateUrl: './restaurants-list.component.html',
+    styleUrls: ['./restaurants-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RestaurantsListComponent {
+  private readonly el = inject(ElementRef);
+  private readonly facade = inject(RestaurantsListFacade);
+
   readonly searchTerm = this.facade.searchTerm;
   readonly statusFilter = this.facade.statusFilter;
   readonly pageSize = this.facade.pageSize;
   readonly currentPage = this.facade.currentPage;
   readonly feedback = this.facade.feedback;
+  readonly loading = this.facade.loading;
   readonly pageSizeOptions = this.facade.pageSizeOptions;
   readonly filterOptions = this.facade.filterOptions;
-  readonly visiblePages = this.facade.visiblePages;
   readonly totalPages = this.facade.totalPages;
   readonly restaurants = this.facade.restaurants;
 
-  readonly pageSizeMenuOpen = signal(false);
   readonly filterMenuOpen = signal(false);
   readonly exportMenuOpen = signal(false);
-
-  constructor(
-    private readonly el: ElementRef,
-    private readonly facade: RestaurantsListFacade
-  ) {}
+  readonly menuItems: MenuItem[] = [
+    { label: 'Voir détails', icon: 'pi pi-eye' },
+    { label: 'Modifier', icon: 'pi pi-pencil' },
+    { label: 'Désactiver', icon: 'pi pi-ban', styleClass: 'danger-item' },
+  ];
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (!this.el.nativeElement.contains(event.target)) {
-      this.pageSizeMenuOpen.set(false);
       this.filterMenuOpen.set(false);
       this.exportMenuOpen.set(false);
     }
@@ -54,19 +58,10 @@ export class RestaurantsListComponent {
 
   setPageSize(size: number): void {
     this.facade.setPageSize(size);
-    this.pageSizeMenuOpen.set(false);
   }
 
   setPage(page: number | '...'): void {
     this.facade.setPage(page);
-  }
-
-  prevPage(): void {
-    this.facade.prevPage();
-  }
-
-  nextPage(): void {
-    this.facade.nextPage();
   }
 
   setFilter(status: RestaurantStatusFilter): void {
@@ -78,20 +73,8 @@ export class RestaurantsListComponent {
     this.filterMenuOpen.update(isOpen => !isOpen);
   }
 
-  togglePageSizeMenu(): void {
-    this.pageSizeMenuOpen.update(isOpen => !isOpen);
-  }
-
   toggleExportMenu(): void {
     this.exportMenuOpen.update(isOpen => !isOpen);
-  }
-
-  getMenuItems(): MenuItem[] {
-    return [
-      { label: 'Voir détails', icon: 'pi pi-eye' },
-      { label: 'Modifier',     icon: 'pi pi-pencil' },
-      { label: 'Désactiver', icon: 'pi pi-ban', styleClass: 'danger-item' },
-    ];
   }
 
   async onImportFileSelected(event: Event): Promise<void> {

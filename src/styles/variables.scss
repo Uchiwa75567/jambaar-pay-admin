@@ -6,6 +6,7 @@
   --color-sidebar-active:   #e8722a;
   --color-bg-main:          #f4f4f4;
   --color-orange-accent:    #e8722a;
+  --color-orange-hover:     #c95b16;
   --color-text-primary:     #1a1a2e;
   --color-green-valid:      #00a344;
   --color-grey-secondary:   #958e8e;
@@ -14,6 +15,10 @@
   --color-orange-light:     #FFF3E8;
   --color-sidebar-border:   rgba(255, 255, 255, 0.08);
   --color-text-muted:       #444444;
+  --color-border:           #dedede;
+  --color-focus-ring:       rgba(232, 114, 42, 0.28);
+  --color-success-surface:  #f0fdf4;
+  --color-danger-surface:   #fef2f2;
 
   // Layout - using relative units for responsiveness
   --sidebar-width:          18vw;
@@ -35,16 +40,32 @@
   --spacing-md:   16px;
   --spacing-lg:   24px;
   --spacing-xl:   32px;
+  --spacing-2xl:  48px;
+  --spacing-3xl:  64px;
 
   // Radius
   --radius-sm:    4px;
   --radius-md:    6px;
   --radius-lg:    9px;
   --radius-xl:    16px;
+  --radius-pill:  999px;
 
   // Shadows
   --shadow-card:  0px 0px 5px 1px rgba(0, 0, 0, 0.25);
   --shadow-panel: 0px 0px 4px 3px rgba(0, 0, 0, 0.25);
+  --shadow-overlay: 0 12px 28px rgba(24, 23, 47, 0.14);
+
+  // Motion and interaction
+  --motion-fast: 120ms;
+  --motion-normal: 200ms;
+  --motion-slow: 320ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  // Content and icons
+  --content-max-width: 100rem;
+  --icon-size-sm: 1rem;
+  --icon-size-md: 1.5rem;
+  --icon-size-lg: 2rem;
 }
 
 // SCSS variables (mirrors CSS custom props for use in SCSS expressions)
@@ -52,6 +73,7 @@ $sidebar-bg:       #1a1a2e;
 $sidebar-active:   #e8722a;
 $bg-main:          #f4f4f4;
 $orange-accent:    #e8722a;
+$orange-hover:     #c95b16;
 $text-primary:     #1a1a2e;
 $green-valid:      #00a344;
 $grey-secondary:   #958e8e;

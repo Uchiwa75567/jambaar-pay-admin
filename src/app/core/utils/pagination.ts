@@ -16,7 +16,7 @@ export function buildVisiblePages(totalPages: number, currentPage: number): Visi
   return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
 }
 
-export function sliceCurrentPage<T>(items: T[], currentPage: number, pageSize: number): T[] {
+export function sliceCurrentPage<T>(items: readonly T[], currentPage: number, pageSize: number): T[] {
   const safePageSize = Math.max(1, pageSize);
   const safePage = Math.max(1, currentPage);
   const start = (safePage - 1) * safePageSize;

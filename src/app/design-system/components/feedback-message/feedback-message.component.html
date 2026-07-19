@@ -1,0 +1,14 @@
+@if (state(); as feedback) {
+  <div
+    class="feedback"
+    [class.is-error]="feedback.type === 'error'"
+    [attr.role]="feedback.type === 'error' ? 'alert' : 'status'"
+    aria-live="polite">
+    <i
+      class="pi"
+      [class.pi-check-circle]="feedback.type === 'success'"
+      [class.pi-exclamation-circle]="feedback.type === 'error'"
+      aria-hidden="true"></i>
+    <span>{{ feedback.message }}</span>
+  </div>
+}
