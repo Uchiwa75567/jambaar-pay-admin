@@ -54,10 +54,12 @@
 
       @for (company of partnerCompanies; track company) {
         <div class="companies-row">
-          <span>{{ company.name }}</span>
-          <span>{{ company.employees }}</span>
-          <span>{{ company.amount }}</span>
-          <span class="status-pill" [class.is-inactive]="company.status === 'Inactif'">{{ company.status }}</span>
+          <span class="companies-cell" data-label="Nom de l'entreprise">{{ company.name }}</span>
+          <span class="companies-cell" data-label="Employes">{{ company.employees }}</span>
+          <span class="companies-cell" data-label="Montant total (FCFA)">{{ company.amount }}</span>
+          <span class="companies-cell" data-label="Statut">
+            <span class="status-pill" [class.is-inactive]="company.status === 'Inactif'">{{ company.status }}</span>
+          </span>
         </div>
       }
     </div>
