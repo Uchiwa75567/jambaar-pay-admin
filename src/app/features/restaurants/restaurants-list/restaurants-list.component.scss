@@ -1,3 +1,20 @@
 @use '../../../design-system/styles/entity-list' as list;
 
 @include list.entity-list('restaurants');
+
+:host ::ng-deep .restaurants-table .p-datatable-thead > tr > th:last-child,
+:host ::ng-deep .restaurants-table .p-datatable-tbody > tr > td:last-child {
+  width: 4.5rem !important;
+  white-space: nowrap !important;
+}
+
+:host ::ng-deep .restaurants-table .action-btn {
+  min-width: 2.25rem !important;
+  width: auto !important;
+  color: #4b4b4b !important;
+}
+
+:host ::ng-deep .restaurants-table .action-btn i {
+  font-size: 1rem !important;
+  color: inherit !important;
+}

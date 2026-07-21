@@ -40,7 +40,6 @@ export class RestaurantAddComponent {
     email: '',
     phone: '',
     ninea: '',
-    initialBalance: '',
     address: '',
   };
 
@@ -85,7 +84,6 @@ export class RestaurantAddComponent {
       && !this.emailError
       && !this.phoneError
       && !this.nineaError
-      && !this.initialBalanceError
       && !this.addressError;
   }
 
@@ -124,12 +122,6 @@ export class RestaurantAddComponent {
     return '';
   }
 
-  get initialBalanceError(): string {
-    if (!this.form.initialBalance.trim()) return '';
-    if (!isPositiveNumber(this.form.initialBalance)) return 'Le solde initial doit etre un montant positif.';
-    return '';
-  }
-
   get addressError(): string {
     if (!this.form.address.trim()) return '';
     if (!hasMinLength(this.form.address, 5)) return 'L’adresse doit contenir au moins 5 caracteres.';
@@ -143,7 +135,7 @@ export class RestaurantAddComponent {
       address: this.form.address.trim() || 'Non renseignee',
       phone: this.form.phone.trim() || undefined,
       totalTransactions: 0,
-      totalVolume: this.toNumber(this.form.initialBalance),
+      totalVolume: 0,
       registrationDate: new Date().toISOString().slice(0, 10),
       status: 'Actif',
     };

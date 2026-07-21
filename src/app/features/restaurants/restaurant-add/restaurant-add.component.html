@@ -96,8 +96,8 @@
       </div>
     </div>
 
-    <!-- Row 4: Ninéa + Solde Initial -->
-    <div class="form-row two-col">
+    <!-- Row 4: Ninéa -->
+    <div class="form-row">
       <div class="field">
         <label class="field-label" for="restaurant-ninea">NINEA</label>
         <input
@@ -111,24 +111,6 @@
           placeholder="Ex : SN-DKR-2024-R-5678" />
         @if (submitted() && !!nineaError) {
           <small class="field-error">{{ nineaError }}</small>
-        }
-      </div>
-      <div class="field">
-        <label class="field-label" for="restaurant-balance">Solde initial</label>
-        <div class="balance-input" [class.group-invalid]="submitted() && !!initialBalanceError">
-          <input
-            id="restaurant-balance"
-            pInputText
-            type="text"
-            class="field-input balance-number"
-            [(ngModel)]="form.initialBalance"
-            name="initialBalance"
-            [class.field-input-invalid]="submitted() && !!initialBalanceError"
-            placeholder="Ex : 200000" />
-          <span class="balance-suffix">Fcfa</span>
-        </div>
-        @if (submitted() && !!initialBalanceError) {
-          <small class="field-error">{{ initialBalanceError }}</small>
         }
       </div>
     </div>
