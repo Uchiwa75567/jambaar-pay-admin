@@ -6,5 +6,9 @@ export const landingGuard: CanActivateFn = () => {
   const auth = inject(AuthFacade);
   const router = inject(Router);
 
-  return router.createUrlTree([auth.getRedirectRoute()]);
+  if (auth.isAuthenticated()) {
+    return router.createUrlTree([auth.getLandingRoute()]);
+  }
+
+  return true;
 };

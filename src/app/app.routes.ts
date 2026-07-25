@@ -7,7 +7,13 @@ import { ENTERPRISE_ROUTES } from './features/enterprise/enterprise.routes';
 import { RESTAURANT_ROUTES } from './features/restaurant/restaurant.routes';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', canActivate: [landingGuard], children: [] },
+  {
+    path: '',
+    pathMatch: 'full',
+    title: 'JambaarPay | Portail',
+    canActivate: [landingGuard],
+    loadComponent: () => import('./features/landing/landing.component').then(module => module.LandingComponent),
+  },
   ...AUTH_ROUTES,
   {
     path: '',
@@ -19,5 +25,5 @@ export const routes: Routes = [
       ...RESTAURANT_ROUTES,
     ],
   },
-  { path: '**', canActivate: [landingGuard], children: [] },
+  { path: '**', redirectTo: '' },
 ];
