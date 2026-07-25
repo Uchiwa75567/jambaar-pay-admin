@@ -47,6 +47,7 @@ $border: #c9c9c9;
 }
 
 .login-right {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,6 +55,33 @@ $border: #c9c9c9;
   min-height: calc(100dvh - 5.2vh);
   padding: 6vh 2.5rem 5vh 0.75rem;
   order: 2;
+}
+
+.back-link {
+  position: absolute;
+  top: 1.5rem;
+  left: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.75rem;
+  color: $text;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.back-link:hover {
+  color: $orange;
+  background: rgba($orange, .08);
+  transform: translateX(-0.1875rem);
+}
+
+.back-link:focus-visible {
+  outline: 0.1875rem solid rgba($orange, .25);
+  outline-offset: 0.125rem;
 }
 
 .login-form-card {
@@ -303,7 +331,12 @@ $border: #c9c9c9;
 
   .login-right {
     min-height: auto;
-    padding: 2.25rem 1.25rem max(2rem, env(safe-area-inset-bottom));
+    padding: 5.5rem 1.25rem max(2rem, env(safe-area-inset-bottom));
+  }
+
+  .back-link {
+    top: 1.25rem;
+    left: 1.25rem;
   }
 
   .login-header {
