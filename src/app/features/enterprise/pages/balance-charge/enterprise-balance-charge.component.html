@@ -1,0 +1,121 @@
+<section class="charge-page">
+  <a routerLink="/enterprise-employees" class="back-link">
+    <i class="pi pi-arrow-left" aria-hidden="true"></i>
+    Retour à la liste
+  </a>
+
+  <div class="charge-card">
+    <header class="charge-header">
+      <div>
+        <span class="eyebrow">Chargement des comptes</span>
+        <h2>Alimenter les comptes salariés</h2>
+        <p>Créditez un même montant sur un ou plusieurs comptes.</p>
+      </div>
+      <span class="secure-badge"><i class="pi pi-shield"></i> Opération sécurisée</span>
+    </header>
+
+    <ol class="steps" aria-label="Étapes du chargement">
+      <li [class.active]="step() >= 1"><span>1</span> Comptes</li>
+      <li [class.active]="step() >= 2"><span>2</span> Montant</li>
+      <li [class.active]="step() >= 3"><span>3</span> Confirmation</li>
+    </ol>
+
+    @if (step() === 1) {
+      <div class="step-content">
+        <h3>Quels comptes souhaitez-vous charger ?</h3>
+        <div class="scope-grid">
+          <label class="scope-card" [class.selected]="scope === 'all'">
+            <input type="radio" name="scope" value="all" [(ngModel)]="scope" />
+            <span class="scope-icon"><i class="pi pi-users"></i></span>
+            <span><strong>Tous les salariés</strong><small>{{ employees().length }} comptes seront crédités</small></span>
+          </label>
+          <label class="scope-card" [class.selected]="scope === 'selected'">
+            <input type="radio" name="scope" value="selected" [(ngModel)]="scope" />
+            <span class="scope-icon"><i class="pi pi-user"></i></span>
+            <span><strong>Sélection personnalisée</strong><small>Choisissez les comptes à créditer</small></span>
+          </label>
+        </div>
+
+        @if (scope === 'selected') {
+          <div class="employee-picker">
+            @for (employee of employees(); track employee.id) {
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="isSelected(employee.id)"
+                  (change)="toggleEmployee(employee.id, $any($event.target).checked)" />
+                <span><strong>{{ employee.name }}</strong><small>{{ employee.email }}</small></span>
+                <em>{{ employee.balance }}</em>
+              </label>
+            }
+          </div>
+          @if (submitted() && !selectedEmployeeIds.length) {
+            <p class="field-error">Sélectionnez au moins un salarié.</p>
+          }
+        }
+      </div>
+    }
+
+    @if (step() === 2) {
+      <div class="step-content amount-step">
+        <h3>Définissez le montant du chargement</h3>
+        <p class="step-description">Ce montant sera ajouté au solde de chaque compte sélectionné.</p>
+        <label class="field">
+          <span>Montant par salarié <strong>*</strong></span>
+          <div class="amount-input">
+            <input
+              type="text"
+              inputmode="numeric"
+              name="amount"
+              [(ngModel)]="amount"
+              [class.invalid]="submitted() && !!amountError"
+              placeholder="Ex : 25 000" />
+            <span>FCFA</span>
+          </div>
+          @if (submitted() && !!amountError) {
+            <small class="field-error">{{ amountError }}</small>
+          }
+        </label>
+        <label class="field">
+          <span>Motif <small>(facultatif)</small></span>
+          <textarea name="reason" [(ngModel)]="reason" rows="3" placeholder="Ex : Allocation repas — juillet 2026"></textarea>
+        </label>
+      </div>
+    }
+
+    @if (step() === 3) {
+      <div class="step-content review-step">
+        <div class="review-icon"><i class="pi pi-wallet"></i></div>
+        <h3>Vérifiez l’opération</h3>
+        <p class="step-description">Le crédit sera appliqué immédiatement après confirmation.</p>
+        <dl class="summary">
+          <div><dt>Nombre de comptes</dt><dd>{{ selectedEmployees.length }}</dd></div>
+          <div><dt>Montant par compte</dt><dd>{{ formatAmount(amountValue) }}</dd></div>
+          @if (reason.trim()) {
+            <div><dt>Motif</dt><dd>{{ reason }}</dd></div>
+          }
+          <div class="summary-total"><dt>Montant total</dt><dd>{{ formatAmount(totalAmount) }}</dd></div>
+        </dl>
+        @if (errorMessage()) {
+          <p class="alert-error"><i class="pi pi-exclamation-circle"></i>{{ errorMessage() }}</p>
+        }
+      </div>
+    }
+
+    <footer class="charge-actions">
+      @if (step() === 1) {
+        <a routerLink="/enterprise-employees" class="btn btn-secondary">Annuler</a>
+        <button type="button" class="btn btn-primary" (click)="continueToAmount()">Continuer</button>
+      } @else {
+        <button type="button" class="btn btn-secondary" (click)="previousStep()">Retour</button>
+        @if (step() === 2) {
+          <button type="button" class="btn btn-primary" (click)="continueToReview()">Voir le récapitulatif</button>
+        } @else {
+          <button type="button" class="btn btn-primary" (click)="confirmCharge()">
+            <i class="pi pi-check"></i> Confirmer le chargement
+          </button>
+        }
+      }
+    </footer>
+  </div>
+</section>

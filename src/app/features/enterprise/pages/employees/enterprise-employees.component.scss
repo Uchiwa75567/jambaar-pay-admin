@@ -266,7 +266,13 @@
   border: 0;
   background: transparent;
   color: #9a9a9a;
-  cursor: default;
+  cursor: pointer;
+
+  &:hover {
+    border-radius: .35rem;
+    background: var(--color-orange-light);
+    color: var(--color-orange-accent);
+  }
 }
 
 .employees-pagination {

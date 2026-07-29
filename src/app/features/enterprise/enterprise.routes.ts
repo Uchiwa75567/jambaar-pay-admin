@@ -24,6 +24,12 @@ export const ENTERPRISE_ROUTES: Routes = [
     loadComponent: () => import('./pages/employee-add/enterprise-employee-add.component').then(module => module.EnterpriseEmployeeAddComponent),
   }, ENTERPRISE_ROLES),
   protectedPage({
+    path: 'enterprise-employees/charge-balances',
+    title: 'Charger les comptes',
+    data: { subtitle: 'Alimentez les comptes de vos salariés' },
+    loadComponent: () => import('./pages/balance-charge/enterprise-balance-charge.component').then(module => module.EnterpriseBalanceChargeComponent),
+  }, ENTERPRISE_ROLES),
+  protectedPage({
     path: 'enterprise-history',
     title: 'Historique des transactions',
     data: { subtitle: 'Consultez toutes les transactions' },

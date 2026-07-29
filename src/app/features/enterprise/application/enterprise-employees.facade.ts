@@ -12,6 +12,11 @@ export interface EmployeeRow {
   status: 'Validé';
 }
 
+export interface BalanceChargeResult {
+  employeeCount: number;
+  totalAmount: number;
+}
+
 export type EmployeeStatusFilter = 'Tous' | 'Validé';
 export type EmployeeFeedbackState = { type: 'success' | 'error'; message: string } | null;
 
@@ -67,6 +72,7 @@ export class EnterpriseEmployeesFacade {
   readonly employees = computed(() => {
     return sliceCurrentPage(this.filteredEmployees(), this.currentPage(), this.pageSize());
   });
+  readonly employeeOptions = computed(() => this.allEmployees());
 
   constructor() {
     const defaults = Array.from({ length: 144 }, (_, index) => ({
@@ -124,6 +130,36 @@ export class EnterpriseEmployeesFacade {
     this.setFeedback('success', 'Soldes mis a jour a partir du fichier importe.');
   }
 
+  chargeBalances(employeeIds: string[], amount: number): BalanceChargeResult {
+    const selectedIds = new Set(employeeIds);
+
+    if (!selectedIds.size) {
+      throw new Error('Selectionnez au moins un salarie.');
+    }
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw new Error('Le montant doit etre superieur a zero.');
+    }
+
+    let employeeCount = 0;
+    const updated = this.allEmployees().map(employee => {
+      if (!selectedIds.has(employee.id)) {
+        return employee;
+      }
+
+      employeeCount += 1;
+      const currentBalance = this.parseBalance(employee.balance);
+      return { ...employee, balance: this.formatBalance(currentBalance + amount) };
+    });
+
+    if (!employeeCount) {
+      throw new Error('Aucun salarie valide n’a ete selectionne.');
+    }
+
+    this.persistEmployees(updated);
+    return { employeeCount, totalAmount: employeeCount * amount };
+  }
+
   exportEmployees(): void {
     this.dataTransfer.exportCsv('salaries-entreprise-jambaarpay', this.filteredEmployees(), this.exportColumns);
     this.setFeedback('success', 'Export Excel prepare pour la liste des salaries.');
@@ -131,6 +167,10 @@ export class EnterpriseEmployeesFacade {
 
   setErrorFeedback(error: unknown, fallbackMessage: string): void {
     this.setFeedback('error', error instanceof Error ? error.message : fallbackMessage);
+  }
+
+  setSuccessFeedback(message: string): void {
+    this.setFeedback('success', message);
   }
 
   private mapImportedEmployee(record: ImportedRecord, index: number): EmployeeRow | null {
@@ -192,6 +232,16 @@ export class EnterpriseEmployeesFacade {
   private persistEmployees(employees: EmployeeRow[]): void {
     this.allEmployees.set(employees);
     this.datasetStorage.writeArray(EMPLOYEES_STORAGE_KEY, employees);
+  }
+
+  private parseBalance(value: string): number {
+    const normalized = value.replace(/[^\d,.-]/g, '').replace(',', '.');
+    const amount = Number(normalized);
+    return Number.isFinite(amount) ? amount : 0;
+  }
+
+  private formatBalance(value: number): string {
+    return `${new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(value)} Fcfa`;
   }
 
   private setFeedback(type: 'success' | 'error', message: string): void {

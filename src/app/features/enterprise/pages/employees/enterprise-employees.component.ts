@@ -37,6 +37,13 @@ export class EnterpriseEmployeesComponent {
 
   readonly filterMenuOpen = signal(false);
 
+  constructor() {
+    const successMessage = this.router.getCurrentNavigation()?.extras.state?.['balanceChargeSuccess'];
+    if (typeof successMessage === 'string') {
+      this.facade.setSuccessFeedback(successMessage);
+    }
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (!this.el.nativeElement.contains(event.target)) {
@@ -65,21 +72,14 @@ export class EnterpriseEmployeesComponent {
     }
   }
 
-  async onImportBalances(event: Event): Promise<void> {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
+  goToChargeBalances(): void {
+    this.router.navigate(['/enterprise-employees/charge-balances']);
+  }
 
-    if (!file) {
-      return;
-    }
-
-    try {
-      await this.facade.importBalances(file);
-    } catch (error) {
-      this.facade.setErrorFeedback(error, 'Import des soldes impossible.');
-    } finally {
-      input.value = '';
-    }
+  goToEmployeeHistory(employeeName: string): void {
+    this.router.navigate(['/enterprise-history'], {
+      queryParams: { employee: employeeName },
+    });
   }
 
   exportEmployees(): void {

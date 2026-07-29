@@ -21,13 +21,81 @@
   </button>
 </div>
 
+<section class="history-filters" aria-label="Filtres de l'historique">
+  <label class="filter-field">
+    <span>Salarié (nom ou email)</span>
+    <div class="employee-search" (focusout)="closeEmployeeMenu()">
+      <i class="pi pi-search" aria-hidden="true"></i>
+      <input
+        type="search"
+        [ngModel]="employeeSearch()"
+        (ngModelChange)="setEmployeeSearch($event)"
+        (focus)="employeeMenuOpen.set(true)"
+        (keydown.escape)="employeeMenuOpen.set(false)"
+        placeholder="Tous les salariés" />
+      <button
+        type="button"
+        class="employee-menu-toggle"
+        aria-label="Afficher les salariés"
+        (mousedown)="$event.preventDefault()"
+        (click)="employeeMenuOpen.set(!employeeMenuOpen())">
+        <i class="pi pi-chevron-down"></i>
+      </button>
+      @if (employeeMenuOpen()) {
+        <div class="employee-options">
+          <button type="button" class="employee-option all-option" (mousedown)="$event.preventDefault()" (click)="showAllEmployees()">
+            <span class="option-avatar"><i class="pi pi-users"></i></span>
+            <span><strong>Tous les salariés</strong><small>Afficher tout l’historique</small></span>
+          </button>
+          @for (employee of employeeSuggestions(); track employee.email) {
+            <button type="button" class="employee-option" (mousedown)="$event.preventDefault()" (click)="selectEmployee(employee.email)">
+              <span class="option-avatar">{{ employee.name.slice(-2) }}</span>
+              <span><strong>{{ employee.name }}</strong><small>{{ employee.email }}</small></span>
+            </button>
+          } @empty {
+            <p class="no-employee">Aucun salarié trouvé</p>
+          }
+        </div>
+      }
+    </div>
+  </label>
+
+  <div class="filter-field">
+    <span>Période</span>
+    <div class="period-switch">
+      <button type="button" [class.active]="periodMode() === 'week'" (click)="setPeriodMode('week')">Par semaine</button>
+      <button type="button" [class.active]="periodMode() === 'month'" (click)="setPeriodMode('month')">Par mois</button>
+    </div>
+  </div>
+
+  <label class="filter-field period-value">
+    <span>{{ periodMode() === 'week' ? 'Semaine' : 'Mois' }}</span>
+    @if (periodMode() === 'week') {
+      <input type="week" [ngModel]="selectedWeek()" (ngModelChange)="setSelectedWeek($event)" />
+    } @else {
+      <input type="month" [ngModel]="selectedMonth()" (ngModelChange)="setSelectedMonth($event)" />
+    }
+  </label>
+
+  <div class="history-summary">
+    <span><strong>{{ transactionCount() }}</strong> transaction(s)</span>
+    <span><strong>{{ formatAmount(totalAmount()) }}</strong> dépensés</span>
+  </div>
+</section>
+
 <section class="history-card">
-  <h2>Transaction recentes</h2>
+  <div class="history-title">
+    <div>
+      <h2>{{ employeeSearch().trim() ? 'Historique de ' + employeeSearch().trim() : 'Historique de tous les salariés' }}</h2>
+      <p>{{ periodMode() === 'week' ? 'Transactions de la semaine sélectionnée' : 'Transactions du mois sélectionné' }}</p>
+    </div>
+  </div>
 
   <p-table [value]="paginatedTransactions()" styleClass="history-table">
     <ng-template pTemplate="header">
       <tr>
         <th>Salarié</th>
+        <th>Email</th>
         <th>Restaurants</th>
         <th>Montant</th>
         <th>Date</th>
@@ -37,6 +105,7 @@
     <ng-template pTemplate="body" let-row>
       <tr>
         <td data-label="Salarié">{{ row.employee }}</td>
+        <td data-label="Email">{{ row.employeeEmail }}</td>
         <td data-label="Restaurants">{{ row.restaurant }}</td>
         <td data-label="Montant">{{ row.amount }}</td>
         <td data-label="Date">{{ row.date }}</td>
@@ -44,7 +113,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-      <tr><td colspan="5"><app-empty-state message="Aucune transaction trouvée." /></td></tr>
+      <tr><td colspan="6"><app-empty-state message="Aucune transaction pour ces critères sur la période sélectionnée." /></td></tr>
     </ng-template>
   </p-table>
 </section>
